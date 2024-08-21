@@ -113,6 +113,15 @@ const TableContainer = ({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+<<<<<<< HEAD
+=======
+    initialState: {
+      pagination: {
+        pageIndex: 0, // Start from the first page
+        pageSize: 10, // Default page size
+      }
+    }
+>>>>>>> 9627d4e (added comments page)
   });
 
   const {
@@ -124,6 +133,7 @@ const TableContainer = ({
     setPageIndex,
     nextPage,
     previousPage,
+<<<<<<< HEAD
     // setPageSize,
     getState
   } = table;
@@ -154,6 +164,15 @@ const TableContainer = ({
           </Col>
         )}
 
+=======
+    getState,
+    pageCount,
+  } = table;
+
+  return (
+    <Fragment>
+      <Row className="mb-2">
+>>>>>>> 9627d4e (added comments page)
         {isGlobalFilter && <DebouncedInput
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
@@ -235,7 +254,10 @@ const TableContainer = ({
         </Table>
       </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9627d4e (added comments page)
       {
         isPagination && (
           <Row>
@@ -266,4 +288,8 @@ const TableContainer = ({
   );
 };
 
+<<<<<<< HEAD
 export default TableContainer;
+=======
+export default TableContainer;
+>>>>>>> 9627d4e (added comments page)
