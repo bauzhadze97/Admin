@@ -153,7 +153,17 @@ const SidebarContent = props => {
               </Link>
          
             </li>
-
+            <li>
+              <Link to="/tables-datatable">
+                <i className="bx bxs-report"></i>
+                <span className="badge rounded-pill bg-danger float-end">
+                  10
+                </span>
+                <span>{props.t("Daily Report")}</span>
+              </Link>
+         
+            </li>
+          
             <li className="menu-title">{props.t("Apps")}</li>
 
             <li>
@@ -487,9 +497,7 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/tables-basic">{props.t("Basic Tables")}</Link>
                 </li>
-                <li>
-                  <Link to="/tables-datatable">{props.t("Data Tables")}</Link>
-                </li>
+                
                 {/* <li>
                   <Link to="/tables-responsive">
                     {props.t("Responsive Table")}

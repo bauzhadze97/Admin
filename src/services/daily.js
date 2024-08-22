@@ -87,3 +87,5 @@ export const updateDaily = async (id, data) => {
 export const deleteDaily = async (id) => {
     return defaultInstance.delete(`/api/dailies/${id}`);
 }
+
+
