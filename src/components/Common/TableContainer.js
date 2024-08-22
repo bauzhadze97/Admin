@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Row, Table, Button, Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   useReactTable,
@@ -113,15 +113,6 @@ const TableContainer = ({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-<<<<<<< HEAD
-=======
-    initialState: {
-      pagination: {
-        pageIndex: 0, // Start from the first page
-        pageSize: 10, // Default page size
-      }
-    }
->>>>>>> 9627d4e (added comments page)
   });
 
   const {
@@ -133,7 +124,6 @@ const TableContainer = ({
     setPageIndex,
     nextPage,
     previousPage,
-<<<<<<< HEAD
     // setPageSize,
     getState
   } = table;
@@ -141,6 +131,8 @@ const TableContainer = ({
   // useEffect(() => {
   //   Number(customPageSize) && setPageSize(Number(customPageSize));
   // }, [customPageSize, setPageSize]);
+
+  const navigate = useNavigate();
 
   return (
     <Fragment>
@@ -164,15 +156,6 @@ const TableContainer = ({
           </Col>
         )}
 
-=======
-    getState,
-    pageCount,
-  } = table;
-
-  return (
-    <Fragment>
-      <Row className="mb-2">
->>>>>>> 9627d4e (added comments page)
         {isGlobalFilter && <DebouncedInput
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
@@ -236,7 +219,7 @@ const TableContainer = ({
           <tbody>
             {getRowModel().rows.map(row => {
               return (
-                <tr key={row.id}>
+                <tr key={row.id} onClick={() => navigate(`/comment/${row.original.id}`)}>
                   {row.getVisibleCells().map(cell => {
                     return (
                       <td key={cell.id}>
@@ -254,10 +237,7 @@ const TableContainer = ({
         </Table>
       </div>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 9627d4e (added comments page)
       {
         isPagination && (
           <Row>
@@ -288,8 +268,4 @@ const TableContainer = ({
   );
 };
 
-<<<<<<< HEAD
 export default TableContainer;
-=======
-export default TableContainer;
->>>>>>> 9627d4e (added comments page)

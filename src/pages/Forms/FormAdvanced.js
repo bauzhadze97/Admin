@@ -402,11 +402,7 @@ const FormAdvanced = () => {
                   <form>
                     <Row>
                       <Col lg="6">
-<<<<<<< HEAD
                         <div className="mb-3">
-=======
-                        <div className="form-group">
->>>>>>> 9627d4e (added comments page)
                           <Label>Single Select</Label>
                           <Select
                             value={selectedGroup}

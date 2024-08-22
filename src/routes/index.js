@@ -13,30 +13,18 @@ import UserProfile from "../pages/Authentication/user-profile";
 // Pages Calendar
 import Calendar from "../pages/Calendar/index";
 
-<<<<<<< HEAD
 // //Tasks
-=======
-// Tasks
->>>>>>> 9627d4e (added comments page)
 import TasksList from "../pages/Tasks/tasks-list";
 import TasksCreate from "../pages/Tasks/tasks-create";
 import TasksKanban from "../pages/Tasks/tasks-kanban";
 
-<<<<<<< HEAD
 // //Projects
-=======
-// Projects
->>>>>>> 9627d4e (added comments page)
 import ProjectsGrid from "../pages/Projects/projects-grid";
 import ProjectsList from "../pages/Projects/projects-list";
 import ProjectsOverview from "../pages/Projects/ProjectOverview/projects-overview";
 import ProjectsCreate from "../pages/Projects/projects-create";
 
-<<<<<<< HEAD
 // //Ecommerce Pages
-=======
-// Ecommerce Pages
->>>>>>> 9627d4e (added comments page)
 import EcommerceProducts from "../pages/Ecommerce/EcommerceProducts";
 import EcommerceProductDetail from "../pages/Ecommerce/EcommerceDetails/index";
 import EcommerceOrders from "../pages/Ecommerce/EcommerceOrders/index";
@@ -46,22 +34,14 @@ import EcommerceCheckout from "../pages/Ecommerce/EcommerceCheckout";
 import EcommerceShops from "../pages/Ecommerce/EcommerceShops/index";
 import EcommerceAddProduct from "../pages/Ecommerce/EcommerceAddProduct";
 
-<<<<<<< HEAD
 //Email
-=======
-// Email
->>>>>>> 9627d4e (added comments page)
 import EmailInbox from "../pages/Email/email-inbox";
 import EmailRead from "../pages/Email/email-read";
 import EmailBasicTemplte from "../pages/Email/email-basic-templte";
 import EmailAlertTemplte from "../pages/Email/email-template-alert";
 import EmailTemplateBilling from "../pages/Email/email-template-billing";
 
-<<<<<<< HEAD
 //Invoices
-=======
-// Invoices
->>>>>>> 9627d4e (added comments page)
 import InvoicesList from "../pages/Invoices/invoices-list";
 import InvoiceDetail from "../pages/Invoices/invoices-detail";
 
@@ -71,11 +51,7 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
-<<<<<<< HEAD
 //  // Inner Authentication
-=======
-// Inner Authentication
->>>>>>> 9627d4e (added comments page)
 import Login1 from "../pages/AuthenticationInner/Login";
 import Login2 from "../pages/AuthenticationInner/Login2";
 import Register1 from "../pages/AuthenticationInner/Register";
@@ -96,7 +72,6 @@ import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-ver
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
-<<<<<<< HEAD
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
 import Blog from "../pages/Dashboard-Blog/index";
 import DashboardJob from "../pages/DashboardJob/index";
@@ -110,11 +85,6 @@ import CryptoOrders from "../pages/Crypto/CryptoOrders/crypto-orders";
 import CryptoKYCApplication from "../pages/Crypto/crypto-kyc-application";
 import CryptoIcoLanding from "../pages/Crypto/CryptoIcoLanding/index";
 
-=======
-import Blog from "../pages/Dashboard-Blog/index";
-import DashboardJob from "../pages/DashboardJob/index";
-
->>>>>>> 9627d4e (added comments page)
 // Charts
 import ChartApex from "../pages/Charts/Apexcharts";
 import ChartjsChart from "../pages/Charts/ChartjsChart";
@@ -126,40 +96,22 @@ import ReCharts from "../pages/Charts/ReCharts";
 // Maps
 import MapsGoogle from "../pages/Maps/MapsGoogle";
 
-<<<<<<< HEAD
 //Icons
-=======
-// Icons
->>>>>>> 9627d4e (added comments page)
 import IconBoxicons from "../pages/Icons/IconBoxicons";
 import IconDripicons from "../pages/Icons/IconDripicons";
 import IconMaterialdesign from "../pages/Icons/IconMaterialdesign";
 import IconFontawesome from "../pages/Icons/IconFontawesome";
 
-<<<<<<< HEAD
 //Tables
 import BasicTables from "../pages/Tables/BasicTables";
 import DatatableTables from "../pages/Tables/DatatableTables";
 
 //Blog
-=======
-// Tables
-import BasicTables from "../pages/Tables/BasicTables";
-import DatatableTables from "../pages/Tables/DatatableTables";
-import CreateDaily from "../pages/Tables/CreateDaily";
-import MakeCommentsPage from "../pages/MakeCommentsPage/MakeCommentsPage";
-
-// Blog
->>>>>>> 9627d4e (added comments page)
 import BlogList from "../pages/Blog/BlogList/index";
 import BlogGrid from "../pages/Blog/BlogGrid/index";
 import BlogDetails from "../pages/Blog/BlogDetails";
 
-<<<<<<< HEAD
 //Job
-=======
-// Job
->>>>>>> 9627d4e (added comments page)
 import JobGrid from "../pages/JobPages/JobGrid/index";
 import JobDetails from "../pages/JobPages/JobDetails";
 import JobCategories from "../pages/JobPages/JobCategories";
@@ -179,11 +131,7 @@ import FormRepeater from "../pages/Forms/FormRepeater";
 import FormUpload from "../pages/Forms/FormUpload";
 import FormWizard from "../pages/Forms/FormWizard";
 
-<<<<<<< HEAD
 //Ui
-=======
-// Ui
->>>>>>> 9627d4e (added comments page)
 import UiAlert from "../pages/Ui/UiAlert";
 import UiButtons from "../pages/Ui/UiButtons";
 import UiCards from "../pages/Ui/UiCards";
@@ -208,11 +156,7 @@ import UiUtilitie from "../pages/Ui/UiUtilitie";
 import UiPlaceholders from "../pages/Ui/UiPlaceholders";
 import UiToasts from "../pages/Ui/UiToast";
 
-<<<<<<< HEAD
 //Pages
-=======
-// Utility
->>>>>>> 9627d4e (added comments page)
 import PagesStarter from "../pages/Utility/pages-starter";
 import PagesMaintenance from "../pages/Utility/pages-maintenance";
 import PagesComingsoon from "../pages/Utility/pages-comingsoon";
@@ -222,19 +166,15 @@ import PagesPricing from "../pages/Utility/pages-pricing";
 import Pages404 from "../pages/Utility/pages-404";
 import Pages500 from "../pages/Utility/pages-500";
 
-<<<<<<< HEAD
 //Contacts
-=======
-// Contacts
->>>>>>> 9627d4e (added comments page)
 import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
+import MakeComment from "pages/Comment/MakeComment";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
-<<<<<<< HEAD
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
   { path: "/dashboard-job", component: <DashboardJob /> },
@@ -260,14 +200,6 @@ const authProtectedRoutes = [
   { path: "/profile", component: <UserProfile /> },
 
   //Ecommerce
-=======
-  { path: "/blog", component: <Blog /> },
-  { path: "/dashboard-job", component: <DashboardJob /> },
-  { path: "/chat", component: <Chat /> },
-  { path: "/apps-filemanager", component: <FileManager /> },
-  { path: "/calendar", component: <Calendar /> },
-  { path: "/profile", component: <UserProfile /> },
->>>>>>> 9627d4e (added comments page)
   { path: "/ecommerce-product-detail/:id", component: <EcommerceProductDetail /> },
   { path: "/ecommerce-products", component: <EcommerceProducts /> },
   { path: "/ecommerce-orders", component: <EcommerceOrders /> },
@@ -276,17 +208,13 @@ const authProtectedRoutes = [
   { path: "/ecommerce-checkout", component: <EcommerceCheckout /> },
   { path: "/ecommerce-shops", component: <EcommerceShops /> },
   { path: "/ecommerce-add-product", component: <EcommerceAddProduct /> },
-<<<<<<< HEAD
 
   //Email
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/email-inbox", component: <EmailInbox /> },
   { path: "/email-read/:id?", component: <EmailRead /> },
   { path: "/email-template-basic", component: <EmailBasicTemplte /> },
   { path: "/email-template-alert", component: <EmailAlertTemplte /> },
   { path: "/email-template-billing", component: <EmailTemplateBilling /> },
-<<<<<<< HEAD
 
   //Invoices
   { path: "/invoices-list", component: <InvoicesList /> },
@@ -299,20 +227,11 @@ const authProtectedRoutes = [
   { path: "/tasks-kanban", component: <TasksKanban /> },
 
   //Projects
-=======
-  { path: "/invoices-list", component: <InvoicesList /> },
-  { path: "/invoices-detail/:id", component: <InvoiceDetail /> },
-  { path: "/invoices-detail", component: <InvoiceDetail /> },
-  { path: "/tasks-list", component: <TasksList /> },
-  { path: "/tasks-create", component: <TasksCreate /> },
-  { path: "/tasks-kanban", component: <TasksKanban /> },
->>>>>>> 9627d4e (added comments page)
   { path: "/projects-grid", component: <ProjectsGrid /> },
   { path: "/projects-list", component: <ProjectsList /> },
   { path: "/projects-overview", component: <ProjectsOverview /> },
   { path: "/projects-overview/:id", component: <ProjectsOverview /> },
   { path: "/projects-create", component: <ProjectsCreate /> },
-<<<<<<< HEAD
 
   //Blog
   { path: "/blog-list", component: <BlogList /> },
@@ -320,11 +239,6 @@ const authProtectedRoutes = [
   { path: "/blog-details", component: <BlogDetails /> },
 
   //job
-=======
-  { path: "/blog-list", component: <BlogList /> },
-  { path: "/blog-grid", component: <BlogGrid /> },
-  { path: "/blog-details", component: <BlogDetails /> },
->>>>>>> 9627d4e (added comments page)
   { path: "/job-grid", component: <JobGrid /> },
   { path: "/job-details", component: <JobDetails /> },
   { path: "/job-categories", component: <JobCategories /> },
@@ -332,7 +246,6 @@ const authProtectedRoutes = [
   { path: "/job-apply", component: <ApplyJobs /> },
   { path: "/candidate-list", component: <CandidateList /> },
   { path: "/candidate-overview", component: <CandidateOverview /> },
-<<<<<<< HEAD
 
   // Contacts
   { path: "/contacts-grid", component: <ContactsGrid /> },
@@ -340,42 +253,28 @@ const authProtectedRoutes = [
   { path: "/contacts-profile", component: <ContactsProfile /> },
 
   //Charts
-=======
-  { path: "/contacts-grid", component: <ContactsGrid /> },
-  { path: "/contacts-list", component: <ContactsList /> },
-  { path: "/contacts-profile", component: <ContactsProfile /> },
->>>>>>> 9627d4e (added comments page)
   { path: "/apex-charts", component: <ChartApex /> },
   { path: "/chartjs-charts", component: <ChartjsChart /> },
   { path: "/e-charts", component: <EChart /> },
   { path: "/sparkline-charts", component: <SparklineChart /> },
   { path: "/charts-knob", component: <ChartsKnob /> },
   { path: "/re-charts", component: <ReCharts /> },
-<<<<<<< HEAD
 
   // Icons
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/icons-boxicons", component: <IconBoxicons /> },
   { path: "/icons-dripicons", component: <IconDripicons /> },
   { path: "/icons-materialdesign", component: <IconMaterialdesign /> },
   { path: "/icons-fontawesome", component: <IconFontawesome /> },
-<<<<<<< HEAD
 
   // Tables
   { path: "/tables-basic", component: <BasicTables /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
+  { path: "/comment/:id", component: <MakeComment /> },
 
   // Maps
   { path: "/maps-google", component: <MapsGoogle /> },
 
   // Forms
-=======
-  { path: "/tables-basic", component: <BasicTables /> },
-  { path: "/tables-datatable", component: <DatatableTables /> },
-  { path: "/make-comments/:id", component: <MakeCommentsPage /> },
-  { path: "/maps-google", component: <MapsGoogle /> },
->>>>>>> 9627d4e (added comments page)
   { path: "/form-elements", component: <FormElements /> },
   { path: "/form-layouts", component: <FormLayouts /> },
   { path: "/form-advanced", component: <FormAdvanced /> },
@@ -385,11 +284,8 @@ const authProtectedRoutes = [
   { path: "/form-uploads", component: <FormUpload /> },
   { path: "/form-wizard", component: <FormWizard /> },
   { path: "/form-validation", component: <FormValidations /> },
-<<<<<<< HEAD
 
   // Ui
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/ui-alerts", component: <UiAlert /> },
   { path: "/ui-buttons", component: <UiButtons /> },
   { path: "/ui-cards", component: <UiCards /> },
@@ -413,21 +309,15 @@ const authProtectedRoutes = [
   { path: "/ui-utilities", component: <UiUtilitie /> },
   { path: "/ui-placeholders", component: <UiPlaceholders /> },
   { path: "/ui-toasts", component: <UiToasts /> },
-<<<<<<< HEAD
 
   //Utility
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/pages-starter", component: <PagesStarter /> },
   { path: "/pages-timeline", component: <PagesTimeline /> },
   { path: "/pages-faqs", component: <PagesFaqs /> },
   { path: "/pages-pricing", component: <PagesPricing /> },
-<<<<<<< HEAD
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
-=======
->>>>>>> 9627d4e (added comments page)
   {
     path: "/",
     exact: true,
@@ -440,20 +330,14 @@ const publicRoutes = [
   { path: "/logout", component: <Logout /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
-<<<<<<< HEAD
 
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/pages-maintenance", component: <PagesMaintenance /> },
   { path: "/pages-comingsoon", component: <PagesComingsoon /> },
   { path: "/pages-404", component: <Pages404 /> },
   { path: "/pages-500", component: <Pages500 /> },
-<<<<<<< HEAD
   { path: "/crypto-ico-landing", component: <CryptoIcoLanding /> },
 
   // Authentication Inner
-=======
->>>>>>> 9627d4e (added comments page)
   { path: "/pages-login", component: <Login1 /> },
   { path: "/pages-login-2", component: <Login2 /> },
   { path: "/pages-register", component: <Register1 /> },
