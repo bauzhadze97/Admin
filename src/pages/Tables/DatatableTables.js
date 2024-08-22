@@ -115,7 +115,9 @@ const DatatableTables = () => {
                 <Breadcrumbs title="Tables" breadcrumbItem="Data Tables" />
                 <div className="table-container">
                     <h2 className="page-name">
-                        <div>Data Table</div>
+                        <div>Daily Report
+                            
+                        </div>
                     </h2>
                     
                     <TableContainer

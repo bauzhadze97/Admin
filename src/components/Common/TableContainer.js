@@ -66,8 +66,8 @@ const TableContainer = ({
 
   return (
     <Fragment>
-      <div className={divClassName ? divClassName : "table-responsive"}>
-        <Table hover className={tableClass} bordered={isBordered}>
+      <div className={divClassName ? divClassName : "table-responsive "}>
+        <Table hover className={tableClass}  bordered={isBordered}>
           <thead className={theadClass}>
             {getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
