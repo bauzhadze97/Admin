@@ -1,11 +1,8 @@
-// src/components/filter.js
 import React, { useEffect, useState, useMemo } from 'react';
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 import TableContainer from '../../components/Common/TableContainer';
-
 import { getDailyList } from '../../services/daily';
 import { getDepartments } from '../../services/auth';
-import { Link } from 'react-router-dom';
 
 const DatatableTables = () => {
     const [data, setData] = useState([]);
@@ -13,8 +10,8 @@ const DatatableTables = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(30);
+    const [totalItems, setTotalItems] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(10);  // Adjust itemsPerPage as needed
     const [filters, setFilters] = useState({
         date: '',
         taskName: '',
@@ -24,11 +21,12 @@ const DatatableTables = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
                 const response = await getDailyList(currentPage, itemsPerPage);
                 const sortedData = response.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 setData(sortedData);
-                setTotalPages(response.data.last_page);
+                setTotalItems(response.data.total);  // Adjust based on your API response
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -98,7 +96,7 @@ const DatatableTables = () => {
     };
 
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
+        if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -107,16 +105,6 @@ const DatatableTables = () => {
         setItemsPerPage(parseInt(e.target.value));
         setCurrentPage(1);
     };
-
-    const filteredData = data.filter(item => {
-        const adminHasNotCommented = filters.adminNotCommented ? !item.comments.some(comment => comment.user.id === 1) : true;
-        return (
-            (filters.date === '' || new Date(item.date).toLocaleDateString() === new Date(filters.date).toLocaleDateString()) &&
-            (filters.taskName === '' || item.name.toLowerCase().includes(filters.taskName.toLowerCase())) &&
-            (filters.department === '' || item.user?.department?.id === filters.department) &&
-            adminHasNotCommented
-        );
-    });
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -128,21 +116,25 @@ const DatatableTables = () => {
                 <div className="table-container">
                     <h2 className="page-name">
                         <div>Data Table</div>
-                        <div className='button-container'>
-                        </div>
                     </h2>
                     
                     <TableContainer
                         columns={columns}
-                        data={filteredData}
+                        data={data}
                         isGlobalFilter={true}
                         isPagination={true}
                         SearchPlaceholder="Search records..."
                         pagination="pagination"
                         paginationWrapper='dataTables_paginate paging_simple_numbers'
                         tableClass="table-bordered table-nowrap dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage}
+                        totalItems={totalItems}
+                        onPreviousPage={handlePreviousPage}
+                        onNextPage={handleNextPage}
+                        onItemsPerPageChange={handleItemsPerPageChange}
+                        setCurrentPage={setCurrentPage}
                     />
-                   
                 </div>
             </div>
         </div>
