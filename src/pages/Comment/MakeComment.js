@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { createDailyComment, getDailyCommentList } from '../../services/dailyComment';
-import { getDaily } from '../../services/daily';
 import { Button, Form, FormGroup, Label, Input, Col, Row, Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
+import { getDaily } from 'services/daily';
+import { createDailyComment } from 'services/dailyComment';
 
 const MakeComment = () => {
   const { id } = useParams(); 
   const [item, setItem] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]); // Default to an empty array
   const [newComment, setNewComment] = useState('');
   const [replyTo, setReplyTo] = useState(null); // Track which comment is being replied to
   const [loading, setLoading] = useState(true);
@@ -16,10 +16,12 @@ const MakeComment = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await getDaily(id); // Fetch the daily item
+        const response = await getDaily(id);
         setItem(response.data);
-        const commentsResponse = await getDailyCommentList(); // Fetch all comments
-        setComments(commentsResponse.data.filter(comment => comment.daily_id === id)); // Filter comments by daily_id
+
+        // Extract comments from the daily data, fallback to an empty array if undefined
+        setComments(response.data.comments || []);
+        
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -59,7 +61,7 @@ const MakeComment = () => {
   };
 
   const renderComments = (commentsList, parentId = null) => {
-    return commentsList
+    return (commentsList || []) // Ensure commentsList is always an array
       .filter(comment => comment.parent_id === parentId)
       .map(comment => (
         <div key={comment.id} style={{ marginLeft: parentId ? '20px' : '0' }}>
@@ -75,7 +77,8 @@ const MakeComment = () => {
             <p className="mb-0">{comment.comment}</p> {/* Correctly display the comment content */}
             <Button size="sm" color="link" onClick={() => setReplyTo(comment.id)}>Reply</Button>
           </ListGroupItem>
-          {renderComments(comment.replies, comment.id)} {/* Recursively render replies */}
+          {/* Recursively render replies */}
+          {renderComments(commentsList, comment.id)}
         </div>
       ));
   };
@@ -94,6 +97,7 @@ const MakeComment = () => {
             <p><strong>Task Name:</strong> {item.name}</p>
             <p><strong>Department:</strong> {item.user?.department?.name}</p>
             <p><strong>Name:</strong> {item.user?.name}</p>
+            <p><strong>Description:</strong> {item?.description}</p>
           </CardBody>
         </Card>
       ) : (
@@ -102,7 +106,7 @@ const MakeComment = () => {
 
       <h3>Comments</h3>
       <ListGroup className="mb-4">
-        {renderComments(comments)}
+        {comments.length > 0 ? renderComments(comments) : <p>No comments yet</p>}
       </ListGroup>
 
       <h4>{replyTo ? "Reply to Comment" : "Add a Comment"}</h4>
