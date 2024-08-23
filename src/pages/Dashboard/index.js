@@ -177,7 +177,7 @@ const Dashboard = props => {
       </div>
 
       {/* subscribe ModalHeader */}
-      <Modal isOpen={subscribeModal} role="dialog" autoFocus={true} centered data-toggle="modal"
+      {/* <Modal isOpen={subscribeModal} role="dialog" autoFocus={true} centered data-toggle="modal"
         toggle={() => { setSubscribeModal(!subscribeModal); }} >
         <div>
           <ModalHeader className="border-bottom-0" toggle={() => { setSubscribeModal(!subscribeModal); }}></ModalHeader>
@@ -207,7 +207,7 @@ const Dashboard = props => {
             </Row>
           </div>
         </ModalBody>
-      </Modal>
+      </Modal> */}
 
       <Modal isOpen={modal} role="dialog" autoFocus={true} centered={true} className="exampleModal" tabIndex="-1"
         toggle={() => { setModal(!modal); }}>

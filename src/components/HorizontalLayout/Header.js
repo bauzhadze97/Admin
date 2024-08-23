@@ -74,7 +74,7 @@ const Header = props => {
                   <img src={logo} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoDark} alt="" height="17" />
+                  <img src={logoDark} alt="" width="200px" />
                 </span>
               </Link>
 
@@ -83,7 +83,7 @@ const Header = props => {
                   <img src={logoLightSvg} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoLight} alt="" height="19" />
+                  <img src={logoLight} alt="" width="200px" />
                 </span>
               </Link>
             </div>
@@ -376,7 +376,7 @@ const Header = props => {
 
             <ProfileMenu />
 
-            <div className="dropdown d-inline-block">
+            {/* <div className="dropdown d-inline-block">
               <button
                 onClick={() => {
                   props.showRightSidebarAction(!props.showRightSidebar);
@@ -386,7 +386,7 @@ const Header = props => {
               >
                 <i className="bx bx-cog bx-spin" />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </header>

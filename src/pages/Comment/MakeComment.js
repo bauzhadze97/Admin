@@ -1,8 +1,10 @@
+import echo from 'plugins/echo';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Col, Row, Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import { getDaily } from 'services/daily';
 import { createDailyComment } from 'services/dailyComment';
+import Pusher from 'pusher-js'
 
 const MakeComment = () => {
   const { id } = useParams();
@@ -31,6 +33,61 @@ const MakeComment = () => {
 
     fetchItem();
   }, [id]);
+
+
+  const userId = 1;
+
+  // useEffect(() => {
+  //   console.log('useEffect called for userId:', userId);
+
+  //   const channel = echo.private(`user.${userId}`);
+    
+  //   channel.listen('App\\Events\\ReplyMade', (e) => {
+  //     console.log('New reply received:', e);
+  //   });
+
+  //   return () => {
+  //     console.log('Cleaning up useEffect for userId:', userId);
+  //     channel.stopListening('App\\Events\\ReplyMade');
+  //     echo.leaveChannel(`user.${userId}`);
+  //   };
+  // }, []); 
+  
+  // useEffect(() => {
+  //   console.log('useEffect called for userId:', userId);
+
+  //   const channel = echo.private(`user.${userId}`);
+    
+  //   // Match the event name here with what is broadcasted from Laravel
+  //   channel.listen('.ReplyMade', (e) => {
+  //     console.log('New reply received:', e);
+  //   });
+  //   console.log(channel)
+  //   return () => {
+  //     console.log('Cleaning up useEffect for userId:', userId);
+  //     channel.stopListening('.ReplyMade');
+  //     echo.leaveChannel(`user.${userId}`);
+  //   };
+  // }, [userId]); // Include userId as a dependency if it's subject to change
+ 
+  useEffect(() => {
+    console.log(window.Echo)
+    if (window.Echo) {
+      // Subscribe to the correct channel with user ID
+      const channel = window.Echo.channel(`user.${userId}`);
+      // Listen for the event
+      channel.listen('ReplyMade', (event) => {
+        console.log('Event received:', event);
+        // setUserData(event.user);
+      });
+
+      // Cleanup on unmount
+      return () => {
+        window.Echo.leave(`user.${userId}`);
+      };
+    }
+  }, [userId, window.Echo]);
+
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -68,6 +125,9 @@ const MakeComment = () => {
 
   const renderComments = (commentsList, parentId = null) => {
     const paginatedComments = paginate(commentsList);
+
+
+   
 
     return (paginatedComments || [])
       .filter(comment => comment.parent_id === parentId && comment.user_id !== 1)
@@ -121,6 +181,33 @@ const MakeComment = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+
+
+
+
+
+
+  // useEffect(() => {
+  //   const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+  //     cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
+  //     encrypted: true,
+  //   });
+
+  //   const userId = 1; 
+  //   const channel = echo.private(`user.${userId}`);
+
+  //   channel.listen('App\\Events\\ReplyMade', (e) => {
+  //     console.log('New reply received:', e);
+    
+  //   });
+
+  //   return () => {
+  //     channel.unbind_all();
+  //     channel.unsubscribe();
+  //   };
+  // }, []);
+
+  
 
   return (
     <div className="container-fluid mt-4">
