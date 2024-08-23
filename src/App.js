@@ -22,6 +22,7 @@ import "./assets/scss/theme.scss";
 // import { initFirebaseBackend } from "./helpers/firebase_helper";
 
 import fakeBackend from "./helpers/AuthType/fakeBackend";
+import DataProvider from 'components/hoc/DataProvider';
 
 // Activating fake backend
 fakeBackend();
@@ -72,7 +73,7 @@ const App = () => {
   const Layout = getLayout(layoutType);
 
   return (
-    <React.Fragment>
+    <DataProvider>
       <Routes>
         {publicRoutes.map((route, idx) => (
           <Route
@@ -99,7 +100,7 @@ const App = () => {
           />
         ))}
       </Routes>
-    </React.Fragment>
+    </DataProvider>
   );
 };
 

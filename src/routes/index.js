@@ -171,6 +171,15 @@ import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 import MakeComment from "pages/Comment/MakeComment";
+import ProfilePage from "pages/ProfilePage";
+import BusinessPage from "pages/BusinessPage";
+import VacationPage from "pages/VacationPage";
+import ProcurementPage from "pages/ProcurementPage";
+import HeadPage from "pages/HeadPage";
+import HrPage from "pages/HrPage";
+import AdminPage from "pages/AdminPage";
+import NotesPage from "pages/NotesPage";
+import NotesEditor from "pages/NotesEditor";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -197,7 +206,16 @@ const authProtectedRoutes = [
   { path: "/calendar", component: <Calendar /> },
 
   // //profile
-  { path: "/profile", component: <UserProfile /> },
+  // { path: "/profile", component: <UserProfile /> },
+  { path: "/profile", component: <ProfilePage /> },
+  { path: "/business", component: <BusinessPage /> },
+  { path: "/vacation", component: <VacationPage /> },
+  { path: "/procurement", component: <ProcurementPage /> },
+  { path: "/head", component: <HeadPage />},
+  { path: "/hr", component: <HrPage />},
+  { path: "/admin", component: <AdminPage />},
+  { path: "/notes", component: <NotesPage />},
+  { path: "/notes-editor/:id", component: <NotesEditor />},
 
   //Ecommerce
   { path: "/ecommerce-product-detail/:id", component: <EcommerceProductDetail /> },

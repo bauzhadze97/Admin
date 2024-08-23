@@ -163,6 +163,56 @@ const SidebarContent = props => {
               </Link>
          
             </li>
+            <li>
+              <Link to="/admin">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Admin Panel")}</span>
+              </Link>
+         
+            </li>
+            <li>
+              <Link to="/head">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Approvals")}</span>
+              </Link>
+         
+            </li>
+            <li>
+              <Link to="/profile">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Profile")}</span>
+              </Link>
+         
+            </li>
+
+            <li>
+              <Link to="/business">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Business Trip")}</span>
+              </Link>
+         
+            </li>
+            <li>
+              <Link to="/procurement">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Internal Purchasment")}</span>
+              </Link>
+         
+            </li>
+            <li>
+              <Link to="/hr">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("HR Document")}</span>
+              </Link>
+         
+            </li>
+            <li>
+              <Link to="/notes">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Notes")}</span>
+              </Link>
+         
+            </li>
           
             <li className="menu-title">{props.t("Apps")}</li>
 

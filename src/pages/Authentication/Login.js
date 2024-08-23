@@ -8,7 +8,7 @@ import withRouter from "components/Common/withRouter";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { loginUser } from "../../services/auth";
-import { fetchUserSuccess } from "../../store/actions";
+import { fetchUserSuccess } from "../../store/user/actions";
 import { toast } from "react-toastify";
 
 import profile from "assets/images/profile-img.png";
@@ -41,11 +41,12 @@ const Login = (props) => {
         } else {
           localStorage.setItem('token', res.data.token);          
           localStorage.setItem('authUser', JSON.stringify(res.data.user));
-          console.log(res.data.user);
+          dispatch(fetchUserSuccess(res.data.user))
           
           toast.success(res.data.message);
-          navigate('/dashboard');
         }
+        navigate('/dashboard');
+
       } catch (error) {
         console.error("Login failed", error);
         toast.error("Login failed. Please try again.");

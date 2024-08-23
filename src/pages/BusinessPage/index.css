@@ -1,0 +1,182 @@
+/* Main container styling */
+.vacation-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+/* Header section styling */
+.vacation-main-header {
+  background-color: #ffffff;
+  
+  padding: 1.5rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vacation-main-header h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2a3042;
+}
+
+/* .vacation-request-button {
+  padding: 0.6rem 1.5rem;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  
+  border: none;
+  cursor: pointer;
+} */
+
+.vacation-request-button:hover {
+  background-color: #007ad3;
+}
+
+/* List section styling */
+.middle-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.vacation-main-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+}
+
+.vacation-main-content h1 {
+  color: #2a3042;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.vacation-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.vacation-form-wrapper label {
+  color: #2a3042;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.vacation-form-wrapper input,
+.vacation-form-wrapper select,
+.vacation-form-wrapper textarea {
+  border-radius: 0.5rem;
+  border: 1px solid #2a3042;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+.vacation-form-submit {
+  background-color: #009fe3;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.vacation-form-submit:hover {
+  background-color: #007ad3;
+}
+
+/* Request Card styling */
+.request-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.request-card h3 {
+  color: #009fe3;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.request-card-details {
+  display: flex;
+  gap: 2rem;
+  font-size: 1rem;
+  color: #2a3042;
+}
+
+.request-card-details p {
+  margin: 0;
+}
+
+.request-status {
+  padding: 0.6rem 1.5rem;
+  background-color: #fbc02d;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+
+.request-status.pending {
+  background-color: #fbc02d;
+}
+
+.request-status.approved {
+  background-color: #4caf50;
+}
+
+.request-status.declined {
+  background-color: #d32f2f;
+}
+
+/* General layout adjustments for spacing and consistency */
+.vacation-main-content h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2a3042;
+}
+
+.vacation-main-content button {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.vacation-main-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2a3042;
+}
+
+
+.approve-button{
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  background-color: #556ee6;
+  font-weight: 400;
+  font-size: medium;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
