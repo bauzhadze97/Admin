@@ -9,7 +9,7 @@ import "react-rangeslider/lib/index.css"
 const UiRangeSlider = () => {
 
   //meta title
-  document.title = "Range Slider | Skote - React Admin & Dashboard Template";
+  document.title = "Range Slider | Gorgia LLC";
 
   const formatkg = value => "$ " + value
   const formatdollar = value => value + " kg"

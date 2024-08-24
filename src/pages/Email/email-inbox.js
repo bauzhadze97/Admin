@@ -49,7 +49,7 @@ import Spinners from "components/Common/Spinner";
 const EmailInbox = props => {
 
   //meta title
-  document.title = "Inbox | Skote - React Admin & Dashboard Template";
+  document.title = "Inbox | Gorgia LLC";
 
   const dispatch = useDispatch();
 

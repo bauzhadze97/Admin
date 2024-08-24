@@ -16,7 +16,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const UiAlert = () => {
   //meta title
-  document.title = "Alert | Skote - React Admin & Dashboard Template";
+  document.title = "Alert | Gorgia LLC";
 
   const [show, setShow] = useState(false);
 

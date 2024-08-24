@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 const LockScreen = () => {
 
   //meta title
-  document.title="Lock Screen 2 | Skote - React Admin & Dashboard Template";
+  document.title="Lock Screen 2 | Gorgia LLC";
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

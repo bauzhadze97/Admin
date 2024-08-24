@@ -15,7 +15,7 @@ import Footer from "./Footer/footer"
 const CryptoIcoLanding = () => {
   
   //meta title
-  document.title="ICO Landing | Skote - React Admin & Dashboard Template";
+  document.title="ICO Landing | Gorgia LLC";
 
   return (
     <React.Fragment>

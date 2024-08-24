@@ -23469,7 +23469,7 @@ const IconMaterialdesign = () => {
   })
 
    //meta title
-   document.title = "Material Design | Skote - React Admin & Dashboard Template";
+   document.title = "Material Design | Gorgia LLC";
 
   return (
     <React.Fragment>

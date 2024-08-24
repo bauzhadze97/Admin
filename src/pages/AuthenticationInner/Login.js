@@ -18,7 +18,7 @@ const Login = () => {
   const [show, setShow] = useState(false);
 
   //meta title
-  document.title = "Login | Skote - React Admin & Dashboard Template";
+  document.title = "Login | Gorgia LLC";
 
   // Form validation 
   const validation = useFormik({

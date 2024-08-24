@@ -16,7 +16,7 @@ import logo from "assets/images/logo.svg";
 
 const Login = (props) => {
 
-  document.title = "Login | Skote - React Admin & Dashboard Template";
+  document.title = "Login | Gorgia LLC";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

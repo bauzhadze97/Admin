@@ -12,7 +12,7 @@ const LoadingContainer = () => <div>Loading...</div>
 const MapsGoogle = props => {
 
   //meta title
-  document.title = "Google Maps | Skote - React Admin & Dashboard Template";
+  document.title = "Google Maps | Gorgia LLC";
 
   const selectedPlace = {}
 

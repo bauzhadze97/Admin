@@ -22,7 +22,7 @@ import logo from "../../assets/images/logo.svg";
 const ForgetPasswordPage = props => {
 
   //meta title
-  document.title = "Forget Password | Skote - React Admin & Dashboard Template";
+  document.title = "Forget Password | Gorgia LLC";
 
   const dispatch = useDispatch();
 

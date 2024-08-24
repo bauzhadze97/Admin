@@ -40,7 +40,7 @@ import { ToastContainer } from "react-toastify";
 const ContactsList = () => {
 
   //meta title
-  document.title = "User List | Skote - React Admin & Dashboard Template";
+  document.title = "User List | Gorgia LLC";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();

@@ -37,7 +37,7 @@ import { handleSearchData } from "components/Common/searchFile";
 const CryptoOrders = props => {
 
   //meta title
-  document.title = "Orders | Skote - React Admin & Dashboard Template";
+  document.title = "Orders | Gorgia LLC";
 
   const { orders, onGetOrders, loading } = props;
   const [activeTab, setActiveTab] = useState("1");

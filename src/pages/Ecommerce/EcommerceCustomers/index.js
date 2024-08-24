@@ -30,7 +30,7 @@ import { ToastContainer } from "react-toastify";
 const EcommerceCustomers = () => {
 
   //meta title
-  document.title = "Customers | Skote - React Admin & Dashboard Template";
+  document.title = "Customers | Gorgia LLC";
 
   const dispatch = useDispatch();
 

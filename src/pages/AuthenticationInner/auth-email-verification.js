@@ -9,7 +9,7 @@ import logolight from "../../assets/images/logo-light.png"
 const EmailVerification = () => {
 
   //meta title
-  document.title="Email Verification | Skote - React Admin & Dashboard Template";
+  document.title="Email Verification | Gorgia LLC";
 
   return (
     <React.Fragment>

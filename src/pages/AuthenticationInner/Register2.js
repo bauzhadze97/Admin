@@ -14,7 +14,7 @@ import CarouselPage from "./CarouselPage";
 const Register2 = () => {
 
   //meta title
-  document.title="Register 2 | Skote - React Admin & Dashboard Template";
+  document.title="Register 2 | Gorgia LLC";
 
   //form validation
   const validation = useFormik({

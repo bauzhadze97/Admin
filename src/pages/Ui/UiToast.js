@@ -27,7 +27,7 @@ const CustomToastHeader = ({ children }) => {
 const UiToast = () => {
 
     //meta title
-    document.title = "Toast | Skote - React Admin & Dashboard Template";
+    document.title = "Toast | Gorgia LLC";
 
     const [toast, setToast] = useState(false);
     const [toast2, setToast2] = useState(true);

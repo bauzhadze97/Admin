@@ -46,7 +46,7 @@ const orderSummary = [
 const EcommerceCheckout = () => {
 
   //meta title
-  document.title = "Checkout | Skote - React Admin & Dashboard Template";
+  document.title = "Checkout | Gorgia LLC";
 
 
   const [activeTab, setActiveTab] = useState("1")

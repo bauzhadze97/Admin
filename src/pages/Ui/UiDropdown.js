@@ -25,7 +25,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 const UiDropdown = () => {
 
   //meta title
-  document.title = "Dropdowns | Skote - React Admin & Dashboard Template";
+  document.title = "Dropdowns | Gorgia LLC";
 
   const [singlebtn, setSinglebtn] = useState(false)
   const [singlebtn1, setSinglebtn1] = useState(false)

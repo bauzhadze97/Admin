@@ -46,7 +46,7 @@ import { Link } from "react-router-dom";
 const JobList = () => {
 
     //meta title
-    document.title = "Jobs List | Skote - React Admin & Dashboard Template";
+    document.title = "Jobs List | Gorgia LLC";
 
     const [modal, setModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);

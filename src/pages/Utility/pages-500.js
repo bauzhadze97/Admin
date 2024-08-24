@@ -7,7 +7,7 @@ import error from "../../assets/images/error-img.png"
 
 const Pages500 = () => {
    //meta title
-   document.title = "500 Error Page | Skote - React Admin & Dashboard Template";
+   document.title = "500 Error Page | Gorgia LLC";
 
   return (
     <React.Fragment>

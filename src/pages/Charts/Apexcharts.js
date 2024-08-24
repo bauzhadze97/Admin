@@ -24,7 +24,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 const Apexchart = () => {
 
   //meta title
-  document.title="Apex Charts | Skote - React Admin & Dashboard Template";
+  document.title="Apex Charts | Gorgia LLC";
 
   return (
     <React.Fragment>

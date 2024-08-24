@@ -36,7 +36,7 @@ const PagesComingsoon = () => {
   }
 
   //meta title
-  document.title = "Coming Soon | Skote - React Admin & Dashboard Template";
+  document.title = "Coming Soon | Gorgia LLC";
 
   return (
     <React.Fragment>

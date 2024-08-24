@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 const CryptoBuySell = () => {
 
   //meta title
-  document.title = "Buy/Sell | Skote - React Admin & Dashboard Template";
+  document.title = "Buy/Sell | Gorgia LLC";
 
   const [activeTab, setActiveTab] = useState("1");
   const [isMenu, setIsMenu] = useState(false);

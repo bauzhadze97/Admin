@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const EmailTemplateBilling = props => {
    //meta title
-   document.title="Billing Email | Skote - React Admin & Dashboard Template";
+   document.title="Billing Email | Gorgia LLC";
   return (
     <React.Fragment>
       <div className="page-content">

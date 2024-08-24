@@ -10,7 +10,7 @@ import { Rating } from "react-simple-star-rating";
 const UiRating = () => {
 
   //meta title
-  document.title = "Rating | Skote - React Admin & Dashboard Template";
+  document.title = "Rating | Gorgia LLC";
 
   return (
     <React.Fragment>

@@ -13,7 +13,7 @@ import CarouselPage from "./CarouselPage";
 const ForgetPassword2 = () => {
 
   //meta title
-  document.title="Forget Password 2 | Skote - React Admin & Dashboard Template";
+  document.title="Forget Password 2 | Gorgia LLC";
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

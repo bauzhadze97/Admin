@@ -66,7 +66,7 @@ const ProjectStatus = ({ status }) => {
 const ProjectsList = () => {
 
   //meta title
-  document.title = "Project List | Skote - React Admin & Dashboard Template";
+  document.title = "Project List | Gorgia LLC";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

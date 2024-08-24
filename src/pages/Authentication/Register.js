@@ -21,7 +21,7 @@ import logoImg from "../../assets/images/logo.svg";
 const Register = props => {
 
   //meta title
-  document.title = "Register | Skote - React Admin & Dashboard Template";
+  document.title = "Register | Gorgia LLC";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

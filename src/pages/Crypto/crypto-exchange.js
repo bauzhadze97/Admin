@@ -17,7 +17,7 @@ import avatar from "../../assets/images/users/avatar-1.jpg"
 const CryptoExchange = () => {
 
   //meta title
-  document.title = "Exchange | Skote - React Admin & Dashboard Template";
+  document.title = "Exchange | Gorgia LLC";
 
   const options = {
     chart: {

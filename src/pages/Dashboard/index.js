@@ -82,7 +82,7 @@ const Dashboard = props => {
   }, [dispatch]);
 
   //meta title
-  document.title = "Dashboard | Skote - React Admin & Dashboard Template";
+  document.title = "Dashboard | Gorgia LLC";
 
   return (
     <React.Fragment>

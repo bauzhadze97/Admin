@@ -10,7 +10,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 const FormLayouts = () => {
 
   //meta title
-  document.title = "Form Layouts | Skote - React Admin & Dashboard Template";
+  document.title = "Form Layouts | Gorgia LLC";
 
   //Grid form
   const formik = useFormik({

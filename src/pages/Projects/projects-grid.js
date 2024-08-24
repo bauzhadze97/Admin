@@ -23,7 +23,7 @@ import Paginations from "components/Common/Pagination";
 const ProjectsGrid = () => {
 
   //meta title
-  document.title = "Projects Grid | Skote - React Admin & Dashboard Template";
+  document.title = "Projects Grid | Gorgia LLC";
 
   const dispatch = useDispatch();
 

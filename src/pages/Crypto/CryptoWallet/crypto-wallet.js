@@ -19,7 +19,7 @@ import { createSelector } from "reselect";
 const CryptoWallet = () => {
 
   //meta title
-  document.title = "Wallet | Skote - React Admin & Dashboard Template";
+  document.title = "Wallet | Gorgia LLC";
 
   const dispatch = useDispatch();
 

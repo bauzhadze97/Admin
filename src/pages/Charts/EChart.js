@@ -17,7 +17,7 @@ import Candlestick from "../AllCharts/echart/candlestickchart"
 const EChart = () => {
   
   //meta title
-  document.title = "E Charts | Skote - React Admin & Dashboard Template"
+  document.title = "E Charts | Gorgia LLC"
 
   return (
     <React.Fragment>

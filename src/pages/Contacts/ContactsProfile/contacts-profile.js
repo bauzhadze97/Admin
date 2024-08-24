@@ -33,7 +33,7 @@ import { getUserProfile } from "store/actions";
 const ContactsProfile = props => {
 
   //meta title
-  document.title = "Profile | Skote - React Admin & Dashboard Template";
+  document.title = "Profile | Gorgia LLC";
 
   const { userProfile, onGetUserProfile } = props;
 

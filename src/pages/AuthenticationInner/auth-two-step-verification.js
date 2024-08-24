@@ -19,7 +19,7 @@ import logolight from "../../assets/images/logo-light.png"
 const TwostepVerification = () => {
 
   //meta title
-  document.title = "Two Step Verification | Skote - React Admin & Dashboard Template";
+  document.title = "Two Step Verification | Gorgia LLC";
 
   return (
     <React.Fragment>

@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiVideo = () => {
   //meta title
-  document.title = "Video | Skote - React Admin & Dashboard Template";
+  document.title = "Video | Gorgia LLC";
   return (
     <React.Fragment>
       <div className="page-content">

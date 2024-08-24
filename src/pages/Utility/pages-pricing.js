@@ -11,7 +11,7 @@ import CardPricing from "./card-pricing"
 const PagesPricing = () => {
 
   //meta title
-  document.title = "Pricing | Skote - React Admin & Dashboard Template";
+  document.title = "Pricing | Gorgia LLC";
 
   const pricings = [
     {

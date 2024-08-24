@@ -40,7 +40,7 @@ import { ToastContainer } from "react-toastify"
 import Spinners from "components/Common/Spinner"
 
 const TasksKanban = () => {
-  document.title = "Kanban Board | Skote - React Admin & Dashboard Template"
+  document.title = "Kanban Board | Gorgia LLC"
   const dispatch = useDispatch()
   const [images, setImages] = useState([])
 

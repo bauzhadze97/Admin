@@ -11,7 +11,7 @@ import smallImage from "../../assets/images/small/img-1.jpg";
 const UiPlaceholders = () => {
 
     //meta title
-    document.title = "Placeholders | Skote - React Admin & Dashboard Template";
+    document.title = "Placeholders | Gorgia LLC";
 
     return (    
         <React.Fragment>

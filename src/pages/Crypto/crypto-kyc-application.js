@@ -33,7 +33,7 @@ import verificationImg from "../../assets/images/verification-img.png";
 const CryptoKYCApplication = props => {
 
   //meta title
-  document.title = "KYC Application | Skote - React Admin & Dashboard Template";
+  document.title = "KYC Application | Gorgia LLC";
 
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState(1);

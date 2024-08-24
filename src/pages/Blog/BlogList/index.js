@@ -9,7 +9,7 @@ import RightBar from "./RightBar"
 
 const Index = () => {
     //meta title
-    document.title="Blog List | Skote - React Admin & Dashboard Template";
+    document.title="Blog List | Gorgia LLC";
   return (
     <React.Fragment>
       <div className="page-content">

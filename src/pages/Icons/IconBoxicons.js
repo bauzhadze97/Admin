@@ -7,7 +7,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const IconBoxicons = () => {
   //meta title
-  document.title = "Boxicons | Skote - React Admin & Dashboard Template";
+  document.title = "Boxicons | Gorgia LLC";
 
   return (
     <React.Fragment>

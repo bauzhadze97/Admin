@@ -34,7 +34,7 @@ import { ToastContainer } from "react-toastify";
 function EcommerceOrder() {
 
   //meta title
-  document.title = "Orders | Skote - React Admin & Dashboard Template";
+  document.title = "Orders | Gorgia LLC";
 
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);

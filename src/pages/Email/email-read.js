@@ -19,7 +19,7 @@ import withRouter from "components/Common/withRouter";
 
 const EmailRead = (props) => {
   //meta title
-  document.title = "Read Email | Skote - React Admin & Dashboard Template";
+  document.title = "Read Email | Gorgia LLC";
 
   const id = props.router.params.id;
 

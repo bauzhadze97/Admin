@@ -22,7 +22,7 @@ import { productListvar } from "../../common/data";
 const EcommerceCart = () => {
 
   //meta title
-  document.title = "Cart | Skote - React Admin & Dashboard Template";
+  document.title = "Cart | Gorgia LLC";
 
   const [productList, setProductList] = useState(productListvar);
 
