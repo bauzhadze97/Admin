@@ -209,7 +209,7 @@ const Register2 = () => {
                         { new Date().getFullYear()}
                         Gorgia LLC. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
+                        Gorgia Web Developers Team
                       </p>
                     </div>
                   </div>

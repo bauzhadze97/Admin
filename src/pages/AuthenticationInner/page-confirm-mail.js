@@ -68,7 +68,7 @@ const ConfirmMail = () => {
               <div className="mt-5 text-center">
                 <p>
                   © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                  <i className="mdi mdi-heart text-danger"></i> by Gorgia Web Developers Team
                 </p>
               </div>
             </Col>
