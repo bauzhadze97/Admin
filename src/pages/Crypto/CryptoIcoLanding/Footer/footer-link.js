@@ -17,7 +17,7 @@ const FooterLink = () => {
             {new Date().getFullYear()} Developed by Gorgia Web Developer Team
           </p>
           <p>
-            It will be as simple as occidental in fact, it will be to an english
+            It wil be as simple as occidental in fact, it will be to an english
             person, it will seem like simplified English, as a skeptical
           </p>
         </Col>
