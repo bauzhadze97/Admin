@@ -33,7 +33,7 @@ const theme = {
     }
   }
 }
-TuiChart.registerTheme("skoteTheme", theme)
+TuiChart.registerTheme("Gorgia LLCTheme", theme)
 
 const TreeMapChartToast = props => {
   const data = {

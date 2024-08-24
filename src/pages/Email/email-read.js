@@ -62,7 +62,7 @@ const EmailRead = (props) => {
                       <img
                         className="d-flex me-3 rounded-circle avatar-sm"
                         src={avatar2}
-                        alt="skote"
+                        alt="Gorgia LLC"
                       />
                       <div className="flex-grow-1">
                         <h5 className="font-size-14 mt-1">

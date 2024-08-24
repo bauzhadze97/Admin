@@ -48,7 +48,7 @@ const theme = {
     borderColor: "#F4511E"
   }
 }
-TuiChart.registerTheme("skoteTheme", theme)
+TuiChart.registerTheme("Gorgia LLCTheme", theme)
 
 const ProfileMenu = props => {
   const data = {

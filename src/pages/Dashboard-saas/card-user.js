@@ -21,7 +21,7 @@ const CardUser = () => {
                     </div>
                     <div className="flex-grow-1 align-self-center">
                       <div className="text-muted">
-                        <p className="mb-2">Welcome to Skote Dashboard</p>
+                        <p className="mb-2">Welcome to Gorgia LLC Dashboard</p>
                         <h5 className="mb-1">Henry wells</h5>
                         <p className="mb-0">UI / UX Designer</p>
                       </div>

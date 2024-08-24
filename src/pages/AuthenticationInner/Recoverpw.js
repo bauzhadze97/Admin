@@ -51,7 +51,7 @@ const Recoverpw = () => {
                     <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary"> Reset Password</h5>
-                        <p>Reset Password with Skote.</p>
+                        <p>Reset Password with Gorgia LLC.</p>
                       </div>
                     </Col>
                     <Col xs={5} className="align-self-end">
@@ -148,7 +148,7 @@ const Recoverpw = () => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger"></i> by Themesbrand
                 </p>
               </div>

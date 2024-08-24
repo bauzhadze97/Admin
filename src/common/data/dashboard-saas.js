@@ -125,7 +125,7 @@ const tasksData = [
     {
 
         id: 1,
-        task: "Skote Saas Dashboard",
+        task: "Gorgia LLC Saas Dashboard",
         assignedTo: "Mark"
     },
     {
@@ -155,7 +155,7 @@ const tasksData = [
     },
     {
         id: 7,
-        task: "Skote Saas Dashboard",
+        task: "Gorgia LLC Saas Dashboard",
         assignedTo: "Mark"
     }
 ]

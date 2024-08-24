@@ -108,7 +108,7 @@ const recentAddedJobsData = [
     {
         logo: airbnb,
         jobTitle: "NodeJs Developer",
-        company: "Skote Themes, Louisiana",
+        company: "Gorgia LLC Themes, Louisiana",
         postedTime: "2",
         postedText: "hrs ago"
     },
@@ -122,7 +122,7 @@ const recentAddedJobsData = [
     {
         logo: mailChimp,
         jobTitle: "Marketing Director",
-        company: "Skote Technology, Dominica",
+        company: "Gorgia LLC Technology, Dominica",
         postedTime: "1",
         postedText: "days ago"
     },

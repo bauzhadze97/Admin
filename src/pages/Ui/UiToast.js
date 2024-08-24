@@ -100,7 +100,7 @@ const UiToast = () => {
                                         >
                                             <ToastHeader tag={CustomToastHeader} tagClassName="" toggle={() => setToast2(!toast2)}>
                                                 <img src={logo} alt="" className="me-2" height="18" />
-                                                <strong className="me-auto">Skote</strong>
+                                                <strong className="me-auto">Gorgia LLC</strong>
                                                 <small className="text-muted">11 mins ago</small>
                                             </ToastHeader>
                                             <ToastBody>
@@ -129,7 +129,7 @@ const UiToast = () => {
                                         >
                                             <ToastHeader tag={CustomToastHeader} tagClassName="" toggle={() => setToast3(!toast3)}>
                                                 <img src={logo} alt="" className="me-2" height="18" />
-                                                <strong className="me-auto">Skote</strong>
+                                                <strong className="me-auto">Gorgia LLC</strong>
                                                 <small className="text-muted">11 mins ago</small>
                                             </ToastHeader>
                                             <ToastBody>
@@ -160,7 +160,7 @@ const UiToast = () => {
                                                 >
                                                     <ToastHeader tag={CustomToastHeader} tagClassName="" toggle={() => setToast4(!toast4)}>
                                                         <img src={logo} alt="" className="me-2" height="18" />
-                                                        <strong className="me-auto">Skote</strong>
+                                                        <strong className="me-auto">Gorgia LLC</strong>
                                                         <small className="text-muted">just now</small>
                                                     </ToastHeader>
                                                     <ToastBody>
@@ -174,7 +174,7 @@ const UiToast = () => {
                                                 >
                                                     <ToastHeader tag={CustomToastHeader} tagClassName="" toggle={() => setToast5(!toast5)}>
                                                         <img src={logo} alt="" className="me-2" height="18" />
-                                                        <strong className="me-auto">Skote</strong>
+                                                        <strong className="me-auto">Gorgia LLC</strong>
                                                         <small className="text-muted">2 sec ago</small>
                                                     </ToastHeader>
                                                     <ToastBody>

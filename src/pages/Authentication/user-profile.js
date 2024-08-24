@@ -96,7 +96,7 @@ const UserProfile = () => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+          <Breadcrumb title="Gorgia LLC" breadcrumbItem="Profile" />
 
           <Row>
             <Col lg="12">

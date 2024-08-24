@@ -280,7 +280,7 @@ const EmailBasicTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        <b>Skote</b>
+                                        <b>Gorgia LLC</b>
                                         <p>Support Team</p>
                                       </td>
                                     </tr>
@@ -308,7 +308,7 @@ const EmailBasicTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        © {new Date().getFullYear()} Skote
+                                        © {new Date().getFullYear()} Gorgia LLC
                                         </td>
                                     </tr>
                                   </tbody>

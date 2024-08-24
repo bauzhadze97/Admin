@@ -91,7 +91,7 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar2}
-              alt="skote"
+              alt="Gorgia LLC"
               height="36"
             />
             <div className="flex-grow-1 chat-user-box">
@@ -104,7 +104,7 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar3}
-              alt="skote"
+              alt="Gorgia LLC"
               height="36"
             />
             <div className="chat-user-box">
@@ -117,7 +117,7 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar4}
-              alt="skote"
+              alt="Gorgia LLC"
               height="36"
             />
             <div className="chat-user-box">
@@ -130,7 +130,7 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar6}
-              alt="skote"
+              alt="Gorgia LLC"
               height="36"
             />
             <div className="chat-user-box">

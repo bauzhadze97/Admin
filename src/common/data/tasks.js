@@ -49,7 +49,7 @@ const tasks = [
       },
       {
         id: "3",
-        title: "Create a Skote Logo",
+        title: "Create a Gorgia LLC Logo",
         date: "15 Oct, 2019",
         badgeText: "Waiting",
         badgeColor: "secondary",
@@ -136,7 +136,7 @@ const tasks = [
       },
       {
         id: "11",
-        title: "Skote landing Psd",
+        title: "Gorgia LLC landing Psd",
         date: "15 Oct, 2019",
         badgeText: "Waiting",
         badgeColor: "secondary",
@@ -145,7 +145,7 @@ const tasks = [
         kanbanImgtextColor: "bg-info",
         kanbanImgtext: [{ id: 1, imageText: "2+" }],
         userImages: [{ id: 7, img: avatar7 }, { id: 8, img: avatar8 }, { id: 0, imageText: "D" },],
-        taskdesc: "testing Skote landing"
+        taskdesc: "testing Gorgia LLC landing"
       },
     ],
   },
