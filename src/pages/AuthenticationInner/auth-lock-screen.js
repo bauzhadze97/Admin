@@ -16,7 +16,11 @@ import { Link } from "react-router-dom";
 const LockScreen = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title="Lock Screen 2 | Skote - React Admin & Dashboard Template";
+=======
+  document.title="Lock Screen 2 | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -141,8 +145,13 @@ const LockScreen = () => {
                   </Link>{" "}
                 </p>
                 <p>
+<<<<<<< HEAD
                   © {(new Date().getFullYear())} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Themesbrand
+=======
+                  © {(new Date().getFullYear())} Gorgia LLC. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </p>
               </div>
             </Col>

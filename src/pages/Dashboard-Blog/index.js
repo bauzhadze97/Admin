@@ -15,7 +15,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const index = () => {
   //meta title
+<<<<<<< HEAD
   document.title = "Blog Dashboard | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Blog Dashboard | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>

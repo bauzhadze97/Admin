@@ -26,7 +26,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 const TasksCreate = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Create Task | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Create Task | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const inpRow = [{ name: "", file: "" }]
   const [startDate, setstartDate] = useState(new Date())

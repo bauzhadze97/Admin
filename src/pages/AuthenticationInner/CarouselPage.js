@@ -43,7 +43,11 @@ const CarouselPage = () => {
                                     Abs1981
                                   </h4>
                                   <p className="font-size-14 mb-0">
+<<<<<<< HEAD
                                     - Skote User
+=======
+                                    - Gorgia LLC User
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                   </p>
                                 </div>
                               </div>
@@ -54,7 +58,11 @@ const CarouselPage = () => {
                               <div className="pb-5 pt-3">
                                 <p className="font-size-16 mb-4">
                                   &quot;If Every Vendor on Envato are as supportive
+<<<<<<< HEAD
                                   as Themesbrand, Development with be a nice
+=======
+                                  as Gorgia Web Developers Team, Development with be a nice
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                   experience. You guys are Wonderful. Keep us
                                   the good work. &ldquo;
                                 </p>
@@ -64,7 +72,11 @@ const CarouselPage = () => {
                                     Abs1981
                                   </h4>
                                   <p className="font-size-14 mb-0">
+<<<<<<< HEAD
                                     - Skote User
+=======
+                                    - Gorgia LLC User
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                   </p>
                                 </div>
                               </div>

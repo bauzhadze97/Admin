@@ -42,7 +42,11 @@ const UiLightbox = (props) => {
   const selectedPlace = {}
 
   //meta title
+<<<<<<< HEAD
   document.title = "Lightbox | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Lightbox | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const [photoIndex, setphotoIndex] = useState(0);
   const [isFits, setisFits] = useState(false);
@@ -140,7 +144,11 @@ const UiLightbox = (props) => {
                             setisFits(true);
                           }}
                           className="img-fluid"
+<<<<<<< HEAD
                           alt="Skote"
+=======
+                          alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                           src={img2}
                           width="145"
                         />

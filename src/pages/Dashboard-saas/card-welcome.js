@@ -14,7 +14,11 @@ const CardWelcome = () => {
               <Col xs="7">
                 <div className="text-primary p-3">
                   <h5 className="text-primary">Welcome Back !</h5>
+<<<<<<< HEAD
                   <p>Skote Saas Dashboard</p>
+=======
+                  <p>Gorgia LLC Saas Dashboard</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
                   <ul className="ps-3 mb-0">
                     <li className="py-1">7 + Layouts</li>

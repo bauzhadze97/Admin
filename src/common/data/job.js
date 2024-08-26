@@ -13,7 +13,11 @@ const jobs = [
         id: 1,
         jobId: "#SK2540",
         jobTitle: "Magento Developer",
+<<<<<<< HEAD
         companyName: "Themesbrand",
+=======
+        companyName: "Gorgia Web Developers Team",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         location: "California",
         experience: "0-2 Years",
         position: 2,
@@ -73,7 +77,11 @@ const jobs = [
         id: 5,
         jobId: "#SK2544",
         jobTitle: "Product Sales Specialist",
+<<<<<<< HEAD
         companyName: "Skote Technology pvt.Ltd",
+=======
+        companyName: "Gorgia LLC Technology pvt.Ltd",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         location: "Louisiana",
         experience: "5+ Years",
         position: 1,
@@ -285,7 +293,11 @@ const jobApply = [
         id: 6,
         no: 6,
         jobTitle: "Magento Developer",
+<<<<<<< HEAD
         companyName: "Themesbrand",
+=======
+        companyName: "Gorgia Web Developers Team",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         type: "Freelance",
         applyDate: "25 June 2021",
         status: "Close",
@@ -303,7 +315,11 @@ const jobApply = [
         id: 4,
         no: 4,
         jobTitle: "HTML Developer",
+<<<<<<< HEAD
         companyName: "Skote Technology pvt.Ltd",
+=======
+        companyName: "Gorgia LLC Technology pvt.Ltd",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         type: "Full Time",
         applyDate: "02 June 2021",
         status: "Active",
@@ -321,7 +337,11 @@ const jobApply = [
         id: 2,
         no: 2,
         jobTitle: "Apple School & College",
+<<<<<<< HEAD
         companyName: "Themesbrand",
+=======
+        companyName: "Gorgia Web Developers Team",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         type: "Part Time",
         applyDate: "15 June 2021",
         status: "New",

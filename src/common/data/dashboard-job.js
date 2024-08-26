@@ -87,14 +87,22 @@ const recentAddedJobsData = [
     {
         logo: weChat,
         jobTitle: "Marketing Director",
+<<<<<<< HEAD
         company: "Themesbrand, USA",
+=======
+        company: "Gorgia Web Developers Team, USA",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         postedTime: "53",
         postedText: "sec ago"
     },
     {
         logo: sass,
         jobTitle: "Frontend Developer",
+<<<<<<< HEAD
         company: "Themesbrand, Hong-Kong",
+=======
+        company: "Gorgia Web Developers Team, Hong-Kong",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         postedTime: "47",
         postedText: "min ago"
     },
@@ -108,7 +116,11 @@ const recentAddedJobsData = [
     {
         logo: airbnb,
         jobTitle: "NodeJs Developer",
+<<<<<<< HEAD
         company: "Skote Themes, Louisiana",
+=======
+        company: "Gorgia LLC Themes, Louisiana",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         postedTime: "2",
         postedText: "hrs ago"
     },
@@ -122,14 +134,22 @@ const recentAddedJobsData = [
     {
         logo: mailChimp,
         jobTitle: "Marketing Director",
+<<<<<<< HEAD
         company: "Skote Technology, Dominica",
+=======
+        company: "Gorgia LLC Technology, Dominica",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         postedTime: "1",
         postedText: "days ago"
     },
     {
         logo: spotify,
         jobTitle: "Business Associate",
+<<<<<<< HEAD
         company: "Themesbrand, Russia",
+=======
+        company: "Gorgia Web Developers Team, Russia",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         postedTime: "2",
         postedText: "days ago"
     },

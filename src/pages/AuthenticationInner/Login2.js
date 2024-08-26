@@ -15,7 +15,11 @@ const Login2 = () => {
   const [passwordShow, setPasswordShow] = useState(false);
 
   //meta title
+<<<<<<< HEAD
   document.title = "Login 2 | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Login 2 | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   // Form validation 
   const validation = useFormik({
@@ -64,7 +68,11 @@ const Login2 = () => {
                       <div>
                         <h5 className="text-primary">Welcome Back !</h5>
                         <p className="text-muted">
+<<<<<<< HEAD
                           Sign in to continue to Skote.
+=======
+                          Sign in to continue to Gorgia LLC.
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                         </p>
                       </div>
 
@@ -194,9 +202,15 @@ const Login2 = () => {
 
                     <div className="mt-4 mt-md-5 text-center">
                       <p className="mb-0">
+<<<<<<< HEAD
                         © {new Date().getFullYear()} Skote. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
                         Themesbrand
+=======
+                        © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </p>
                     </div>
                   </div>

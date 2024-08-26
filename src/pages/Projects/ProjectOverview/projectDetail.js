@@ -12,7 +12,11 @@ const ProjectDetail = ({ project }) => {
           <img src={img1} alt="" className="avatar-sm me-4" />
 
           <div className="flex-grow-1 overflow-hidden">
+<<<<<<< HEAD
             <h5 className="text-truncate font-size-15">Skote Dashboard UI</h5>
+=======
+            <h5 className="text-truncate font-size-15">Gorgia LLC Dashboard UI</h5>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
             <p className="text-muted">Separate existence is a myth. For science, music, sport, etc.</p>
           </div>
         </div>

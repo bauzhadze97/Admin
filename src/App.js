@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import React from "react";
+=======
+import React, { useEffect } from "react";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Routes, Route } from "react-router-dom";
@@ -24,6 +28,12 @@ import "./assets/scss/theme.scss";
 import fakeBackend from "./helpers/AuthType/fakeBackend";
 import DataProvider from 'components/hoc/DataProvider';
 
+<<<<<<< HEAD
+=======
+
+import instantiatePusher from './helpers/instantiatePusher';
+
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 // Activating fake backend
 fakeBackend();
 
@@ -59,6 +69,20 @@ const getLayout = (layoutType) => {
 
 const App = () => {
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    const initPusher = async () => {
+      try {
+        await instantiatePusher();
+      } catch (error) {
+      }
+    };
+
+    initPusher();
+  }, []);
+
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
   const LayoutProperties = createSelector(
     (state) => state.Layout,
     (layout) => ({

@@ -6,7 +6,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const EmailTemplateBilling = props => {
    //meta title
+<<<<<<< HEAD
    document.title="Billing Email | Skote - React Admin & Dashboard Template";
+=======
+   document.title="Billing Email | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
   return (
     <React.Fragment>
       <div className="page-content">
@@ -174,7 +178,11 @@ const EmailTemplateBilling = props => {
                                           Thanks for using{" "}
                                           <b style={{ fontWeight: "600" }}>
                                             {" "}
+<<<<<<< HEAD
                                             SKOTE
+=======
+                                            Gorgia LLC
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                           </b>
                                           .
                                         </h2>
@@ -582,7 +590,11 @@ const EmailTemplateBilling = props => {
                                         align="center"
                                         valign="top"
                                       >
+<<<<<<< HEAD
                                         Skote Inc. 2896 Howell Rd,
+=======
+                                        Gorgia LLC Inc. 2896 Howell Rd,
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                         Russellville, AR, 72823
                                       </td>
                                     </tr>
@@ -610,7 +622,11 @@ const EmailTemplateBilling = props => {
                                         }}
                                         valign="top"
                                       >
+<<<<<<< HEAD
                                         © {new Date().getFullYear()} Skote
+=======
+                                        © {new Date().getFullYear()} Gorgia LLC
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                       </td>
                                     </tr>
                                   </tbody>

@@ -13,7 +13,11 @@ import Storage from "./Storage";
 const Index = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "File Manager | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "File Manager | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const series = [76]
   const options = {

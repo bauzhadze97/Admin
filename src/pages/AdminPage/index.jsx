@@ -153,6 +153,11 @@ export default function AdminPage() {
         setActiveSide(side);
         navigate(`?activeSide=${side}`);
     };
+<<<<<<< HEAD
+=======
+
+   
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     return (
         <div className="page-content">
             <div className="container-fluid">

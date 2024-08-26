@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "title": "Dashboard | Skote - Admin & Dashboard Vorlage",
+=======
+    "title": "Dashboard | Gorgia LLC - Admin & Dashboard Vorlage",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     "t-menu":"Speisekarte",
     "t-dashboards":"Instrumententafel",
     "t-default":"Standard",

@@ -19,7 +19,11 @@ import { projectAssignedTo } from "../../common/data";
 const ProjectsCreate = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Create New Project | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Create New Project | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);

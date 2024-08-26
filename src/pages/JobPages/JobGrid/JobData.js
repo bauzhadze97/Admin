@@ -173,7 +173,11 @@ const JobData = () => {
                                                 <Link to="/job-details" className="text-dark">{item.title}</Link> <small className="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                             <ul className="list-inline mb-0">
                                                 <li className="list-inline-item">
+<<<<<<< HEAD
                                                     <p className="text-muted fs-14 mb-1">Skote Technology Pvt.Ltd</p>
+=======
+                                                    <p className="text-muted fs-14 mb-1">Gorgia LLC Technology Pvt.Ltd</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                                 </li>{" "}
                                                 <li className="list-inline-item">
                                                     <p className="text-muted fs-14 mb-0"><i className="mdi mdi-map-marker"></i> {item.location}</p>

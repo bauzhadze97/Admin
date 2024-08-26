@@ -23,7 +23,11 @@ const JobVacancy = () => {
                                 <Link to="/job-details" className="text-body">
                                     <h5 className="mt-4 mb-2 font-size-15">{item.title}</h5>
                                 </Link>
+<<<<<<< HEAD
                                 <p className="mb-0 text-muted">Themesbrand</p>
+=======
+                                <p className="mb-0 text-muted">Gorgia Web Developers Team</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                             </div>
 
                             <div className="d-flex">

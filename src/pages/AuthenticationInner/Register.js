@@ -16,7 +16,11 @@ import lightlogo from "../../assets/images/logo-light.svg";
 const Register = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Register | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Register | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   //form validation
   const validation = useFormik({
@@ -48,7 +52,11 @@ const Register = () => {
                     <Col className="col-7">
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Free Register</h5>
+<<<<<<< HEAD
                         <p>Get your free Skote account now.</p>
+=======
+                        <p>Get your free Gorgia LLC account now.</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -190,7 +198,11 @@ const Register = () => {
 
                       <div className="mt-4 text-center">
                         <p className="mb-0">
+<<<<<<< HEAD
                           By registering you agree to the Skote{" "}
+=======
+                          By registering you agree to the Gorgia LLC{" "}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                           <Link to="#" className="text-primary">
                             Terms of Use
                           </Link>
@@ -209,8 +221,13 @@ const Register = () => {
                   </Link>{" "}
                 </p>
                 <p>
+<<<<<<< HEAD
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Themesbrand
+=======
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </p>
               </div>
             </Col>

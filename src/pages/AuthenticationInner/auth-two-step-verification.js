@@ -19,7 +19,11 @@ import logolight from "../../assets/images/logo-light.png"
 const TwostepVerification = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Two Step Verification | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Two Step Verification | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>
@@ -136,8 +140,13 @@ const TwostepVerification = () => {
                   </a>{" "}
                 </p>
                 <p>
+<<<<<<< HEAD
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+=======
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger"></i> by Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </p>
               </div>
             </Col>

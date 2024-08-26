@@ -125,7 +125,11 @@ const tasksData = [
     {
 
         id: 1,
+<<<<<<< HEAD
         task: "Skote Saas Dashboard",
+=======
+        task: "Gorgia LLC Saas Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         assignedTo: "Mark"
     },
     {
@@ -155,7 +159,11 @@ const tasksData = [
     },
     {
         id: 7,
+<<<<<<< HEAD
         task: "Skote Saas Dashboard",
+=======
+        task: "Gorgia LLC Saas Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         assignedTo: "Mark"
     }
 ]

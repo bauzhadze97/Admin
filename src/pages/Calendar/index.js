@@ -35,7 +35,11 @@ import { createSelector } from "reselect";
 const Calender = props => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Calendar | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Calendar | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const dispatch = useDispatch();
 

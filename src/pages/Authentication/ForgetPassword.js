@@ -22,7 +22,11 @@ import logo from "../../assets/images/logo.svg";
 const ForgetPasswordPage = props => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Forget Password | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Forget Password | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const dispatch = useDispatch();
 
@@ -72,7 +76,11 @@ const ForgetPasswordPage = props => {
                     <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Welcome Back !</h5>
+<<<<<<< HEAD
                         <p>Sign in to continue to Skote.</p>
+=======
+                        <p>Sign in to continue to Gorgia LLC.</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -155,8 +163,13 @@ const ForgetPasswordPage = props => {
                   </Link>{" "}
                 </p>
                 <p>
+<<<<<<< HEAD
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Themesbrand
+=======
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </p>
               </div>
             </Col>

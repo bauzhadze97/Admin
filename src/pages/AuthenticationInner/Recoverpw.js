@@ -23,7 +23,11 @@ import lightlogo from "../../assets/images/logo-light.svg";
 const Recoverpw = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title="Recover Password | Skote - React Admin & Dashboard Template";
+=======
+  document.title="Recover Password | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -51,7 +55,11 @@ const Recoverpw = () => {
                     <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary"> Reset Password</h5>
+<<<<<<< HEAD
                         <p>Reset Password with Skote.</p>
+=======
+                        <p>Reset Password with Gorgia LLC.</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </div>
                     </Col>
                     <Col xs={5} className="align-self-end">
@@ -148,8 +156,13 @@ const Recoverpw = () => {
                   </Link>{" "}
                 </p>
                 <p>
+<<<<<<< HEAD
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+=======
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger"></i> by Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </p>
               </div>
             </Col>

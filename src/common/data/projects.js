@@ -101,9 +101,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -154,9 +160,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -207,9 +219,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -261,9 +279,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -293,7 +317,11 @@ const projects = [
   {
     id: 4,
     img: companies05,
+<<<<<<< HEAD
     name: "Skote Dashboard UI",
+=======
+    name: "Gorgia LLC Dashboard UI",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     description: "Separate existence is a myth",
     status: "Completed",
     color: "success",
@@ -315,9 +343,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -368,9 +402,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -435,9 +475,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -490,9 +536,15 @@ const projects = [
       ],
     },
     files: [
+<<<<<<< HEAD
       { name: "Skote Landing.Zip", size: "3.25 MB", link: "#" },
       { name: "Skote Admin.Zip", size: "3.15 MB", link: "#" },
       { name: "Skote Logo.Zip", size: "2.02 MB", link: "#" },
+=======
+      { name: "Gorgia LLC Landing.Zip", size: "3.25 MB", link: "#" },
+      { name: "Gorgia LLC Admin.Zip", size: "3.15 MB", link: "#" },
+      { name: "Gorgia LLC Logo.Zip", size: "2.02 MB", link: "#" },
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       { name: "Veltrix admin.Zip", size: "2.25 MB", link: "#" },
     ],
     comments: [
@@ -647,7 +699,11 @@ const projectListData = [
   {
     id: 5,
     img: companies05,
+<<<<<<< HEAD
     name: "Skote Dashboard UI",
+=======
+    name: "Gorgia LLC Dashboard UI",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     description: "Separate existence is a myth",
     dueDate: "22 Oct, 19",
     status: "Completed",

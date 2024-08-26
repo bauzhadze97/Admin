@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "title": "Dashboard | Skote - Admin & Dashboard Template",
+=======
+    "title": "Dashboard | Gorgia LLC - Admin & Dashboard Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     "t-menu":"Menu",
     "t-dashboards":"Dashboards",
     "t-default":"Default",

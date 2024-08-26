@@ -15,7 +15,11 @@ import Spinners from 'components/Common/Spinner';
 import { handleSearchData } from 'components/Common/searchFile';
 
 const CandidateList = () => {
+<<<<<<< HEAD
     document.title = "Candidate List | Skote - React Admin & Dashboard Template";
+=======
+    document.title = "Candidate List | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
     const [listData, setListData] = useState();
     const [isLoading, setLoading] = useState(true)

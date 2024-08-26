@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "title": "Panel de control | Skote - Plantilla de administrador y panel",
+=======
+    "title": "Panel de control | Gorgia LLC - Plantilla de administrador y panel",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     "t-menu":"Menú",
     "t-dashboards":"Tablero",
     "t-default":"Defecto",

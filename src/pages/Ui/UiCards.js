@@ -34,7 +34,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 const UiCards = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Cards | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Cards | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>
@@ -45,7 +49,11 @@ const UiCards = () => {
           <Row>
             <Col mg={6} xl={3}>
               <Card>
+<<<<<<< HEAD
                 <CardImg top className="img-fluid" src={img1} alt="Skote" />
+=======
+                <CardImg top className="img-fluid" src={img1} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardBody>
                   <CardTitle className="mt-0">Card title</CardTitle>
                   <CardText>
@@ -63,7 +71,11 @@ const UiCards = () => {
             </Col>
             <Col mg={6} xl={3}>
               <Card>
+<<<<<<< HEAD
                 <CardImg top className="img-fluid" src={img2} alt="Skote" />
+=======
+                <CardImg top className="img-fluid" src={img2} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardBody>
                   <CardTitle className="mt-0">Card title</CardTitle>
                   <CardText>
@@ -88,7 +100,11 @@ const UiCards = () => {
 
             <Col mg={6} xl={3}>
               <Card>
+<<<<<<< HEAD
                 <CardImg top className="img-fluid" src={img3} alt="Skote" />
+=======
+                <CardImg top className="img-fluid" src={img3} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardBody>
                   <CardText>
                     Some quick example text to build on the card title and make
@@ -105,7 +121,11 @@ const UiCards = () => {
                     Support card subtitle
                   </CardSubtitle>
                 </CardBody>
+<<<<<<< HEAD
                 <CardImg className="img-fluid" src={img4} alt="Skote" />
+=======
+                <CardImg className="img-fluid" src={img4} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardBody>
                   <CardText>
                     Some quick example text to build on the card title and make
@@ -268,7 +288,11 @@ const UiCards = () => {
           <Row>
             <Col lg={4}>
               <Card>
+<<<<<<< HEAD
                 <CardImg top className="img-fluid" src={img5} alt="Skote" />
+=======
+                <CardImg top className="img-fluid" src={img5} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardBody>
                   <CardTitle className="mt-0">Card title</CardTitle>
                   <CardText>
@@ -300,13 +324,21 @@ const UiCards = () => {
                     </small>
                   </CardText>
                 </CardBody>
+<<<<<<< HEAD
                 <CardImg bottom className="img-fluid" src={img7} alt="Skote" />
+=======
+                <CardImg bottom className="img-fluid" src={img7} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               </Card>
             </Col>
 
             <Col lg={4}>
               <Card>
+<<<<<<< HEAD
                 <CardImg className="img-fluid" src={img6} alt="Skote" />
+=======
+                <CardImg className="img-fluid" src={img6} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <CardImgOverlay>
                   <CardTitle className="text-white mt-0">Card title</CardTitle>
                   <CardText className="text-light">
@@ -329,7 +361,11 @@ const UiCards = () => {
               <Card>
                 <Row className="no-gutters align-items-center">
                   <Col md={4}>
+<<<<<<< HEAD
                     <CardImg className="img-fluid" src={img2} alt="Skote" />
+=======
+                    <CardImg className="img-fluid" src={img2} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                   </Col>
                   <Col md={8}>
                     <CardBody>
@@ -366,7 +402,11 @@ const UiCards = () => {
                     </CardBody>
                   </Col>
                   <Col md={4}>
+<<<<<<< HEAD
                     <CardImg className="img-fluid" src={img3} alt="Skote" />
+=======
+                    <CardImg className="img-fluid" src={img3} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                   </Col>
                 </Row>
               </Card>
@@ -524,7 +564,11 @@ const UiCards = () => {
               <CardDeck className="card-deck-wrapper">
                 <div className="card-group">
                   <Card className="mb-4">
+<<<<<<< HEAD
                     <CardImg top className="img-fluid" src={img4} alt="Skote" />
+=======
+                    <CardImg top className="img-fluid" src={img4} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                     <CardBody>
                       <CardTitle className="mt-0">Card title</CardTitle>
                       <CardText>
@@ -540,7 +584,11 @@ const UiCards = () => {
                     </CardBody>
                   </Card>
                   <Card className="mb-4">
+<<<<<<< HEAD
                     <CardImg top className="img-fluid" src={img5} alt="Skote" />
+=======
+                    <CardImg top className="img-fluid" src={img5} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                     <CardBody>
                       <CardTitle className="mt-0">Card title</CardTitle>
                       <CardText>
@@ -555,7 +603,11 @@ const UiCards = () => {
                     </CardBody>
                   </Card>
                   <Card className="mb-4">
+<<<<<<< HEAD
                     <CardImg top className="img-fluid" src={img6} alt="Skote" />
+=======
+                    <CardImg top className="img-fluid" src={img6} alt="Gorgia LLC" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                     <CardBody>
                       <CardTitle className="mt-0">Card title</CardTitle>
                       <CardText>

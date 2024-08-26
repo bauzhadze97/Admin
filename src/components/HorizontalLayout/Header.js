@@ -74,7 +74,11 @@ const Header = props => {
                   <img src={logo} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
+<<<<<<< HEAD
                   <img src={logoDark} alt="" height="17" />
+=======
+                  <img src={logoDark} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </span>
               </Link>
 
@@ -83,7 +87,11 @@ const Header = props => {
                   <img src={logoLightSvg} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
+<<<<<<< HEAD
                   <img src={logoLight} alt="" height="19" />
+=======
+                  <img src={logoLight} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </span>
               </Link>
             </div>
@@ -376,7 +384,11 @@ const Header = props => {
 
             <ProfileMenu />
 
+<<<<<<< HEAD
             <div className="dropdown d-inline-block">
+=======
+            {/* <div className="dropdown d-inline-block">
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               <button
                 onClick={() => {
                   props.showRightSidebarAction(!props.showRightSidebar);
@@ -386,7 +398,11 @@ const Header = props => {
               >
                 <i className="bx bx-cog bx-spin" />
               </button>
+<<<<<<< HEAD
             </div>
+=======
+            </div> */}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           </div>
         </div>
       </header>

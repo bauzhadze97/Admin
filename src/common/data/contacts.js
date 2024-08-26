@@ -11,7 +11,11 @@ const users = [
     name: "David McHenry",
     designation: "UI/UX Designer",
     color: "primary",
+<<<<<<< HEAD
     email: "david@skote.com",
+=======
+    email: "david@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "125",
     tags: ["Photoshop", "illustrator"],
   },
@@ -20,7 +24,11 @@ const users = [
     img: avatar2,
     name: "Frank Kirk",
     designation: "Frontend Developer",
+<<<<<<< HEAD
     email: "frank@skote.com",
+=======
+    email: "frank@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "132",
     tags: ["Html", "Css", "Php"],
   },
@@ -29,7 +37,11 @@ const users = [
     img: avatar3,
     name: "Rafael Morales",
     designation: "Backend Developer",
+<<<<<<< HEAD
     email: "Rafael@skote.com",
+=======
+    email: "Rafael@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "1112",
     tags: ["Php", "Java", "Python", "Html"],
   },
@@ -38,7 +50,11 @@ const users = [
     name: "Mark Ellison",
     designation: "Full Stack Developer",
     color: "success",
+<<<<<<< HEAD
     email: "mark@skote.com",
+=======
+    email: "mark@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "121",
     tags: ["Ruby", "Php", "UI/UX Designer"],
   },
@@ -47,7 +63,11 @@ const users = [
     img: avatar4,
     name: "Minnie Walter",
     designation: "Frontend Developer",
+<<<<<<< HEAD
     email: "minnie@skote.com",
+=======
+    email: "minnie@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "145",
     tags: ["Html", "Css", "Java"],
   },
@@ -56,7 +76,11 @@ const users = [
     img: avatar5,
     name: "Shirley Smith",
     designation: "UI/UX Designer",
+<<<<<<< HEAD
     email: "shirley@skote.com",
+=======
+    email: "shirley@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "136",
     tags: ["Photoshop", "illustrator"],
   },
@@ -65,7 +89,11 @@ const users = [
     name: "John Santiago",
     designation: "Full Stack Developer",
     color: "info",
+<<<<<<< HEAD
     email: "john@skote.com",
+=======
+    email: "john@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "125",
     tags: ["Ruby", "Php", "Java"],
   },
@@ -75,7 +103,11 @@ const users = [
     name: "Colin Melton",
     designation: "Backend Developer",
     color: "",
+<<<<<<< HEAD
     email: "colin@skote.com",
+=======
+    email: "colin@Gorgia LLC.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     projects: "136",
     tags: ["Php", "Java", "Python"],
   },
@@ -90,7 +122,11 @@ const userProfile = {
   personalDetail:
     "Hi I'm Cynthia Price,has been the industry's standard dummy text To an English person, it will seem like simplified English, as a skeptical Cambridge.",
   phone: "(123) 123 1234",
+<<<<<<< HEAD
   email: "cynthiaskote@gmail.com",
+=======
+  email: "cynthiaGorgia LLC@gmail.com",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
   location: "California, United States",
   experiences: [
     {
@@ -118,14 +154,22 @@ const userProfile = {
   projects: [
     {
       id: 1,
+<<<<<<< HEAD
       name: "Skote admin UI",
+=======
+      name: "Gorgia LLC admin UI",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       startDate: "2 Sep, 2019",
       deadline: "20 Oct, 2019",
       budget: "$506",
     },
     {
       id: 2,
+<<<<<<< HEAD
       name: "Skote admin Logo",
+=======
+      name: "Gorgia LLC admin Logo",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
       startDate: "1 Sep, 2019",
       deadline: "2 Sep, 2019",
       budget: "$94",

@@ -10,9 +10,15 @@ const invoiceList = [
   {
     id: 1,
     founder: "Marion Burton",
+<<<<<<< HEAD
     founderAt: "Skote",
     invoiceID: "14251",
     company: "Skote Dashboard UI",
+=======
+    founderAt: "Gorgia LLC",
+    invoiceID: "14251",
+    company: "Gorgia LLC Dashboard UI",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoicePrice: "1455",
     date: " 10 Oct, 19",
     color: "primary",
@@ -27,12 +33,20 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Admin Dashboard Template",
+=======
+          item: "Gorgia LLC - Admin Dashboard Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         },
         {
           id: 2,
+<<<<<<< HEAD
           item: "Skote - Landing Template",
+=======
+          item: "Gorgia LLC - Landing Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$399.00",
         }
       ],
@@ -45,7 +59,11 @@ const invoiceList = [
     id: 2,
     image: avatar2,
     founder: "Francis Witte",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14252",
     company: "Brand logo design",
     invoicePrice: "1024",
@@ -60,7 +78,11 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Admin Dashboard",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Admin Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         },
         {
@@ -78,7 +100,11 @@ const invoiceList = [
     id: 3,
     image: avatar7,
     founder: "Joseph Flint",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14253",
     company: "Landing page Design",
     invoicePrice: "1189",
@@ -93,7 +119,11 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Landing Template",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Landing Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$399.00",
         },
         {
@@ -111,7 +141,11 @@ const invoiceList = [
     id: 4,
     image: avatar8,
     founder: "Larry Nielsen",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14254",
     company: "Redesign - Landing page",
     invoicePrice: "1245",
@@ -126,12 +160,20 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Admin Dashboard",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Admin Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         },
         {
           id: 2,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Landing Template",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Landing Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$399.00",
         },
         {
@@ -149,7 +191,11 @@ const invoiceList = [
     id: 5,
     image: avatar5,
     founder: "Mark Evans",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14255",
     company: "Blog Template Design",
     invoicePrice: "1024",
@@ -164,7 +210,11 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Admin Dashboard",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Admin Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         },
         {
@@ -181,7 +231,11 @@ const invoiceList = [
   {
     id: 6,
     founder: "Timothy Lee",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14256",
     company: "Landing page Design",
     invoicePrice: "1189",
@@ -198,12 +252,20 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Admin Dashboard",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Admin Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         },
         {
           id: 2,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Landing Template",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Landing Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$399.00",
         }
       ],
@@ -216,7 +278,11 @@ const invoiceList = [
     id: 7,
     image: avatar1,
     founder: "Stanley Bland",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14257",
     company: "Landing page UI",
     invoicePrice: "1148",
@@ -231,7 +297,11 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Landing Template",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Landing Template",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$399.00",
         },
         {
@@ -248,7 +318,11 @@ const invoiceList = [
   {
     id: 8,
     founder: "Tommy Wilson",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14258",
     company: "Redesign - Dashboard",
     invoicePrice: "1259",
@@ -265,7 +339,11 @@ const invoiceList = [
       items: [
         {
           id: 1,
+<<<<<<< HEAD
           item: "Skote - Bootstrap 4 Admin Dashboard",
+=======
+          item: "Gorgia LLC - Bootstrap 4 Admin Dashboard",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           price: "$499.00",
         }
       ],
@@ -278,7 +356,11 @@ const invoiceList = [
     id: 9,
     image: avatar4,
     founder: "Louis Brandon",
+<<<<<<< HEAD
     founderAt: "Skote",
+=======
+    founderAt: "Gorgia LLC",
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
     invoiceID: "14259",
     company: "Email Template UI",
     invoicePrice: "1355",

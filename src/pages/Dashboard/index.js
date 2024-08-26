@@ -82,7 +82,11 @@ const Dashboard = props => {
   }, [dispatch]);
 
   //meta title
+<<<<<<< HEAD
   document.title = "Dashboard | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Dashboard | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>
@@ -177,7 +181,11 @@ const Dashboard = props => {
       </div>
 
       {/* subscribe ModalHeader */}
+<<<<<<< HEAD
       <Modal isOpen={subscribeModal} role="dialog" autoFocus={true} centered data-toggle="modal"
+=======
+      {/* <Modal isOpen={subscribeModal} role="dialog" autoFocus={true} centered data-toggle="modal"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
         toggle={() => { setSubscribeModal(!subscribeModal); }} >
         <div>
           <ModalHeader className="border-bottom-0" toggle={() => { setSubscribeModal(!subscribeModal); }}></ModalHeader>
@@ -207,7 +215,11 @@ const Dashboard = props => {
             </Row>
           </div>
         </ModalBody>
+<<<<<<< HEAD
       </Modal>
+=======
+      </Modal> */}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
       <Modal isOpen={modal} role="dialog" autoFocus={true} centered={true} className="exampleModal" tabIndex="-1"
         toggle={() => { setModal(!modal); }}>

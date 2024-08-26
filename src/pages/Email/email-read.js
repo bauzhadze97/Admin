@@ -19,7 +19,11 @@ import withRouter from "components/Common/withRouter";
 
 const EmailRead = (props) => {
   //meta title
+<<<<<<< HEAD
   document.title = "Read Email | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Read Email | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const id = props.router.params.id;
 
@@ -62,7 +66,11 @@ const EmailRead = (props) => {
                       <img
                         className="d-flex me-3 rounded-circle avatar-sm"
                         src={avatar2}
+<<<<<<< HEAD
                         alt="skote"
+=======
+                        alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       />
                       <div className="flex-grow-1">
                         <h5 className="font-size-14 mt-1">

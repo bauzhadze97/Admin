@@ -23,7 +23,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 const UiImages = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Images | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Images | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>

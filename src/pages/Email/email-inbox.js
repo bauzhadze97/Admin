@@ -49,7 +49,11 @@ import Spinners from "components/Common/Spinner";
 const EmailInbox = props => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Inbox | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Inbox | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const dispatch = useDispatch();
 
@@ -220,7 +224,11 @@ const EmailInbox = props => {
                           <img
                             className="d-flex me-3 rounded-circle"
                             src={item.imageSrc}
+<<<<<<< HEAD
                             alt="skote"
+=======
+                            alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                             height="36"
                           />
                         </div>

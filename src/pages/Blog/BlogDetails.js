@@ -20,7 +20,11 @@ import avtar1 from "../../assets/images/users/avatar-2.jpg"
 
 const BlogDetails = () => {
   //meta title
+<<<<<<< HEAD
   document.title = "Blog Details | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Blog Details | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
   return (
     <React.Fragment>
       <div className="page-content">

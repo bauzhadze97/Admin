@@ -10,7 +10,11 @@ import { Link } from "react-router-dom"
 const TwostepVerification2 = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Two Step Verification 2 | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Two Step Verification 2 | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>
@@ -117,9 +121,15 @@ const TwostepVerification2 = () => {
 
                     <div className="mt-4 mt-md-5 text-center">
                       <p className="mb-0">
+<<<<<<< HEAD
                         © {new Date().getFullYear()} Skote. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
                         Themesbrand
+=======
+                        © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </p>
                     </div>
                   </div>

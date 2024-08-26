@@ -9,7 +9,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 const ChartsKnob = () => {
 
    //meta title
+<<<<<<< HEAD
   document.title = "Jquery Knob Charts | Skote - React Admin & Dashboard Template"
+=======
+  document.title = "Jquery Knob Charts | Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const [value, setvalue] = useState(35)
   const [value_cur, setvalue_cur] = useState(29)

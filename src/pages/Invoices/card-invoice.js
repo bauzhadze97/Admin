@@ -34,7 +34,11 @@ const CardInvoice = ({ data }) => {
                     {data.founder}
                   </h5>
                   <Link to="#" className="text-muted">
+<<<<<<< HEAD
                     @Skote
+=======
+                    @Gorgia LLC
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                   </Link>
                 </div>
               </Col>

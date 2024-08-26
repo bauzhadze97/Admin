@@ -58,7 +58,11 @@ const Overview = () => {
                     <CardBody>
                         <div className="text-center">
                             <img src={adobephotoshop} alt="" height="50" className="mx-auto d-block" />
+<<<<<<< HEAD
                             <h5 className="mt-3 mb-1">Themesbrand</h5>
+=======
+                            <h5 className="mt-3 mb-1">Gorgia Web Developers Team</h5>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                             <p className="text-muted mb-0">Since July 2017</p>
                         </div>
 
@@ -77,7 +81,11 @@ const Overview = () => {
                                     <i className="bx bx-mail-send text-primary fs-4"></i>
                                     <div className="ms-3">
                                         <h6 className="fs-14 mb-2">Email</h6>
+<<<<<<< HEAD
                                         <p className="text-muted fs-14 mb-0">themesbrand@gmail.com</p>
+=======
+                                        <p className="text-muted fs-14 mb-0">Gorgia Web Developers Team@gmail.com</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                     </div>
                                 </div>
                             </li>
@@ -86,7 +94,11 @@ const Overview = () => {
                                     <i className="bx bx-globe text-primary fs-4"></i>
                                     <div className="ms-3">
                                         <h6 className="fs-14 mb-2">Website</h6>
+<<<<<<< HEAD
                                         <p className="text-muted fs-14 text-break mb-0">www.themesbrand.com</p>
+=======
+                                        <p className="text-muted fs-14 text-break mb-0">www.Gorgia Web Developers Team.com</p>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                     </div>
                                 </div>
                             </li>

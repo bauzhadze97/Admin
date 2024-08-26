@@ -17,7 +17,11 @@ const DetailsSection = () => {
                                 <h5 className="fw-semibold">Magento Developer</h5>
                                 <ul className="list-unstyled hstack gap-2 mb-0">
                                     <li>
+<<<<<<< HEAD
                                         <i className="bx bx-building-house"></i> <span className="text-muted">Themesbrand</span>
+=======
+                                        <i className="bx bx-building-house"></i> <span className="text-muted">Gorgia Web Developers Team</span>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                     </li>
                                     <li>
                                         <i className="bx bx-map"></i> <span className="text-muted">California</span>

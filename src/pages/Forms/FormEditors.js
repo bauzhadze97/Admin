@@ -17,7 +17,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 const FormEditors = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Form Editors | Skote - React Admin & Dashboard Template"
+=======
+  document.title = "Form Editors | Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>

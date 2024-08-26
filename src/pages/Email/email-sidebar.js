@@ -91,7 +91,11 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar2}
+<<<<<<< HEAD
               alt="skote"
+=======
+              alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               height="36"
             />
             <div className="flex-grow-1 chat-user-box">
@@ -104,7 +108,11 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar3}
+<<<<<<< HEAD
               alt="skote"
+=======
+              alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               height="36"
             />
             <div className="chat-user-box">
@@ -117,7 +125,11 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar4}
+<<<<<<< HEAD
               alt="skote"
+=======
+              alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               height="36"
             />
             <div className="chat-user-box">
@@ -130,7 +142,11 @@ const EmailSideBar = props => {
             <img
               className="d-flex me-3 rounded-circle"
               src={avatar6}
+<<<<<<< HEAD
               alt="skote"
+=======
+              alt="Gorgia LLC"
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               height="36"
             />
             <div className="chat-user-box">

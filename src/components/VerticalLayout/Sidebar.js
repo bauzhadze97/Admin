@@ -25,7 +25,11 @@ const Sidebar = props => {
               <img src={logo} alt="" height="22" />
             </span>
             <span className="logo-lg">
+<<<<<<< HEAD
               <img src={logoDark} alt="" height="17" />
+=======
+              <img src={logoDark} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
             </span>
           </Link>
 
@@ -34,7 +38,11 @@ const Sidebar = props => {
               <img src={logoLightSvg} alt="" height="22" />
             </span>
             <span className="logo-lg">
+<<<<<<< HEAD
               <img src={logoLightPng} alt="" height="19" />
+=======
+              <img src={logoLightPng} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
             </span>
           </Link>
         </div>

@@ -6,7 +6,11 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 import { Link } from 'react-router-dom';
 
 const JobCategories = () => {
+<<<<<<< HEAD
     document.title = "Job Categories | Skote - React Admin & Dashboard Template";
+=======
+    document.title = "Job Categories | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
     const jobCategories1 = [
         { id : 1, name : "Accounting & Finance" , category : 52},

@@ -11,7 +11,11 @@ import classnames from "classnames";
 const UiTabsAccordions = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Tabs & Accordions | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Tabs & Accordions | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const [activeTab, setactiveTab] = useState("1");
   const [activeTab1, setactiveTab1] = useState("5");

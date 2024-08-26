@@ -46,7 +46,11 @@ const theme = {
     ranges: [{ color: "#eee", opacity: 0.7 }, null, { color: "#556ee6" }]
   }
 }
+<<<<<<< HEAD
 TuiChart.registerTheme("skoteTheme", theme)
+=======
+TuiChart.registerTheme("Gorgia LLCTheme", theme)
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
 const BulletChartToast = props => {
   const data = {

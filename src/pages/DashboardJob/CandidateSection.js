@@ -22,7 +22,11 @@ const CandidateSection = () => {
                     <CardBody>
                         <div className="d-flex">
                             <div>
+<<<<<<< HEAD
                                 <h4 className="card-title mb-3">Invite your friends to Skote</h4>
+=======
+                                <h4 className="card-title mb-3">Invite your friends to Gorgia LLC</h4>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                                 <p className="text-muted">Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally.</p>
                                 <div>
                                     <Link to="#" className="btn btn-primary btn-sm"><i className='bx bx-user-plus align-middle'></i> Invite Friends</Link>

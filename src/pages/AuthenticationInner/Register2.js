@@ -14,7 +14,11 @@ import CarouselPage from "./CarouselPage";
 const Register2 = () => {
 
   //meta title
+<<<<<<< HEAD
   document.title="Register 2 | Skote - React Admin & Dashboard Template";
+=======
+  document.title="Register 2 | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   //form validation
   const validation = useFormik({
@@ -65,7 +69,11 @@ const Register2 = () => {
                       <div>
                         <h5 className="text-primary">Register account</h5>
                         <p className="text-muted">
+<<<<<<< HEAD
                           Get your free Skote account now.
+=======
+                          Get your free Gorgia LLC account now.
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                         </p>
                       </div>
 
@@ -135,7 +143,11 @@ const Register2 = () => {
 
                           <div>
                             <p className="mb-0">
+<<<<<<< HEAD
                               By registering you agree to the Skote{" "}
+=======
+                              By registering you agree to the Gorgia LLC{" "}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                               <a href="#" className="text-primary">
                                 Terms of Use
                               </a>
@@ -207,9 +219,15 @@ const Register2 = () => {
                       <p className="mb-0">
                         ©{" "}
                         { new Date().getFullYear()}
+<<<<<<< HEAD
                         Skote. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
                         Themesbrand
+=======
+                        Gorgia LLC. Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </p>
                     </div>
                   </div>

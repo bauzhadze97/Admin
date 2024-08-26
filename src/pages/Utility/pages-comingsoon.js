@@ -36,7 +36,11 @@ const PagesComingsoon = () => {
   }
 
   //meta title
+<<<<<<< HEAD
   document.title = "Coming Soon | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Coming Soon | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   return (
     <React.Fragment>
@@ -66,7 +70,11 @@ const PagesComingsoon = () => {
                     </div>
                   </Col>
                 </Row>
+<<<<<<< HEAD
                 <h4 className="mt-5">Let&apos;s get started with Skote</h4>
+=======
+                <h4 className="mt-5">Let&apos;s get started with Gorgia LLC</h4>
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <p className="text-muted">
                   It will be as simple as Occidental in fact it will be
                   Occidental.

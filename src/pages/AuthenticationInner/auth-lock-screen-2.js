@@ -17,7 +17,11 @@ import CarouselPage from "./CarouselPage";
 const LockScreen2 = (props) => {
 
   //meta title
+<<<<<<< HEAD
   document.title = "Lock Screen 2 | Skote - React Admin & Dashboard Template";
+=======
+  document.title = "Lock Screen 2 | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -130,9 +134,15 @@ const LockScreen2 = (props) => {
                       <p className="mb-0">
                         ©{" "}
                         {new Date().getFullYear()}{" "}
+<<<<<<< HEAD
                         Skote. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
                         Themesbrand
+=======
+                        Gorgia LLC. Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Gorgia Web Developers Team
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                       </p>
                     </div>
                   </div>

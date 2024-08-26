@@ -55,7 +55,11 @@ const Layout = (props) => {
     let currentage = title.charAt(1).toUpperCase() + title.slice(2);
 
     document.title =
+<<<<<<< HEAD
       currentage + " | Skote - React Admin & Dashboard Template";
+=======
+      currentage + " | Gorgia LLC";
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
   }, [pathName.pathname]);
 
   useEffect(() => {

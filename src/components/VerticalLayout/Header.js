@@ -87,13 +87,21 @@ const Header = props => {
             <div className="navbar-brand-box d-lg-none d-md-block">
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
+<<<<<<< HEAD
                   <img src={logo} alt="" height="22" />
+=======
+                  <img src={logo} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </span>
               </Link>
 
               <Link to="/" className="logo logo-light">
                 <span className="logo-sm">
+<<<<<<< HEAD
                   <img src={logoLightSvg} alt="" height="22" />
+=======
+                  <img src={logoLightSvg} alt="" width="200px" />
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 </span>
               </Link>
             </div>
@@ -127,15 +135,24 @@ const Header = props => {
                 setmegaMenu(!megaMenu);
               }}
             >
+<<<<<<< HEAD
               <DropdownToggle
+=======
+              {/* <DropdownToggle
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 className="btn header-item "
                 caret
                 tag="button"
               >
                 {" "}
                 {props.t("Mega Menu")} <i className="mdi mdi-chevron-down" />
+<<<<<<< HEAD
               </DropdownToggle>
               <DropdownMenu className="dropdown-megamenu">
+=======
+              </DropdownToggle> */}
+              {/* <DropdownMenu className="dropdown-megamenu">
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                 <Row>
                   <Col sm={8}>
                     <Row>
@@ -267,7 +284,11 @@ const Header = props => {
                     </Row>
                   </Col>
                 </Row>
+<<<<<<< HEAD
               </DropdownMenu>
+=======
+              </DropdownMenu> */}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
             </Dropdown>
           </div>
           <div className="d-flex">
@@ -310,9 +331,15 @@ const Header = props => {
               </div>
             </div>
 
+<<<<<<< HEAD
             <LanguageDropdown />
 
             <Dropdown
+=======
+            {/* <LanguageDropdown /> */}
+
+            {/* <Dropdown
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
               className="d-none d-lg-inline-block ms-1"
               isOpen={socialDrp}
               toggle={() => {
@@ -370,7 +397,11 @@ const Header = props => {
                   </Row>
                 </div>
               </DropdownMenu>
+<<<<<<< HEAD
             </Dropdown>
+=======
+            </Dropdown> */}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
 
             <div className="dropdown d-none d-lg-inline-block ms-1">
               <button
@@ -388,7 +419,11 @@ const Header = props => {
             <NotificationDropdown />
             <ProfileMenu />
 
+<<<<<<< HEAD
             <div
+=======
+            {/* <div
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
                onClick={() => {
                 props.showRightSidebarAction(!props.showRightSidebar);
               }}
@@ -400,7 +435,11 @@ const Header = props => {
               >
                 <i className="bx bx-cog bx-spin" />
               </button>
+<<<<<<< HEAD
             </div>
+=======
+            </div> */}
+>>>>>>> 5a3e0cf3c9a36fa82ce8a575296a2ec4913f3d31
           </div>
         </div>
       </header>
