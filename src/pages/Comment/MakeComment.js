@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Col, Row, Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import { getDaily } from 'services/daily';
 import { createDailyComment } from 'services/dailyComment';
-import Pusher from 'pusher-js'
+import Pusher from 'pusher-js';
 
 const MakeComment = () => {
   const { id } = useParams();
@@ -136,14 +136,14 @@ const MakeComment = () => {
           <ListGroupItem className="border border-light p-3 mb-2 bg-light rounded shadow-sm">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <small className="text-muted">
-                <strong>Date:</strong> {comment.created_at ? new Date(comment.created_at).toLocaleString() : 'N/A'}
+                <strong>თარიღი:</strong> {comment.created_at ? new Date(comment.created_at).toLocaleString() : 'N/A'}
               </small>
               <small className="text-muted">
-                <strong>Name:</strong> {comment.user?.name} {comment.user?.sur_name}
+                <strong>სახელი / გვარი:</strong> {comment.user?.name} / {comment.user?.sur_name}
               </small>
             </div>
             <p className="mb-0">{comment.comment}</p>
-            <Button size="sm" color="link" className="text-primary p-0" onClick={() => setReplyTo(comment.id)}>Reply</Button>
+            <Button size="sm" color="link" className="text-primary p-0" onClick={() => setReplyTo(comment.id)}>პასუხი</Button>
           </ListGroupItem>
           {renderComments(commentsList, comment.id)}
         </div>
@@ -215,27 +215,27 @@ const MakeComment = () => {
         <Col md={8}>
           <Card className="mb-4 shadow border-0">
             <CardBody className="p-5">
-              <h3 className="text-dark mb-4">Description</h3>
+              <h3 className="text-dark mb-4">დღის საკითხის აღწერა</h3>
               <p className="lead text-muted" style={{ whiteSpace: 'pre-wrap' }}>{item?.description}</p>
             </CardBody>
           </Card>
 
-          <h3 className="text-dark mb-4">Comments</h3>
+          <h3 className="text-dark mb-4">კომენტარები</h3>
           <ListGroup className="mb-4">
-            {comments.length > 0 ? renderComments(comments) : <p className="text-muted">No comments yet</p>}
+            {comments.length > 0 ? renderComments(comments) : <p className="text-muted">ამ საკითხზე კომენტარი ჯერ არ არის.</p>}
           </ListGroup>
 
           {comments.length > commentsPerPage && (
             <div className="d-flex justify-content-between mb-3">
-              <Button color="primary" disabled={currentPage === 1} onClick={handlePreviousPage}>Previous</Button>
-              <Button color="primary" disabled={currentPage === Math.ceil(comments.length / commentsPerPage)} onClick={handleNextPage}>Next</Button>
+              <Button color="primary" disabled={currentPage === 1} onClick={handlePreviousPage}>წინა გვერდი</Button>
+              <Button color="primary" disabled={currentPage === Math.ceil(comments.length / commentsPerPage)} onClick={handleNextPage}>შემდეგი გვერდი</Button>
             </div>
           )}
 
-          <h4 className="text-dark mb-3">{replyTo ? "Reply to Comment" : "Add a Comment"}</h4>
+          <h4 className="text-dark mb-3">{replyTo ? "პასუხი კომენტარზე" : "კომენტარის დამატება"}</h4>
           <Form onSubmit={handleCommentSubmit} className="mb-4 pb-5 shadow-sm p-4 bg-white rounded">
             <FormGroup row className="mb-3">
-              <Label for="comment" sm={2} className="col-form-label">Comment</Label>
+              <Label for="comment" sm={2} className="col-form-label">კომენტარი</Label>
               <Col sm={10}>
                 <Input 
                   type="textarea" 
@@ -243,7 +243,7 @@ const MakeComment = () => {
                   id="comment" 
                   value={newComment} 
                   onChange={handleCommentChange} 
-                  placeholder="Enter your comment here" 
+                  placeholder="დაწერეთ თქვენი კომენტარი აქ..." 
                   required 
                   style={{ height: '120px', borderColor: '#ced4da' }}
                   className="border-0 shadow-sm"
@@ -252,8 +252,8 @@ const MakeComment = () => {
             </FormGroup>
             <Row className="justify-content-end">
               <Col sm={10} className="text-right">
-                <Button color="success" type="submit" className="shadow-sm">Submit</Button>
-                {replyTo && <Button color="secondary" type="button" onClick={() => setReplyTo(null)} className="ml-2 shadow-sm">Cancel</Button>}
+                <Button color="success" type="submit" className="shadow-sm">გაგზავნა</Button>
+                {replyTo && <Button color="secondary" type="button" onClick={() => setReplyTo(null)} className="ml-2 shadow-sm">გაუქმება</Button>}
               </Col>
             </Row>
           </Form>
@@ -262,7 +262,7 @@ const MakeComment = () => {
         <Col md={4}>
           <Card className="mb-4 shadow">
             <CardBody>
-              <h5 className="text-center text-primary mb-4">Admin Comments</h5>
+              <h5 className="text-center text-primary mb-4">დამფუძნებლის კომენტარი</h5>
               {adminComments.length > 0 ? (
                 adminComments.map(comment => (
                   <Card key={comment.id} className="mb-3 border border-primary shadow-sm">
@@ -277,13 +277,13 @@ const MakeComment = () => {
                       <div className="text-end">
                         <small className="text-muted">{new Date(comment.created_at).toLocaleTimeString()}</small>
                       </div>
-                      <Button size="sm" color="link" className="text-primary p-0" onClick={() => setReplyTo(comment.id)}>Reply</Button>
+                      <Button size="sm" color="link" className="text-primary p-0" onClick={() => setReplyTo(comment.id)}>პასუხი</Button>
                       {renderAdminReplies(comment.id)}
                     </CardBody>
                   </Card>
                 ))
               ) : (
-                <p className="text-muted">No admin comments available.</p>
+                <p className="text-muted">დამფუძნებლის კომენტარი არ არის.</p>
               )}
             </CardBody>
           </Card>

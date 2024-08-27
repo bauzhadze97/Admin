@@ -102,7 +102,7 @@ const TableContainer = ({
         <Row className="justify-content-between align-items-center mt-3">
           <Col sm={12} md={5}>
             <div className="text-muted dataTables_info">
-              Showing {currentPage} of {totalPages} pages ({totalItems} entries)
+              ნაჩვენებია {currentPage}-ლი გვერდი {totalPages} გვერდიდან (სულ {totalItems}-ი ჩანაწერია)
             </div>
           </Col>
           <Col sm={12} md={7} className={paginationWrapper}>

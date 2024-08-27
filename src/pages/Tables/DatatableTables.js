@@ -159,14 +159,14 @@ const DatatableTables = () => {
     return (
         <div className="page-content">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="Daily Report" />
+                <Breadcrumbs title="Tables" breadcrumbItem="დღის საკითხები" />
                 <div className="table-container">
                     <h2 className="page-name">
                         <div className="d-flex justify-content-end">
                             {isAdmin && (
-                                <Button color="secondary" className="ms-2" onClick={handleExport}>Export CSV</Button>
+                                <Button color="secondary" className="ms-2" onClick={handleExport}>ექსპორტი CSV</Button>
                             )}
-                            <Button color="primary" className="ms-2" onClick={toggleModal}>Add Daily Report</Button>
+                            <Button color="primary" className="ms-2" onClick={toggleModal}>დღის საკითხის დამატება</Button>
                         </div>
                     </h2>
                     
