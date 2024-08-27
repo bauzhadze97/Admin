@@ -149,7 +149,7 @@ const SidebarContent = props => {
             <li>
               <Link to="/#">
                 <i className="bx bx-home-circle"></i>
-                <span>{props.t("Dashboards")}</span>
+                <span>{props.t("მთავარი გვერდი")}</span>
               </Link>
          
             </li>
@@ -159,28 +159,28 @@ const SidebarContent = props => {
                 <span className="badge rounded-pill bg-danger float-end">
                   10
                 </span>
-                <span>{props.t("Daily Report")}</span>
+                <span>{props.t("დღის საკითხები")}</span>
               </Link>
          
             </li>
             <li>
               <Link to="/admin">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Admin Panel")}</span>
+                <span>{props.t("სამართავი პანელი")}</span>
               </Link>
          
             </li>
             <li>
               <Link to="/head">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Approvals")}</span>
+                <span>{props.t("ვიზირება")}</span>
               </Link>
          
             </li>
             <li>
               <Link to="/profile">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Profile")}</span>
+                <span>{props.t("პროფილი")}</span>
               </Link>
          
             </li>
@@ -188,21 +188,21 @@ const SidebarContent = props => {
             <li>
               <Link to="/business">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Business Trip")}</span>
+                <span>{props.t("მივლინება")}</span>
               </Link>
          
             </li>
             <li>
               <Link to="/procurement">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Internal Purchasment")}</span>
+                <span>{props.t("შესყიდვები")}</span>
               </Link>
          
             </li>
             <li>
               <Link to="/hr">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("HR Document")}</span>
+                <span>{props.t("HR დოკუმენტები")}</span>
               </Link>
          
             </li>
