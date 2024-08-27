@@ -54,7 +54,7 @@ const CarouselPage = () => {
                               <div className="pb-5 pt-3">
                                 <p className="font-size-16 mb-4">
                                   &quot;If Every Vendor on Envato are as supportive
-                                  as Themesbrand, Development with be a nice
+                                  as GORGIA, Development with be a nice
                                   experience. You guys are Wonderful. Keep us
                                   the good work. &ldquo;
                                 </p>

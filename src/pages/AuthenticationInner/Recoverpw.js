@@ -149,7 +149,7 @@ const Recoverpw = () => {
                 </p>
                 <p>
                   © {new Date().getFullYear()} Gorgia LLC. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                  <i className="mdi mdi-heart text-danger"></i> by GORGIA
                 </p>
               </div>
             </Col>

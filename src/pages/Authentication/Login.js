@@ -205,7 +205,7 @@ const Login = (props) => {
                   Don&#39;t have an account? <Link to="/register" className="fw-medium text-primary">Signup now</Link>
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Gorgia LLC. Crafted with <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Gorgia LLC. Crafted with <i className="mdi mdi-heart text-danger" /> by GORGIA
                 </p>
               </div>
             </Col>

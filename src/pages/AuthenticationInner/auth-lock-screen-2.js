@@ -132,7 +132,7 @@ const LockScreen2 = (props) => {
                         {new Date().getFullYear()}{" "}
                         Gorgia LLC. Crafted with{" "}
                         <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
+                        GORGIA
                       </p>
                     </div>
                   </div>

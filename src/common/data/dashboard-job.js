@@ -87,14 +87,14 @@ const recentAddedJobsData = [
     {
         logo: weChat,
         jobTitle: "Marketing Director",
-        company: "Themesbrand, USA",
+        company: "GORGIA, USA",
         postedTime: "53",
         postedText: "sec ago"
     },
     {
         logo: sass,
         jobTitle: "Frontend Developer",
-        company: "Themesbrand, Hong-Kong",
+        company: "GORGIA, Hong-Kong",
         postedTime: "47",
         postedText: "min ago"
     },
@@ -129,7 +129,7 @@ const recentAddedJobsData = [
     {
         logo: spotify,
         jobTitle: "Business Associate",
-        company: "Themesbrand, Russia",
+        company: "GORGIA, Russia",
         postedTime: "2",
         postedText: "days ago"
     },
