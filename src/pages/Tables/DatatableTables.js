@@ -20,6 +20,7 @@ const DatatableTables = () => {
         department: '',
         description: ''
     });
+    const [last24HoursCount, setLast24HoursCount] = useState(0); // New state for count of last 24 hours
 
     // Assuming you have a way to check if the user is an admin
     const isAdmin = true;  // Replace with actual admin check logic
@@ -55,13 +56,22 @@ const DatatableTables = () => {
             const sortedData = response.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             setData(sortedData);
             setTotalItems(response.data.total);
+    
+            // Calculate count for last 24 hours
+            const now = new Date();
+            const countLast24Hours = sortedData.filter(report => {
+                const reportDate = new Date(report.created_at);
+                return now - reportDate < 24 * 60 * 60 * 1000; // Reports within the last 24 hours
+            }).length;
+            setLast24HoursCount(countLast24Hours); // Update the state with the count
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
     };
-
+    
+    
     useEffect(() => {
         fetchData();
     }, [currentPage, itemsPerPage]);
@@ -152,7 +162,7 @@ const DatatableTables = () => {
         link.click();
         document.body.removeChild(link);
     };
-
+    
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -190,11 +200,11 @@ const DatatableTables = () => {
                 </div>
 
                 <Modal isOpen={modal} toggle={toggleModal}>
-                    <ModalHeader toggle={toggleModal}>Add New Daily</ModalHeader>
+                    <ModalHeader toggle={toggleModal}>საკითხის დამატების ფორმა</ModalHeader>
                     <Form onSubmit={handleSubmit}>
                         <ModalBody>
                             <FormGroup>
-                                <Label for="date">Date</Label>
+                                <Label for="date">მიმდინარე თარიღი</Label>
                                 <Input
                                     type="date"
                                     name="date"
@@ -206,7 +216,7 @@ const DatatableTables = () => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="name">Task Name</Label>
+                                <Label for="name">საკითხის სახელწოდება</Label>
                                 <Input
                                     type="text"
                                     name="name"
@@ -217,7 +227,7 @@ const DatatableTables = () => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="department">Department</Label>
+                                <Label for="department">პასუხისმგებელი დეპარტამენტი</Label>
                                 <Input
                                     type="select"
                                     name="department"
@@ -226,7 +236,7 @@ const DatatableTables = () => {
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Select Department</option>
+                                    <option value="">აირჩიეთ დეპარტამენტი</option>
                                     {departments.map(dept => (
                                         <option key={dept.id} value={dept.id}>
                                             {dept.name}
@@ -235,7 +245,7 @@ const DatatableTables = () => {
                                 </Input>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="description">Description</Label>
+                                <Label for="description">საკითხის აღწერა</Label>
                                 <Input
                                     type="textarea"
                                     name="description"
@@ -246,8 +256,8 @@ const DatatableTables = () => {
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" type="submit">Add Daily</Button>
-                            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+                            <Button color="primary" type="submit">საკითხის დამატება</Button>
+                            <Button color="secondary" onClick={toggleModal}>გაუქმება</Button>
                         </ModalFooter>
                     </Form>
                 </Modal>
