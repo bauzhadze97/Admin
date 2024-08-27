@@ -1,10 +1,51 @@
-import echo from 'plugins/echo';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Col, Row, Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
+import Select from 'react-select'; // Import the react-select package
 import { getDaily } from 'services/daily';
 import { createDailyComment } from 'services/dailyComment';
+import { getDepartments } from '../../services/auth';
 import Pusher from 'pusher-js';
+
+// Define custom styles for react-select
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    borderRadius: '5px',
+    borderColor: '#ced4da',
+    boxShadow: 'none',
+    minHeight: '40px',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 2, // Ensure menu stays above other elements
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#007bff' : '#fff', // Change the background color when selected
+    color: state.isSelected ? '#fff' : '#333', // Change the text color when selected
+    ':hover': {
+      backgroundColor: '#e9ecef', // Background color on hover
+      color: '#333',
+    },
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#e9ecef',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#333',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: '#333',
+    ':hover': {
+      backgroundColor: '#dc3545',
+      color: '#fff',
+    },
+  }),
+};
 
 const MakeComment = () => {
   const { id } = useParams();
@@ -14,6 +55,9 @@ const MakeComment = () => {
   const [replyTo, setReplyTo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [departments, setDepartments] = useState([]); // Initialize as an empty array
+  const [selectedDepartments, setSelectedDepartments] = useState([]); // State to store selected departments
 
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 10;
@@ -32,65 +76,44 @@ const MakeComment = () => {
     };
 
     fetchItem();
-  }, [id]);
 
+    // Fetch the list of departments
+    const fetchDepartments = async () => {
+      try {
+        const response = await getDepartments(); // Fetch the departments from the service
+        console.log('Fetched Departments:', response.data.departments); // Debugging line to check data
+        setDepartments(Array.isArray(response.data.departments) ? response.data.departments : []); // Ensure response.data.departments is an array, or default to an empty array
+      } catch (error) {
+        console.error('Failed to fetch departments:', error);
+        setDepartments([]); // Default to an empty array on error
+      }
+    };
+
+    fetchDepartments();
+  }, [id]);
 
   const userId = 1;
 
-  // useEffect(() => {
-  //   console.log('useEffect called for userId:', userId);
-
-  //   const channel = echo.private(`user.${userId}`);
-    
-  //   channel.listen('App\\Events\\ReplyMade', (e) => {
-  //     console.log('New reply received:', e);
-  //   });
-
-  //   return () => {
-  //     console.log('Cleaning up useEffect for userId:', userId);
-  //     channel.stopListening('App\\Events\\ReplyMade');
-  //     echo.leaveChannel(`user.${userId}`);
-  //   };
-  // }, []); 
-  
-  // useEffect(() => {
-  //   console.log('useEffect called for userId:', userId);
-
-  //   const channel = echo.private(`user.${userId}`);
-    
-  //   // Match the event name here with what is broadcasted from Laravel
-  //   channel.listen('.ReplyMade', (e) => {
-  //     console.log('New reply received:', e);
-  //   });
-  //   console.log(channel)
-  //   return () => {
-  //     console.log('Cleaning up useEffect for userId:', userId);
-  //     channel.stopListening('.ReplyMade');
-  //     echo.leaveChannel(`user.${userId}`);
-  //   };
-  // }, [userId]); // Include userId as a dependency if it's subject to change
- 
   useEffect(() => {
-    console.log(window.Echo)
+    console.log(window.Echo);
     if (window.Echo) {
-      // Subscribe to the correct channel with user ID
       const channel = window.Echo.channel(`user.${userId}`);
-      // Listen for the event
       channel.listen('ReplyMade', (event) => {
         console.log('Event received:', event);
-        // setUserData(event.user);
       });
 
-      // Cleanup on unmount
       return () => {
         window.Echo.leave(`user.${userId}`);
       };
     }
-  }, [userId, window.Echo]);
-
+  }, [userId]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
+  };
+
+  const handleDepartmentsChange = (selectedOptions) => {
+    setSelectedDepartments(selectedOptions);
   };
 
   const handleCommentSubmit = async (e) => {
@@ -106,11 +129,13 @@ const MakeComment = () => {
         daily_id: id,
         parent_id: replyTo,
         user_id: 1,
+        departments: selectedDepartments.map(dept => dept.value), // Pass the selected department IDs
       });
       const savedComment = response.data;
       setComments([...comments, savedComment]);
       setNewComment('');
       setReplyTo(null);
+      setSelectedDepartments([]); // Clear selected departments after submission
     } catch (error) {
       console.error("Error submitting comment:", error);
       setError("Failed to submit comment");
@@ -125,9 +150,6 @@ const MakeComment = () => {
 
   const renderComments = (commentsList, parentId = null) => {
     const paginatedComments = paginate(commentsList);
-
-
-   
 
     return (paginatedComments || [])
       .filter(comment => comment.parent_id === parentId && comment.user_id !== 1)
@@ -182,33 +204,6 @@ const MakeComment = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-
-
-
-
-
-  // useEffect(() => {
-  //   const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-  //     cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
-  //     encrypted: true,
-  //   });
-
-  //   const userId = 1; 
-  //   const channel = echo.private(`user.${userId}`);
-
-  //   channel.listen('App\\Events\\ReplyMade', (e) => {
-  //     console.log('New reply received:', e);
-    
-  //   });
-
-  //   return () => {
-  //     channel.unbind_all();
-  //     channel.unsubscribe();
-  //   };
-  // }, []);
-
-  
-
   return (
     <div className="container-fluid mt-4">
       <Row style={{ paddingTop: '60px' }}>
@@ -250,6 +245,24 @@ const MakeComment = () => {
                 />
               </Col>
             </FormGroup>
+
+            <FormGroup row className="mb-3">
+              <Label for="departments" sm={2} className="col-form-label">დეპარტამენტის მიბმა</Label>
+              <Col sm={10}>
+                <Select
+                  isMulti
+                  name="departments"
+                  options={Array.isArray(departments) ? departments.map(dept => ({ value: dept.id, label: dept.name })) : []}
+                  value={selectedDepartments}
+                  onChange={handleDepartmentsChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="აირჩიეთ დეპარტამენტი..."
+                  styles={customStyles} // Apply custom styles
+                />
+              </Col>
+            </FormGroup>
+
             <Row className="justify-content-end">
               <Col sm={10} className="text-right">
                 <Button color="success" type="submit" className="shadow-sm">გაგზავნა</Button>
@@ -269,7 +282,7 @@ const MakeComment = () => {
                     <CardBody>
                       <div className="d-flex justify-content-between align-items-center mb-2">
                         <strong className="text-primary">
-                          <i className="fas fa-user-shield me-2"></i> Admin
+                          <i className="fas fa-user-shield me-2"></i> Gia Gorgoshadze
                         </strong>
                         <span className="badge bg-primary text-white">{new Date(comment.created_at).toLocaleDateString()}</span>
                       </div>
@@ -283,7 +296,7 @@ const MakeComment = () => {
                   </Card>
                 ))
               ) : (
-                <p className="text-muted">დამფუძნებლის კომენტარი არ არის.</p>
+                <p className="text-muted">დამფუძნებელს ამ საკითხზე ჯერ კომენტარი არ გაუკეთებია...</p>
               )}
             </CardBody>
           </Card>
