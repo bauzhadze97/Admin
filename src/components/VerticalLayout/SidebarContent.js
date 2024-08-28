@@ -177,13 +177,33 @@ const SidebarContent = props => {
               </Link>
          
             </li>
+
             <li>
-              <Link to="/lawyer">
-                <i className="bx bxs-report"></i>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-task"></i>
                 <span>{props.t("ხელშეკრულებები")}</span>
               </Link>
-         
-            </li>
+              <ul className="sub-menu">
+                <li>
+                <Link to="/lawyer">
+               
+                <span>{props.t("მოთხოვნა")}</span>
+              </Link>
+                </li>
+                <li>
+                <Link to="/lawyer-approve">
+               
+                <span>{props.t("ვიზირება")}</span>
+              </Link>
+                </li>
+                <li>
+                <Link to="/lawyer-history">
+               
+                <span>{props.t("არქივი")}</span>
+              </Link>
+                </li>
+              </ul>
+            </li> 
             <li>
               <Link to="/profile">
                 <i className="bx bxs-report"></i>
@@ -221,7 +241,7 @@ const SidebarContent = props => {
          
             </li>
           
-            {/* <li className="menu-title">{props.t("Apps")}</li>
+             {/* <li className="menu-title">{props.t("Apps")}</li>
 
             <li>
               <Link to="/calendar" >
@@ -241,25 +261,9 @@ const SidebarContent = props => {
                 <i className="bx bx-file"></i>
                 <span>{props.t("File Manager")}</span>
               </Link>
-            </li>
-
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bx-task"></i>
-                <span>{props.t("Tasks")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="/tasks-list">{props.t("Task List")}</Link>
-                </li>
-                <li>
-                  <Link to="/tasks-kanban">{props.t("Kanban Board")}</Link>
-                </li>
-                <li>
-                  <Link to="/tasks-create">{props.t("Create Task")}</Link>
-                </li>
-              </ul>
             </li> */}
+
+        
 
             {/* <li>
               <Link to="/#" className="has-arrow ">
