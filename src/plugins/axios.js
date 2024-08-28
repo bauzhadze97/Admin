@@ -4,7 +4,8 @@ axios.defaults.withCredentials = true
 // axios.defaults.withXSRFToken = true
 
 const defaultInstance = axios.create({
-  baseURL: 'https://back.gorgia.ge',
+  // baseURL: 'https://back.gorgia.ge',
+  baseURL: 'http://127.0.0.1:8000',
   timeout: 10000,
   headers: {
     Accept: 'application/json',
