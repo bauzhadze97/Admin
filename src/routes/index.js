@@ -180,6 +180,7 @@ import HrPage from "pages/HrPage";
 import AdminPage from "pages/AdminPage";
 import NotesPage from "pages/NotesPage";
 import NotesEditor from "pages/NotesEditor";
+import LawyerPage from "pages/LawyerPage";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -213,6 +214,7 @@ const authProtectedRoutes = [
   { path: "/procurement", component: <ProcurementPage /> },
   { path: "/head", component: <HeadPage />},
   { path: "/hr", component: <HrPage />},
+  { path: "/lawyer", component: <LawyerPage />},
   { path: "/admin", component: <AdminPage />},
   { path: "/notes", component: <NotesPage />},
   { path: "/notes-editor/:id", component: <NotesEditor />},
