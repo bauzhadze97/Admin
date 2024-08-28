@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -12,6 +12,7 @@ import {
 
 // Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { getDepartmentAgreements } from "services/agreement";
 
 const LawyerPageApprove = () => {
   // Meta title
@@ -19,6 +20,7 @@ const LawyerPageApprove = () => {
 
   // State to manage expanded rows
   const [expandedRows, setExpandedRows] = useState([]);
+  const [agreements, setAgreements] = useState([]);
 
   // Toggle row function
   const toggleRow = (index) => {
@@ -29,6 +31,20 @@ const LawyerPageApprove = () => {
       setExpandedRows([...expandedRows, index]);
     }
   };
+
+
+  const fetchAgreements = async () => {
+    try {
+      const response = await getDepartmentAgreements();
+      setAgreements(response.data.data);
+    } catch (err) {
+      // setError(err.response?.data?.message || "Error fetching agreements");
+    }
+  };
+
+  useEffect(() => {
+    fetchAgreements();
+  }, [])
 
   return (
     <React.Fragment>
