@@ -183,6 +183,7 @@ import NotesEditor from "pages/NotesEditor";
 import LawyerPage from "pages/LawyerPage";
 import LawyerPageApprove from "pages/LawyerPageApprove";
 import LawyerPageArchive from "pages/LawyerPageArchive/LawyerPageArchive";
+import LawyerPageDoc from "pages/LawyerPageDoc";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -219,6 +220,7 @@ const authProtectedRoutes = [
   { path: "/lawyer", component: <LawyerPage />},
   { path: "/lawyer-approve", component: <LawyerPageApprove />},
   { path: "/lawyer-history", component: <LawyerPageArchive />},
+  { path: "/lawyer-doc", component: <LawyerPageDoc />},
   { path: "/admin", component: <AdminPage />},
   { path: "/notes", component: <NotesPage />},
   { path: "/notes-editor/:id", component: <NotesEditor />},
