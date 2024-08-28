@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 import {
   Card,
@@ -6,7 +6,6 @@ import {
   Col,
   Container,
   Form,
-  FormGroup,
   Input,
   Label,
   NavItem,
@@ -14,42 +13,27 @@ import {
   Row,
   TabContent,
   TabPane,
-} from "reactstrap"
+} from "reactstrap";
 
-import classnames from "classnames"
-import { Link } from "react-router-dom"
+import classnames from "classnames";
+import { Link } from "react-router-dom";
 
-//Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb"
+// Import Breadcrumb
+import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const LawyerPage = () => {
+  // Meta title
+  document.title = "ხელშეკრულების მოთხოვნის ფორმა - Georgia LLC";
 
-  //meta title
-  document.title="ხელშეკრულების მოთხოვნის ფორმა - Georgia LLC";
-
-  const [activeTab, setactiveTab] = useState(1)
-  const [activeTabVartical, setoggleTabVertical] = useState(1)
-
-  const [passedSteps, setPassedSteps] = useState([1])
-  const [passedStepsVertical, setPassedStepsVertical] = useState([1])
+  const [activeTab, setactiveTab] = useState(1);
+  const [passedSteps, setPassedSteps] = useState([1]);
 
   function toggleTab(tab) {
     if (activeTab !== tab) {
-      var modifiedSteps = [...passedSteps, tab]
-      if (tab >= 1 && tab <= 4) {
-        setactiveTab(tab)
-        setPassedSteps(modifiedSteps)
-      }
-    }
-  }
-
-  function toggleTabVertical(tab) {
-    if (activeTabVartical !== tab) {
-      var modifiedSteps = [...passedStepsVertical, tab]
-
-      if (tab >= 1 && tab <= 4) {
-        setoggleTabVertical(tab)
-        setPassedStepsVertical(modifiedSteps)
+      var modifiedSteps = [...passedSteps, tab];
+      if (tab >= 1 && tab <= 3) { // Adjusted to have only 3 tabs
+        setactiveTab(tab);
+        setPassedSteps(modifiedSteps);
       }
     }
   }
@@ -58,13 +42,18 @@ const LawyerPage = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
-          <Breadcrumbs title="იურიდიული დეპარტამენტი" breadcrumbItem="ხელშეკრულების მოთხოვნის ფორმა" />
+          <Breadcrumbs
+            title="იურიდიული დეპარტამენტი"
+            breadcrumbItem="ხელშეკრულების მოთხოვნის ფორმა"
+          />
 
           <Row>
             <Col lg="12">
               <Card>
                 <CardBody>
-                  <h4 className="card-title mb-4">განაცხადი მომსახურების ხელშეკრულების გასაფორმებლად</h4>
+                  <h4 className="card-title mb-4">
+                    განაცხადი მომსახურების ხელშეკრულების გასაფორმებლად
+                  </h4>
                   <div className="wizard clearfix">
                     <div className="steps clearfix">
                       <ul>
@@ -74,7 +63,7 @@ const LawyerPage = () => {
                           <NavLink
                             className={classnames({ current: activeTab === 1 })}
                             onClick={() => {
-                              setactiveTab(1)
+                              setactiveTab(1);
                             }}
                             disabled={!(passedSteps || []).includes(1)}
                           >
@@ -87,7 +76,7 @@ const LawyerPage = () => {
                           <NavLink
                             className={classnames({ active: activeTab === 2 })}
                             onClick={() => {
-                              setactiveTab(2)
+                              setactiveTab(2);
                             }}
                             disabled={!(passedSteps || []).includes(2)}
                           >
@@ -100,24 +89,11 @@ const LawyerPage = () => {
                           <NavLink
                             className={classnames({ active: activeTab === 3 })}
                             onClick={() => {
-                              setactiveTab(3)
+                              setactiveTab(3);
                             }}
                             disabled={!(passedSteps || []).includes(3)}
                           >
-                            <span className="number">3.</span> ხელშეკრულების გაფორმების ინიციატორი 
-                          </NavLink>
-                        </NavItem>
-                        <NavItem
-                          className={classnames({ current: activeTab === 4 })}
-                        >
-                          <NavLink
-                            className={classnames({ active: activeTab === 4 })}
-                            onClick={() => {
-                              setactiveTab(4)
-                            }}
-                            disabled={!(passedSteps || []).includes(4)}
-                          >
-                            <span className="number">4.</span> უშუალო ხელმძღვანელი 
+                            <span className="number">3.</span> უშუალო ხელმძღვანელი
                           </NavLink>
                         </NavItem>
                       </ul>
@@ -130,7 +106,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-firstname-input1">
-                                  შემსრულებლის სრული დასახელება
+                                    შემსრულებლის სრული დასახელება
                                   </Label>
                                   <Input
                                     type="text"
@@ -143,7 +119,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-lastname-input2">
-                                  საიდენტიფიკაციო კოდი ან პირადი ნომერი
+                                    საიდენტიფიკაციო კოდი ან პირადი ნომერი
                                   </Label>
                                   <Input
                                     type="text"
@@ -159,7 +135,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-phoneno-input3">
-                                  იურიდიული მისამართი / ფაქტიური მისამართი
+                                    იურიდიული მისამართი / ფაქტიური მისამართი
                                   </Label>
                                   <Input
                                     type="text"
@@ -172,7 +148,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-email-input4">
-                                  საბანკო რეკვიზიტები
+                                    საბანკო რეკვიზიტები
                                   </Label>
                                   <Input
                                     type="email"
@@ -187,7 +163,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-phoneno-input3">
-                                  დირექტორი ან წარმომადგენელი (მინდობილობა)
+                                    დირექტორი ან წარმომადგენელი (მინდობილობა)
                                   </Label>
                                   <Input
                                     type="text"
@@ -200,7 +176,7 @@ const LawyerPage = () => {
                               <Col lg="6">
                                 <div className="mb-3">
                                   <Label for="basicpill-email-input4">
-                                  საკონტაქტო ინფორმაცია (ტელ, ელ-ფოსტა)
+                                    საკონტაქტო ინფორმაცია (ტელ, ელ-ფოსტა)
                                   </Label>
                                   <Input
                                     type="email"
@@ -212,20 +188,19 @@ const LawyerPage = () => {
                               </Col>
                             </Row>
                             <Row>
-                            <Col lg="12">
-  <div className="mb-3">
-    <Label for="basicpill-date-input1">
-    ხელშეკრულების მოქმედების ვადის ათვლის პერიოდი
-    </Label>
-    <input
-      type="date"
-      id="basicpill-date-input1"
-      className="form-control"
-      defaultValue={new Date().toISOString().split('T')[0]}
-    />
-  </div>
-</Col>
-
+                              <Col lg="12">
+                                <div className="mb-3">
+                                  <Label for="basicpill-date-input1">
+                                    ხელშეკრულების მოქმედების ვადის ათვლის პერიოდი
+                                  </Label>
+                                  <input
+                                    type="date"
+                                    id="basicpill-date-input1"
+                                    className="form-control"
+                                    defaultValue={new Date().toISOString().split('T')[0]}
+                                  />
+                                </div>
+                              </Col>
                             </Row>
                           </Form>
                         </TabPane>
@@ -236,13 +211,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-pancard-input5">
-                                      PAN Card
+                                      მომსახურების საგანი
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-pancard-input5"
-                                      placeholder="Enter Your PAN No."
+                                      placeholder="ჩაწერეთ მომსახურების საგანი."
                                     />
                                   </div>
                                 </Col>
@@ -250,13 +225,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-vatno-input6">
-                                      VAT/TIN No.
+                                      მომსახურების ფასი/გადახდის პირობები/გადახდის განსხვავებული პირობები
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-vatno-input6"
-                                      placeholder="Enter Your VAT/TIN No."
+                                      placeholder="ჩაწერეთ მომსახურების ფასი/გადახდის პირობები/გადახდის განსხვავებული პირობები..."
                                     />
                                   </div>
                                 </Col>
@@ -265,13 +240,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-cstno-input7">
-                                      CST No.
+                                      გადახდის პირობები/გადახდის განსხვავებული პირობები
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-cstno-input7"
-                                      placeholder="Enter Your CST No."
+                                      placeholder="ჩაწერეთ გადახდის პირობები/გადახდის განსხვავებული პირობები..."
                                     />
                                   </div>
                                 </Col>
@@ -279,13 +254,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-servicetax-input8">
-                                      Service Tax No.
+                                      მომსახურების გაწევის ადგილი
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-servicetax-input8"
-                                      placeholder="Enter Your Service Tax No."
+                                      placeholder="ჩაწერეთ მომსახურების გაწევის ადგილი..."
                                     />
                                   </div>
                                 </Col>
@@ -294,13 +269,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-companyuin-input9">
-                                      Company UIN
+                                      ხელშეკრულების მოქმედების ვადა
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-companyuin-input9"
-                                      placeholder="Enter Your Company UIN"
+                                      placeholder="ჩაწერეთ ხელშეკრულების მოქმედების ვადა..."
                                     />
                                   </div>
                                 </Col>
@@ -308,13 +283,13 @@ const LawyerPage = () => {
                                 <Col lg="6">
                                   <div className="mb-3">
                                     <Label for="basicpill-declaration-input10">
-                                      Declaration
+                                      ხელშეკრულების გაფორმების ინიციატორი და შესრულებაზე პასუხისმგებელი პირი
                                     </Label>
                                     <Input
                                       type="text"
                                       className="form-control"
                                       id="basicpill-Declaration-input10"
-                                      placeholder="Declaration Details"
+                                      placeholder="ჩაწერეთ ხელშეკრულების გაფორმების ინიციატორი და შესრულებაზე პასუხისმგებელი პირი..."
                                     />
                                   </div>
                                 </Col>
@@ -323,88 +298,6 @@ const LawyerPage = () => {
                           </div>
                         </TabPane>
                         <TabPane tabId={3}>
-                          <div>
-                            <Form>
-                              <Row>
-                                <Col lg="6">
-                                  <div className="mb-3">
-                                    <Label for="basicpill-namecard-input11">
-                                      Name on Card
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      className="form-control"
-                                      id="basicpill-namecard-input11"
-                                      placeholder="Enter Your Name on Card"
-                                    />
-                                  </div>
-                                </Col>
-
-                                <Col lg="6">
-                                  <div className="mb-3">
-                                    <Label>Credit Card Type</Label>
-                                    <select className="form-select">
-                                      <option defaultValue>
-                                        Select Card Type
-                                      </option>
-                                      <option value="AE">
-                                        American Express
-                                      </option>
-                                      <option value="VI">Visa</option>
-                                      <option value="MC">MasterCard</option>
-                                      <option value="DI">Discover</option>
-                                    </select>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg="6">
-                                  <div className="mb-3">
-                                    <Label for="basicpill-cardno-input12">
-                                      Credit Card Number
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      className="form-control"
-                                      id="basicpill-cardno-input12"
-                                      placeholder="Credit Card Number"
-                                    />
-                                  </div>
-                                </Col>
-
-                                <Col lg="6">
-                                  <div className="mb-3">
-                                    <Label for="basicpill-card-verification-input0">
-                                      Card Verification Number
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      className="form-control"
-                                      id="basicpill-card-verification-input0"
-                                      placeholder="Credit Verification Number"
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg="6">
-                                  <div className="mb-3">
-                                    <Label for="basicpill-expiration-input13">
-                                      Expiration Date
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      className="form-control"
-                                      id="basicpill-expiration-input13"
-                                      placeholder="Card Expiration Date"
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
-                            </Form>
-                          </div>
-                        </TabPane>
-                        <TabPane tabId={4}>
                           <div className="row justify-content-center">
                             <Col lg="6">
                               <div className="text-center">
@@ -434,19 +327,19 @@ const LawyerPage = () => {
                           <Link
                             to="#"
                             onClick={() => {
-                              toggleTab(activeTab - 1)
+                              toggleTab(activeTab - 1);
                             }}
                           >
                             წინა გვერდი
                           </Link>
                         </li>
                         <li
-                          className={activeTab === 4 ? "next disabled" : "next"}
+                          className={activeTab === 3 ? "next disabled" : "next"}
                         >
                           <Link
                             to="#"
                             onClick={() => {
-                              toggleTab(activeTab + 1)
+                              toggleTab(activeTab + 1);
                             }}
                           >
                             შემდეგი გვერდი
@@ -458,12 +351,11 @@ const LawyerPage = () => {
                 </CardBody>
               </Card>
             </Col>
-            
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export default LawyerPage;
