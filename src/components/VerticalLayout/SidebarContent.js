@@ -227,12 +227,26 @@ const SidebarContent = props => {
          
             </li>
             <li>
-              <Link to="/hr">
-                <i className="bx bxs-report"></i>
-                <span>{props.t("HR დოკუმენტები")}</span>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bxs-file-doc"></i>
+                <span>{props.t("დოკუმენტები")}</span>
               </Link>
-         
-            </li>
+              <ul className="sub-menu">
+                <li>
+                <Link to="/hr">
+               
+                <span>{props.t("ცნობები")}</span>
+              </Link>
+                </li>
+                <li>
+                <Link to="/hr-approve">
+               
+                <span>{props.t("ვიზირება")}</span>
+              </Link>
+                </li>
+             
+              </ul>
+            </li> 
             <li>
               <Link to="/notes">
                 <i className="bx bxs-report"></i>

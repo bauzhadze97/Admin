@@ -184,6 +184,7 @@ import LawyerPage from "pages/LawyerPage";
 import LawyerPageApprove from "pages/LawyerPageApprove";
 import LawyerPageArchive from "pages/LawyerPageArchive/LawyerPageArchive";
 import LawyerPageDoc from "pages/LawyerPageDoc";
+import HrPageApprove from "pages/HrPageApprove";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -217,6 +218,7 @@ const authProtectedRoutes = [
   { path: "/procurement", component: <ProcurementPage /> },
   { path: "/head", component: <HeadPage />},
   { path: "/hr", component: <HrPage />},
+  { path: "/hr-approve", component: <HrPageApprove />},
   { path: "/lawyer", component: <LawyerPage />},
   { path: "/lawyer-approve", component: <LawyerPageApprove />},
   { path: "/lawyer-history", component: <LawyerPageArchive />},
