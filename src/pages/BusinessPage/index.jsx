@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import RequestCard from '../../components/Vacation/RequestCard';
-import Profile from '../../components/Profile';
-import Navigation from '../../components/Navigation';
 import {
-  Breadcrumbs,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
-
-import './index.css';
-import { useSelector } from 'react-redux';
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Form,
+  Input,
+  Label,
+  Row,
+  Button,
+} from 'reactstrap';
+import { useTranslation } from 'react-i18next';
+import Breadcrumbs from '../../components/Common/Breadcrumb';
 import { createTrip, getTripList } from '../../services/trip';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
-import store from '../../store'
+import './index.css';
 
 const BusinessPage = () => {
-  const { t } = useTranslation()
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [list, setList] = useState([]);
-  const [userData, setUserData] = useState({});
+  // Meta title
+  document.title = 'მივლინების მოთხოვნის ფორმა - Georgia LLC';
 
-  useEffect(() => {
-    if(store.getState().user && store.getState().user.data) {
-      setUserData(store.getState().user.data )
-    }
-  }, [store.getState().user.data])
+  const { t } = useTranslation();
+  const [errors, setErrors] = useState({}); // State for validation errors
+  const [list, setList] = useState([]);
 
   const [formData, setFormData] = useState({
     trip_type: 'regional',
@@ -45,45 +40,93 @@ const BusinessPage = () => {
     purpose_of_trip: '',
     description: '',
     business_trip_arrangement: '',
-    expected_result_business_trip: ''
+    expected_result_business_trip: '',
   });
 
   useEffect(() => {
     const fetchList = async () => {
       try {
         const res = await getTripList();
-
         setList(res.data.business);
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
-    }
+    };
 
     fetchList();
-  },[])
+  }, []);
 
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
 
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    if (type === 'checkbox') {
-      if (checked) {
-        setFormData((prevData) => ({
-          ...prevData,
-          holiday: [...prevData.holiday, value],
-        }));
-      } else {
-        setFormData((prevData) => ({
-          ...prevData,
-          holiday: prevData.holiday.filter((holiday) => holiday !== value),
-        }));
+    validateField(name, value); // Validate the field on each change
+  };
+
+  // Function to validate a specific field
+  const validateField = (field, value) => {
+    let errorMsg = '';
+
+    switch (field) {
+      case 'place_of_trip':
+        if (!value) errorMsg = 'მივლინების ადგილი აუცილებელია';
+        break;
+      case 'start_date':
+        if (!value) errorMsg = 'დაწყების თარიღი აუცილებელია';
+        break;
+      case 'end_date':
+        if (!value) errorMsg = 'დასრულების თარიღი აუცილებელია';
+        break;
+      case 'expense_vocation':
+        if (!value || isNaN(value)) errorMsg = 'მივლინების ხარჯი უნდა იყოს ციფრი';
+        break;
+      case 'expense_transport':
+        if (!value || isNaN(value)) errorMsg = 'ტრანსპორტი უნდა იყოს ციფრი';
+        break;
+      case 'expense_living':
+        if (!value || isNaN(value)) errorMsg = 'საცხოვრებელი უნდა იყოს ციფრი';
+        break;
+      case 'expense_meal':
+        if (!value || isNaN(value)) errorMsg = 'დღიური კვება უნდა იყოს ციფრი';
+        break;
+      default:
+        break;
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: errorMsg,
+    }));
+  };
+
+  // Function to validate all form data before submission
+  const validateForm = () => {
+    const newErrors = {};
+
+    Object.keys(formData).forEach((field) => {
+      validateField(field, formData[field]);
+    });
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const res = await createTrip(formData);
+      if (res) {
+        toast.success('თქვენი მოთხოვნა წარმატებით გაიგზავნა!');
+        window.location.reload();
       }
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -91,193 +134,236 @@ const BusinessPage = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    if(diffDays === 0) {
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays === 0) {
       return 1;
     }
     return diffDays;
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const res = await createTrip(formData);
-
-      if(res) {
-        toast.success("თქვენი მოთხოვნა წარმატებით გაიგზავნა!");
-        window.location.reload();
-        closeModal();
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  
-  }
-  console.log(formData)
   return (
-    <div className="page-content">
-            <div className="container-fluid">
-                <Breadcrumbs title="Admin" breadcrumbItem="Daily Report" />
-    <div className="vacation-dashboard-container">
-      <Dialog
-          open={modalIsOpen}
-          onClose={closeModal}
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
-        >
-          <DialogTitle id="modal-title">Business Trip Request</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="modal-description">
-              <form onSubmit={handleSubmit}>
-                <div className='vacation-form-wrapper'>
-                  <label>მივლინების ტიპი</label>
-                  <select name="trip_type" onChange={handleInputChange}>
-                    <option value="regional" selected={formData.trip_type === 'regional'}>მივლინება რეგიონში</option>
-                    <option value="international" selected={formData.trip_type === 'international'}>მივლინება საზღვარგარეთ</option>
-                  </select>
-                </div>
-                {
-                    formData.trip_type === 'regional' ? (
-                        <>
-                                 <div className='vacation-form-wrapper'>
-                                    <label>შემცვლელი პირის სახელი</label>
-                                    <input type="text" name="subtitle_user_name" onChange={handleInputChange} value={formData.subtitle_user_name} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>შემცვლელი პირის გვარი</label>
-                                    <input type="text" name="subtitle_user_sur_name" onChange={handleInputChange} value={formData.subtitle_user_sur_name} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების ადგილი</label>
-                                    <input type="text" name="place_of_trip" onChange={handleInputChange} value={formData.place_of_trip} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების მიზანი</label>
-                                    <textarea className="border border-black rounded-2xl p-1" name="purpose_of_trip" onChange={handleInputChange} id=""></textarea>
-                                    {/* <input type="text" name="purpose_of_trip"  value={formData.purpose_of_trip} /> */}
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების ხარჯი</label>
-                                    <input type="text" name="expense_vocation" onChange={handleInputChange} value={formData.expense_vocation} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>ტრანსპორტი (საკუთარი ავტომობილის შემთხვევაში საწვავისთვის საჭირო თანხა)</label>
-                                    <input type="text" name="expense_transport" onChange={handleInputChange} value={formData.expense_transport} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>საცხოვრებელი</label>
-                                    <input type="text" name="expense_living" onChange={handleInputChange} value={formData.expense_living} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>დღიური კვება</label>
-                                    <input type="text" name="expense_meal" onChange={handleInputChange} value={formData.expense_meal} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>სრული ხარჯი</label>
-                                    <input type="text" name="total_expense" onChange={handleInputChange} value={formData.total_expense} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>დაწყების თარიღი</label>
-                                    <input type="date" name="start_date" onChange={handleInputChange} value={formData.start_date} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>დასრულების თარიღი</label>
-                                    <input type="date" name="end_date" onChange={handleInputChange} value={formData.end_date} />
-                                </div>                               
-                        </>
-                    ) : (
-                        <>
-                                <div className='vacation-form-wrapper'>
-                                    <label>შემცვლელი პირის სახელი</label>
-                                    <input type="text" name="subtitle_user_name" onChange={handleInputChange} value={formData.subtitle_user_name} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>შემცვლელი პირის გვარი</label>
-                                    <input type="text" name="subtitle_user_sur_name" onChange={handleInputChange} value={formData.subtitle_user_sur_name} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების ადგილი (კონკრეტულად, ადგილმონაცვლეობის შემთხვევაში ყველა ტერიტორიული ერთეულის ჩამონათვალით)</label>
-                                    <input type="text" name="place_of_trip" onChange={handleInputChange} value={formData.place_of_trip} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების საფუძველი</label>
-                                    <input type="text" name="business_trip_basis" onChange={handleInputChange} value={formData.business_trip_basis} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების მიზანი</label>
-                                    <textarea className="border border-black rounded-2xl p-1" name="purpose_of_trip" onChange={handleInputChange} id=""></textarea>
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>შესასრულებელი ფუნქციის/დავალების დეტალური აღწერა:</label>
-                                    <input type="text" name="description" onChange={handleInputChange} value={formData.description} />
-                                </div>
-                                <div className='va cation-form-wrapper'>
-                                    <label>მივლინების უზრუნველყოფის ღონისძიებები (დაფინანსება სრული, ნაწილობრივი, დაფინანსების გარეშე)</label>
-                                    <input type="text" name="business_trip_arrangement" onChange={handleInputChange} value={formData.business_trip_arrangement} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>მივლინების მოსალოდნელი შედეგი</label>
-                                    <input type="text" name="expected_result_business_trip" onChange={handleInputChange} value={formData.expected_result_business_trip} />
-                                </div>
-                                {/* <div className='vacation-form-wrapper'>
-                                    <label>მივლინების ფაქტობრივი შედეგი</label>
-                                    <input type="text" name="actual_result" onChange={handleInputChange} value={formData.actual_result} />
-                                </div> */}
-                                <div className='vacation-form-wrapper'>
-                                    <label>დაწყების თარიღი</label>
-                                    <input type="date" name="start_date" onChange={handleInputChange} value={formData.start_date} />
-                                </div>
-                                <div className='vacation-form-wrapper'>
-                                    <label>დასრულების თარიღი</label>
-                                    <input type="date" name="end_date" onChange={handleInputChange} value={formData.end_date} />
-                                </div>
-                        </>
-                    )
-                    
-                }
-                
-                <button type="submit" className='vacation-form-submit'>გაგზავნა</button>
-              </form>
-            </DialogContentText>
-           
-          </DialogContent>
-          
-        </Dialog>
-        {/* <div className="user-info">
-          <span>{t("welcome")}, {userData?.name}!</span>
-        </div> */}
-        <div className='middle-wrapper flex pl-10'>
-          <div className='grow-0'>
-            {/* <Profile /> */}
-          </div>
-          <main className="vacation-main-content grow">
-            <div className='flex flex-col items-center'>
-              <div className='vacation-main-header border-[3px] border-[#105D8D]  w-[100%]'>
-                <h1 className='font-semibold text-xl'>{t("Busines Trip")}</h1>
-                <button className="approve-button" onClick={openModal}>{t("request")}</button>
-              </div>
-              <div className='w-[80%] h-[600px] overflow-y-auto pt-2 flex flex-col items-center'>
-                {
-                  list.map((vacation, idx) => {
-                    return <RequestCard 
-                      key={idx}
-                      type={t("business_trip")}
-                      duration={calculateDuration(vacation.start_date, vacation.end_date) + ' დღე'}
-                      startDay={vacation.start_date}
-                      endDay={vacation.end_date}
-                      status={vacation.status}
-                    />
-                  })
-                }
-              </div>
-              
-              </div>
-            </main>
-        </div>
-    </div>
-    </div>
-    </div>
+    <React.Fragment>
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="CRM" breadcrumbItem="მივლინების მოთხოვნის გვერდი" />
+
+          <Row>
+            <Col lg="12">
+              <Card>
+                <CardBody>
+                  <Form onSubmit={handleSubmit}>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="trip_type">მივლინების ტიპი</Label>
+                          <Input
+                            type="select"
+                            name="trip_type"
+                            id="trip_type"
+                            value={formData.trip_type}
+                            onChange={handleInputChange}
+                          >
+                            <option value="regional">მივლინება რეგიონში</option>
+                            <option value="international">მივლინება საზღვარგარეთ</option>
+                          </Input>
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="subtitle_user_name">შემცვლელი პირის სახელი</Label>
+                          <Input
+                            type="text"
+                            id="subtitle_user_name"
+                            name="subtitle_user_name"
+                            value={formData.subtitle_user_name}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ შემცვლელი პირის სახელი..."
+                          />
+                          {errors.subtitle_user_name && (
+                            <div className="text-danger">{errors.subtitle_user_name}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="subtitle_user_sur_name">შემცვლელი პირის გვარი</Label>
+                          <Input
+                            type="text"
+                            id="subtitle_user_sur_name"
+                            name="subtitle_user_sur_name"
+                            value={formData.subtitle_user_sur_name}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ შემცვლელი პირის გვარი..."
+                          />
+                          {errors.subtitle_user_sur_name && (
+                            <div className="text-danger">{errors.subtitle_user_sur_name}</div>
+                          )}
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="place_of_trip">მივლინების ადგილი</Label>
+                          <Input
+                            type="text"
+                            id="place_of_trip"
+                            name="place_of_trip"
+                            value={formData.place_of_trip}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ მივლინების ადგილი..."
+                          />
+                          {errors.place_of_trip && (
+                            <div className="text-danger">{errors.place_of_trip}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="purpose_of_trip">მივლინების მიზანი</Label>
+                          <Input
+                            type="textarea"
+                            id="purpose_of_trip"
+                            name="purpose_of_trip"
+                            value={formData.purpose_of_trip}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ მივლინების მიზანი..."
+                          />
+                          {errors.purpose_of_trip && (
+                            <div className="text-danger">{errors.purpose_of_trip}</div>
+                          )}
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="expense_vocation">მივლინების ხარჯი</Label>
+                          <Input
+                            type="text"
+                            id="expense_vocation"
+                            name="expense_vocation"
+                            value={formData.expense_vocation}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ მივლინების ხარჯი..."
+                          />
+                          {errors.expense_vocation && (
+                            <div className="text-danger">{errors.expense_vocation}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="expense_transport">ტრანსპორტი (საკუთარი ავტომობილის შემთხვევაში საწვავისთვის საჭირო თანხა)</Label>
+                          <Input
+                            type="text"
+                            id="expense_transport"
+                            name="expense_transport"
+                            value={formData.expense_transport}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ ტრანსპორტის ხარჯი..."
+                          />
+                          {errors.expense_transport && (
+                            <div className="text-danger">{errors.expense_transport}</div>
+                          )}
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="expense_living">საცხოვრებელი</Label>
+                          <Input
+                            type="text"
+                            id="expense_living"
+                            name="expense_living"
+                            value={formData.expense_living}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ საცხოვრებლის ხარჯი..."
+                          />
+                          {errors.expense_living && (
+                            <div className="text-danger">{errors.expense_living}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="expense_meal">დღიური კვება</Label>
+                          <Input
+                            type="text"
+                            id="expense_meal"
+                            name="expense_meal"
+                            value={formData.expense_meal}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ დღიური კვების ხარჯი..."
+                          />
+                          {errors.expense_meal && (
+                            <div className="text-danger">{errors.expense_meal}</div>
+                          )}
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="total_expense">სრული ხარჯი</Label>
+                          <Input
+                            type="text"
+                            id="total_expense"
+                            name="total_expense"
+                            value={formData.total_expense}
+                            onChange={handleInputChange}
+                            placeholder="ჩაწერეთ სრული ხარჯი..."
+                          />
+                          {errors.total_expense && (
+                            <div className="text-danger">{errors.total_expense}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="start_date">დაწყების თარიღი</Label>
+                          <Input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            value={formData.start_date}
+                            onChange={handleInputChange}
+                          />
+                          {errors.start_date && (
+                            <div className="text-danger">{errors.start_date}</div>
+                          )}
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="end_date">დასრულების თარიღი</Label>
+                          <Input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            value={formData.end_date}
+                            onChange={handleInputChange}
+                          />
+                          {errors.end_date && (
+                            <div className="text-danger">{errors.end_date}</div>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Button type="submit" color="primary">
+                      {t('Submit')}
+                    </Button>
+                  </Form>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </React.Fragment>
   );
 };
 

@@ -35,7 +35,7 @@ import { createSelector } from "reselect";
 const Calender = props => {
 
   //meta title
-  document.title = "Calendar | Gorgia LLC";
+  document.title = "Calendar | Skote - React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
 
@@ -151,7 +151,7 @@ const Calender = props => {
       currentMin,
       currentSec
     );
-    const modifiedData = { ...arg, date: modifiedDate };
+    // const modifiedData = { ...arg, date: modifiedDate };
 
     setSelectedDay(modifiedData);
     toggle();
@@ -252,7 +252,7 @@ const Calender = props => {
       <div className="page-content">
         <Container fluid={true}>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Calendar" breadcrumbItem="Full Calendar" />
+          <Breadcrumbs title="Calendar" breadcrumbItem="შემოსვლები" />
           <Row>
             <Col xs={12}>
               <Row>
@@ -272,11 +272,11 @@ const Calender = props => {
                               handleChangeLocals(selectedLocale);
                             }}
                           >
-                            {(allLocales || [])?.map((localeCode, key) => (
+                            {/* {(allLocales || [])?.map((localeCode, key) => (
                               <option key={key} value={localeCode.code}>
                                 {localeCode.code}
                               </option>
-                            ))}
+                            ))} */}
                           </select>
                         </div>
                         <Button
