@@ -33,8 +33,8 @@ const WelcomeComp = () => {
                   className="img-thumbnail rounded-circle"
                 />
               </div>
-              <h5 className="font-size-15 text-truncate">Henry Price</h5>
-              <p className="text-muted mb-0 text-truncate">UI/UX Designer</p>
+              <h5 className="font-size-15 text-truncate">ლაშა ბუხიაშვილი</h5>
+              <p className="text-muted mb-0 text-truncate">ქსელის ადმინისტრატორი</p>
             </Col>
 
             <Col sm="8">
@@ -42,11 +42,11 @@ const WelcomeComp = () => {
                 <Row>
                   <Col xs="6">
                     <h5 className="font-size-15">125</h5>
-                    <p className="text-muted mb-0">Projects</p>
+                    <p className="text-muted mb-0">დავალება</p>
                   </Col>
                   <Col xs="6">
-                    <h5 className="font-size-15">$1245</h5>
-                    <p className="text-muted mb-0">Revenue</p>
+                    <h5 className="font-size-15">12 დღე</h5>
+                    <p className="text-muted mb-0">შვებულება</p>
                   </Col>
                 </Row>
                 <div className="mt-4">
