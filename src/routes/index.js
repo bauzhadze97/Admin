@@ -186,6 +186,7 @@ import LawyerPageArchive from "pages/LawyerPageArchive/LawyerPageArchive";
 import LawyerPageDoc from "pages/LawyerPageDoc";
 import HrPageApprove from "pages/HrPageApprove";
 import ItHelpPage from "pages/ItHelpPage";
+import TaskList from "../pages/JobPages/JobList";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -272,7 +273,7 @@ const authProtectedRoutes = [
   { path: "/job-grid", component: <JobGrid /> },
   { path: "/job-details", component: <JobDetails /> },
   { path: "/job-categories", component: <JobCategories /> },
-  { path: "/job-list", component: <JobList /> },
+  { path: "/it-tasks", component: <TaskList /> },
   { path: "/job-apply", component: <ApplyJobs /> },
   { path: "/candidate-list", component: <CandidateList /> },
   { path: "/candidate-overview", component: <CandidateOverview /> },

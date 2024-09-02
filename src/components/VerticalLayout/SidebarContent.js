@@ -306,7 +306,7 @@ const SidebarContent = props => {
             </li> */}
 
 
-            {/* <li>
+            <li>
               <Link to="/#" className="has-arrow">                
                 <i className="bx bx-briefcase-alt"></i>
                 <span key="t-jobs">{props.t("Jobs")}</span>
@@ -325,7 +325,7 @@ const SidebarContent = props => {
                   </ul>
                 </li>
               </ul>
-            </li> */}
+            </li>
 
             {/* <li className="menu-title">Pages</li> */}
             {/* <li>

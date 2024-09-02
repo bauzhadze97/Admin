@@ -4,20 +4,12 @@ import TableContainer from '../../../components/Common/TableContainer';
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-//import components
+// Import components
 import Breadcrumbs from '../../../components/Common/Breadcrumb';
 import DeleteModal from '../../../components/Common/DeleteModal';
 
-import {
-    getJobList as onGetJobList,
-    addNewJobList as onAddNewJobList,
-    updateJobList as onUpdateJobList,
-    deleteJobList as onDeleteJobList,
-} from "store/actions";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
+// Import task services
+import { getTaskList, createTask, updateTask, deleteTask } from "../../../services/tasks";
 
 import {
     Col,
@@ -43,282 +35,193 @@ import Spinners from "components/Common/Spinner";
 import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 
-const JobList = () => {
+const TaskList = () => {
 
-    //meta title
-    document.title = "Jobs List | Gorgia LLC";
+    // Meta title
+    document.title = "Tasks List | Gorgia LLC";
 
     const [modal, setModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [job, setJob] = useState(null);
+    const [task, setTask] = useState(null);
+    const [tasks, setTasks] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    const [deleteModal, setDeleteModal] = useState(false);
 
-    // validation
+    // Fetch tasks function
+    const fetchTasks = async () => {
+        setLoading(true);
+        try {
+            console.log("Fetching tasks...");  // Debugging line
+            const response = await getTaskList();
+            console.log("Tasks fetched successfully:", response.data);  // Debugging line
+            setTasks(response.data || []);  // Ensure it's always an array
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch tasks on component mount
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    // Form validation
     const validation = useFormik({
-        // enableReinitialize : use this flag when initial values needs to be changed
         enableReinitialize: true,
-
         initialValues: {
-            jobId: (job && job.jobId) || '',
-            jobTitle: (job && job.jobTitle) || '',
-            companyName: (job && job.companyName) || '',
-            location: (job && job.location) || '',
-            experience: (job && job.experience) || '',
-            position: (job && job.position) || '',
-            type: (job && job.type) || '',
-            status: (job && job.status) || '',
+            taskId: (task && task.taskId) || '',
+            taskTitle: (task && task.taskTitle) || '',
+            description: (task && task.description) || '',
+            assignedTo: (task && task.assignedTo) || '',
+            dueDate: (task && task.dueDate) || '',
+            priority: (task && task.priority) || 'Medium',
+            status: (task && task.status) || 'Pending',
         },
         validationSchema: Yup.object({
-            jobId: Yup.string().matches(
-                /[0-9\.\-\s+\/()]+/,
-                "Please Enter Valid Job Id"
-            ).required("Please Enter Your Job Id"),
-            jobTitle: Yup.string().required("Please Enter Your Job Title"),
-            companyName: Yup.string().required("Please Enter Your Company Name"),
-            location: Yup.string().required("Please Enter Your Location"),
-            experience: Yup.string().required("Please Enter Your Experience"),
-            position: Yup.string().required("Please Enter Your Position"),
-            type: Yup.string().required("Please Enter Your Type"),
-            status: Yup.string().required("Please Enter Your Status"),
+            taskId: Yup.string().required("Please Enter Your Task Id"),
+            taskTitle: Yup.string().required("Please Enter Your Task Title"),
+            description: Yup.string().required("Please Enter Your Description"),
+            assignedTo: Yup.string().required("Please Enter Assignee"),
+            dueDate: Yup.date().required("Please Enter Due Date"),
+            priority: Yup.string().required("Please Enter Priority"),
+            status: Yup.string().required("Please Enter Status"),
         }),
-        onSubmit: (values) => {
-            if (isEdit) {
-                const updateJobList = {
-                    id: job ? job.id : 0,
-                    jobId: values.jobId,
-                    jobTitle: values.jobTitle,
-                    companyName: values.companyName,
-                    location: values.location,
-                    experience: values.experience,
-                    position: values.position,
-                    type: values.type,
-                    postedDate: "02 June 2021",
-                    lastDate: "25 June 2021",
-                    status: values.status,
-                };
-                // update Job
-                dispatch(onUpdateJobList(updateJobList));
+        onSubmit: async (values) => {
+            try {
+                if (isEdit) {
+                    // Update task
+                    await updateTask(task.id, values);
+                    console.log("Task updated successfully:", values);
+                } else {
+                    // Create new task
+                    await createTask(values);
+                    console.log("New task created successfully:", values);
+                }
                 validation.resetForm();
-            } else {
-                const newJobList = {
-                    id: Math.floor(Math.random() * (30 - 20)) + 20,
-                    jobId: values["jobId"],
-                    jobTitle: values["jobTitle"],
-                    companyName: values["companyName"],
-                    location: values["location"],
-                    experience: values["experience"],
-                    position: values["position"],
-                    type: values["type"],
-                    postedDate: "02 June 2021",
-                    lastDate: "25 June 2021",
-                    status: values["status"],
-                };
-                // save new Job
-                dispatch(onAddNewJobList(newJobList));
-                validation.resetForm();
+                toggle();
+                fetchTasks(); // Refresh tasks after submit
+            } catch (error) {
+                console.error("Error submitting form:", error);
             }
-            toggle();
         },
     });
 
-    const dispatch = useDispatch();
-
-    const JobsJobsProperties = createSelector(
-        (state) => state.JobReducer,
-        (jobReducer) => ({
-            jobs: jobReducer.jobs,
-            loading: jobReducer.loading
-        })
-    );
-
-    const {
-        jobs, loading
-    } = useSelector(JobsJobsProperties);
-
-    const [isLoading, setLoading] = useState(loading)
-
-    useEffect(() => {
-        if (jobs && !jobs.length) {
-            dispatch(onGetJobList());
-        }
-    }, [dispatch, jobs]);
-
+    // Toggle modal visibility
     const toggle = () => {
-        if (modal) {
-            setModal(false);
-            setJob(null);
-        } else {
-            setModal(true);
+        setModal(!modal);
+        if (!modal) {
+            setTask(null);
+            setIsEdit(false);
         }
     };
 
-    const handleJobClick = arg => {
-        const job = arg;
-        setJob({
-            id: job.id,
-            jobId: job.jobId,
-            jobTitle: job.jobTitle,
-            companyName: job.companyName,
-            location: job.location,
-            experience: job.experience,
-            position: job.position,
-            type: job.type,
-            status: job.status,
-        });
-
+    // Handle task click for edit
+    const handleTaskClick = task => {
+        setTask(task);
         setIsEdit(true);
-
         toggle();
     };
 
-    //delete Job
-    const [deleteModal, setDeleteModal] = useState(false);
-
-    const onClickDelete = (job) => {
-        setJob(job);
+    // Handle delete task
+    const onClickDelete = (task) => {
+        setTask(task);
         setDeleteModal(true);
     };
 
-    const handleDeletejob = () => {
-        if (job && job.id) {
-            dispatch(onDeleteJobList(job.id));
+    const handleDeleteTask = async () => {
+        try {
+            if (task && task.id) {
+                await deleteTask(task.id);
+                console.log("Task deleted successfully");
+                fetchTasks();
+            }
             setDeleteModal(false);
+        } catch (error) {
+            console.error("Error deleting task:", error);
         }
     };
 
+    // Define table columns
     const columns = useMemo(
         () => [
             {
                 header: 'No',
                 accessorKey: "id",
-                enableColumnFilter: false,
-                enableSorting: true,
                 cell: (cellProps) => {
                     return <Link to="#" className="text-body fw-bold">{cellProps.row.original.id}</Link>
                 }
             },
             {
-                header: "Job Title",
-                accessorKey: "jobTitle",
-                enableColumnFilter: false,
-                enableSorting: true,
+                header: "Task Title",
+                accessorKey: "taskTitle",
             },
             {
-                header: 'Company Name',
-                accessorKey: "companyName",
-                enableColumnFilter: false,
-                enableSorting: true,
+                header: 'Description',
+                accessorKey: "description",
             },
             {
-                header: 'Location',
-                enableColumnFilter: false,
-                enableSorting: true,
-                accessorKey: "location"
+                header: 'Assigned To',
+                accessorKey: "assignedTo"
             },
             {
-                header: 'Experience',
-                enableColumnFilter: false,
-                enableSorting: true,
-                accessorKey: "experience"
+                header: 'Due Date',
+                accessorKey: "dueDate"
             },
             {
-                header: 'Position',
-                enableColumnFilter: false,
-                enableSorting: true,
-                accessorKey: "position"
-            },
-            {
-                header: "Type",
-                accessorKey: "type",
-                enableColumnFilter: false,
-                enableSorting: true,
+                header: "Priority",
+                accessorKey: "priority",
                 cell: (cellProps) => {
-                    switch (cellProps.row.original.type) {
-                        case "Full Time":
-                            return <span className="badge badge-soft-success">Full Time</span>;
-                        case "Part Time":
-                            return <span className="badge badge-soft-danger">Part Time</span>;
-                        case "Freelance":
-                            return <span className="badge badge-soft-info">Freelance</span>;
+                    switch (cellProps.row.original.priority) {
+                        case "High":
+                            return <Badge className="bg-danger">High</Badge>;
+                        case "Medium":
+                            return <Badge className="bg-warning">Medium</Badge>;
+                        case "Low":
+                            return <Badge className="bg-success">Low</Badge>;
                         default:
-                            return <span className="badge badge-soft-warning">Internship</span>;
+                            return <Badge className="bg-secondary">Unknown</Badge>;
                     }
                 },
             },
             {
-                header: 'Posted Date',
-                enableColumnFilter: false,
-                enableSorting: true,
-                accessorKey: "postedDate"
-            },
-            {
-                header: 'Last Date',
-                enableColumnFilter: false,
-                enableSorting: true,
-                accessorKey: "lastDate"
-            },
-            {
                 header: 'Status',
                 accessorKey: "status",
-                enableColumnFilter: false,
-                enableSorting: true,
                 cell: (cellProps) => {
                     switch (cellProps.row.original.status) {
-                        case "Active":
-                            return <Badge className="bg-success">Active</Badge>
-                        case "New":
-                            return <Badge className="bg-info">New</Badge>
-                        case "Close":
-                            return <Badge className="bg-danger">Close</Badge>
+                        case "Pending":
+                            return <Badge className="bg-warning">Pending</Badge>
+                        case "In Progress":
+                            return <Badge className="bg-info">In Progress</Badge>
+                        case "Completed":
+                            return <Badge className="bg-success">Completed</Badge>
+                        case "Cancelled":
+                            return <Badge className="bg-danger">Cancelled</Badge>
                     }
                 }
             },
             {
                 header: 'Action',
-                enableColumnFilter: false,
-                enableSorting: true,
                 cell: (cellProps) => {
                     return (
                         <ul className="list-unstyled hstack gap-1 mb-0">
-                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                <Link to="/job-details" className="btn btn-sm btn-soft-primary" id={`viewtooltip-${cellProps.row.original.id}`}>
-                                    <i className="mdi mdi-eye-outline" />
-                                </Link>
-                            </li>
-                            <UncontrolledTooltip placement="top" target={`viewtooltip-${cellProps.row.original.id}`}>
-                                View
-                            </UncontrolledTooltip>
-
-                            <li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                 <Link
                                     to="#"
                                     className="btn btn-sm btn-soft-info"
-                                    onClick={() => {
-                                        const jobData = cellProps.row.original;
-                                        handleJobClick(jobData);
-                                    }}
-                                    id={`edittooltip-${cellProps.row.original.id}`}
+                                    onClick={() => handleTaskClick(cellProps.row.original)}
                                 >
                                     <i className="mdi mdi-pencil-outline" />
-                                    <UncontrolledTooltip placement="top" target={`edittooltip-${cellProps.row.original.id}`} >
-                                        Edit
-                                    </UncontrolledTooltip>
                                 </Link>
                             </li>
-
-                            <li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                 <Link
                                     to="#"
                                     className="btn btn-sm btn-soft-danger"
-                                    onClick={() => {
-                                        const jobData = cellProps.row.original;
-                                        onClickDelete(jobData);
-                                    }}
-                                    id={`deletetooltip-${cellProps.row.original.id}`}
+                                    onClick={() => onClickDelete(cellProps.row.original)}
                                 >
                                     <i className="mdi mdi-delete-outline" />
-                                    <UncontrolledTooltip placement="top" target={`deletetooltip-${cellProps.row.original.id}`}>
-                                        Delete
-                                    </UncontrolledTooltip>
                                 </Link>
                             </li>
                         </ul>
@@ -333,12 +236,12 @@ const JobList = () => {
         <React.Fragment>
             <DeleteModal
                 show={deleteModal}
-                onDeleteClick={handleDeletejob}
+                onDeleteClick={handleDeleteTask}
                 onCloseClick={() => setDeleteModal(false)}
             />
             <div className="page-content">
                 <div className="container-fluid">
-                    <Breadcrumbs title="Jobs" breadcrumbItem="Jobs Lists" />
+                    <Breadcrumbs title="Tasks" breadcrumbItem="Tasks Lists" />
                     {
                         isLoading ? <Spinners setLoading={setLoading} />
                             :
@@ -347,9 +250,9 @@ const JobList = () => {
                                     <Card>
                                         <CardBody className="border-bottom">
                                             <div className="d-flex align-items-center">
-                                                <h5 className="mb-0 card-title flex-grow-1">Jobs Lists</h5>
+                                                <h5 className="mb-0 card-title flex-grow-1">Tasks List</h5>
                                                 <div className="flex-shrink-0">
-                                                    <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">Add New Job</Link>
+                                                    <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">Add New Task</Link>
                                                     <Link to="#!" className="btn btn-light me-1"><i className="mdi mdi-refresh"></i></Link>
                                                     <UncontrolledDropdown className="dropdown d-inline-block me-1">
                                                         <DropdownToggle type="menu" className="btn btn-success" id="dropdownMenuButton1">
@@ -366,10 +269,9 @@ const JobList = () => {
                                         <CardBody>
                                             <TableContainer
                                                 columns={columns}
-                                                data={jobs || []}
+                                                data={tasks}
                                                 isCustomPageSize={true}
                                                 isGlobalFilter={true}
-                                                isJobListGlobalFilter={true}
                                                 isPagination={true}
                                                 SearchPlaceholder="Search for ..."
                                                 tableClass="align-middle table-nowrap dt-responsive nowrap w-100 table-check dataTable no-footer dtr-inline mt-4 border-top"
@@ -383,7 +285,7 @@ const JobList = () => {
                     }
                     <Modal isOpen={modal} toggle={toggle}>
                         <ModalHeader toggle={toggle} tag="h4">
-                            {!!isEdit ? "Edit Job" : "Add Job"}
+                            {!!isEdit ? "Edit Task" : "Add Task"}
                         </ModalHeader>
                         <ModalBody>
                             <Form
@@ -396,140 +298,107 @@ const JobList = () => {
                                 <Row>
                                     <Col className="col-12">
                                         <div className="mb-3">
-                                            <Label> Job Id</Label>
+                                            <Label> Task Id</Label>
                                             <Input
-                                                name="jobId"
+                                                name="taskId"
                                                 type="text"
-                                                placeholder="Insert Job Id"
-                                                validate={{
-                                                    required: { value: true },
-                                                }}
+                                                placeholder="Insert Task Id"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.jobId || ""}
+                                                value={validation.values.taskId || ""}
                                                 invalid={
-                                                    validation.touched.jobId && validation.errors.jobId ? true : false
+                                                    validation.touched.taskId && validation.errors.taskId ? true : false
                                                 }
                                             />
-                                            {validation.touched.jobId && validation.errors.jobId ? (
-                                                <FormFeedback type="invalid">{validation.errors.jobId}</FormFeedback>
+                                            {validation.touched.taskId && validation.errors.taskId ? (
+                                                <FormFeedback type="invalid">{validation.errors.taskId}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Job Title</Label>
+                                            <Label>Task Title</Label>
                                             <Input
-                                                name="jobTitle"
+                                                name="taskTitle"
                                                 type="text"
-                                                placeholder="Insert Job Title"
-                                                validate={{
-                                                    required: { value: true },
-                                                }}
+                                                placeholder="Insert Task Title"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.jobTitle || ""}
+                                                value={validation.values.taskTitle || ""}
                                                 invalid={
-                                                    validation.touched.jobTitle && validation.errors.jobTitle ? true : false
+                                                    validation.touched.taskTitle && validation.errors.taskTitle ? true : false
                                                 }
                                             />
-                                            {validation.touched.jobTitle && validation.errors.jobTitle ? (
-                                                <FormFeedback type="invalid">{validation.errors.jobTitle}</FormFeedback>
+                                            {validation.touched.taskTitle && validation.errors.taskTitle ? (
+                                                <FormFeedback type="invalid">{validation.errors.taskTitle}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Company Name</Label>
+                                            <Label>Description</Label>
                                             <Input
-                                                name="companyName"
-                                                type="text"
-                                                placeholder="Insert Company Name"
+                                                name="description"
+                                                type="textarea"
+                                                placeholder="Insert Description"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.companyName || ""}
+                                                value={validation.values.description || ""}
                                                 invalid={
-                                                    validation.touched.companyName && validation.errors.companyName ? true : false
+                                                    validation.touched.description && validation.errors.description ? true : false
                                                 }
                                             />
-                                            {validation.touched.companyName && validation.errors.companyName ? (
-                                                <FormFeedback type="invalid">{validation.errors.companyName}</FormFeedback>
+                                            {validation.touched.description && validation.errors.description ? (
+                                                <FormFeedback type="invalid">{validation.errors.description}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Location</Label>
+                                            <Label>Assigned To</Label>
                                             <Input
-                                                name="location"
-                                                placeholder="Insert Location"
+                                                name="assignedTo"
                                                 type="text"
+                                                placeholder="Assigned To"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.location || ""}
+                                                value={validation.values.assignedTo || ""}
                                                 invalid={
-                                                    validation.touched.location && validation.errors.location ? true : false
+                                                    validation.touched.assignedTo && validation.errors.assignedTo ? true : false
                                                 }
                                             />
-                                            {validation.touched.location && validation.errors.location ? (
-                                                <FormFeedback type="invalid">{validation.errors.location}</FormFeedback>
+                                            {validation.touched.assignedTo && validation.errors.assignedTo ? (
+                                                <FormFeedback type="invalid">{validation.errors.assignedTo}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Experience</Label>
+                                            <Label>Due Date</Label>
                                             <Input
-                                                name="experience"
-                                                type="text"
-                                                placeholder="Insert Experience"
+                                                name="dueDate"
+                                                type="date"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={
-                                                    validation.values.experience || ""
-                                                }
+                                                value={validation.values.dueDate || ""}
                                                 invalid={
-                                                    validation.touched.experience && validation.errors.experience ? true : false
+                                                    validation.touched.dueDate && validation.errors.dueDate ? true : false
                                                 }
                                             />
-                                            {validation.touched.experience && validation.errors.experience ? (
-                                                <FormFeedback type="invalid">{validation.errors.experience}</FormFeedback>
+                                            {validation.touched.dueDate && validation.errors.dueDate ? (
+                                                <FormFeedback type="invalid">{validation.errors.dueDate}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Position</Label>
+                                            <Label>Priority</Label>
                                             <Input
-                                                name="position"
-                                                type="text"
-                                                placeholder="Insert Position"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.position || ""}
-                                                invalid={
-                                                    validation.touched.position && validation.errors.position ? true : false
-                                                }
-                                            />
-                                            {validation.touched.position && validation.errors.position ? (
-                                                <FormFeedback type="invalid">{validation.errors.position}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>Type</Label>
-                                            <Input
-                                                name="type"
+                                                name="priority"
                                                 type="select"
-                                                className="form-select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={
-                                                    validation.values.type || ""
-                                                }
+                                                value={validation.values.priority || ""}
                                                 invalid={
-                                                    validation.touched.type && validation.errors.type
-                                                        ? true
-                                                        : false
+                                                    validation.touched.priority && validation.errors.priority ? true : false
                                                 }
                                             >
-                                                <option>Full Time</option>
-                                                <option>Part Time</option>
-                                                <option>Freelance</option>
-                                                <option>Internship</option>
-
+                                                <option>Low</option>
+                                                <option>Medium</option>
+                                                <option>High</option>
                                             </Input>
-                                            {validation.touched.type && validation.errors.type ? (
-                                                <FormFeedback type="invalid">{validation.errors.type}</FormFeedback>
+                                            {validation.touched.priority && validation.errors.priority ? (
+                                                <FormFeedback type="invalid">{validation.errors.priority}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
@@ -539,19 +408,18 @@ const JobList = () => {
                                                 type="select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={
-                                                    validation.values.status || ""
-                                                }
+                                                value={validation.values.status || ""}
                                                 invalid={
                                                     validation.touched.status && validation.errors.status ? true : false
                                                 }
                                             >
-                                                <option>Active</option>
-                                                <option>New</option>
-                                                <option>Close</option>
+                                                <option>Pending</option>
+                                                <option>In Progress</option>
+                                                <option>Completed</option>
+                                                <option>Cancelled</option>
                                             </Input>
                                             {validation.touched.status && validation.errors.status ? (
-                                                <FormFeedback status="invalid">{validation.errors.status}</FormFeedback>
+                                                <FormFeedback type="invalid">{validation.errors.status}</FormFeedback>
                                             ) : null}
                                         </div>
                                     </Col>
@@ -559,10 +427,7 @@ const JobList = () => {
                                 <Row>
                                     <Col>
                                         <div className="text-end">
-                                            <Button color="success"
-                                                type="submit"
-                                                className="save-user"
-                                            >
+                                            <Button color="success" type="submit" className="save-task">
                                                 Save
                                             </Button>
                                         </div>
@@ -576,7 +441,6 @@ const JobList = () => {
             <ToastContainer />
         </React.Fragment>
     );
-}
+};
 
-
-export default JobList;
+export default TaskList;
