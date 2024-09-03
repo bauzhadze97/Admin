@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardBody, Col } from 'reactstrap';
+import { Card, CardBody, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 
-//import images
+// Import images
 import wechat from "../../../assets/images/companies/wechat.svg";
 
-const DetailsSection = () => {
+const DetailsSection = ({ task }) => {
+    // State to manage comment input
+    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
+
+    // Destructure task properties for easy access
+    const {
+        task_title,
+        description,
+        assigned_to,
+        due_date,
+        priority,
+        status,
+        created_at,
+        updated_at
+    } = task;
+
+    // Handle comment input change
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
+
+    // Handle form submission
+    const handleCommentSubmit = (event) => {
+        event.preventDefault();
+        if (comment.trim()) {
+            setComments([...comments, comment]);
+            setComment(''); // Clear input after submission
+        }
+    };
+
     return (
         <React.Fragment>
             <Col xl={9}>
@@ -14,13 +44,15 @@ const DetailsSection = () => {
                         <div className="d-flex">
                             <img src={wechat} alt="" height="50" />
                             <div className="flex-grow-1 ms-3">
-                                <h5 className="fw-semibold">Magento Developer</h5>
+                                <h5 className="fw-semibold">{task_title || "No Title Available"}</h5>
                                 <ul className="list-unstyled hstack gap-2 mb-0">
                                     <li>
-                                        <i className="bx bx-building-house"></i> <span className="text-muted">GORGIA</span>
+                                        <i className="bx bx-building-house"></i> 
+                                        <span className="text-muted">{assigned_to || "No Assignee"}</span>
                                     </li>
                                     <li>
-                                        <i className="bx bx-map"></i> <span className="text-muted">California</span>
+                                        <i className="bx bx-calendar"></i> 
+                                        <span className="text-muted">Due Date: {due_date || "N/A"}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -28,102 +60,30 @@ const DetailsSection = () => {
                     </CardBody>
                     <CardBody>
                         <h5 className="fw-semibold mb-3">Description</h5>
-                        <p className="text-muted">We are looking to hire a skilled Magento developer to build and maintain eCommerce websites for our clients. As a Magento developer, you will be responsible for liaising with the design team, setting up Magento 1x and 2x sites, building modules and customizing extensions, testing the performance of each site, and maintaining security and feature updates after the installation is complete.</p>
+                        <p className="text-muted">{description || "No description available."}</p>
                         
-                        <h5 className="fw-semibold mb-3">Responsibilities:</h5>
+                        <h5 className="fw-semibold mb-3">Task Details</h5>
                         <ul className="vstack gap-3 job-vstack">
                             <li>
-                                Meeting with the design team to discuss the needs of the company.
+                                <strong>Priority:</strong> {priority || "N/A"}
                             </li>
                             <li>
-                                Building and configuring Magento 1x and 2x eCommerce websites.
+                                <strong>Status:</strong> {status || "N/A"}
                             </li>
                             <li>
-                                Coding of the Magento templates.
+                                <strong>Created At:</strong> {created_at ? new Date(created_at).toLocaleString() : "N/A"}
                             </li>
                             <li>
-                                Developing Magento modules in PHP using best practices.
-                            </li>
-                            <li>
-                                Designing themes and interfaces.
-                            </li>
-                            <li>
-                                Setting performance tasks and goals.
-                            </li>
-                            <li>
-                                Updating website features and security patches.
+                                <strong>Updated At:</strong> {updated_at ? new Date(updated_at).toLocaleString() : "N/A"}
                             </li>
                         </ul>
 
-                        <h5 className="fw-semibold mb-3">Requirements:</h5>
-                        <ul className="vstack gap-3 job-vstack">
-                            <li>
-                                Bachelor’s degree in computer science or related field.
-                            </li>
-                            <li>
-                                Advanced knowledge of Magento, JavaScript, HTML, PHP, CSS, and MySQL.
-                            </li>
-                            <li>
-                                Experience with complete eCommerce lifecycle development.
-                            </li>
-                            <li>
-                                Understanding of modern UI/UX trends.
-                            </li>
-                            <li>
-                                Knowledge of Google Tag Manager, SEO, Google Analytics, PPC, and A/B Testing.
-                            </li>
-                            <li>
-                                Good working knowledge of Adobe Photoshop and Adobe Illustrator.
-                            </li>
-                            <li>
-                                Strong attention to detail.
-                            </li>
-                            <li>
-                                Ability to project-manage and work to strict deadlines.
-                            </li>
-                            <li>
-                                Ability to work in a team environment.
-                            </li>
-                        </ul>
-
-                        <h5 className="fw-semibold mb-3">Qualification:</h5>
-                        <ul className="vstack gap-3 job-vstack">
-                            <li>
-                                B.C.A / M.C.A under National University course complete.
-                            </li>
-                            <li>
-                                3 or more years of professional design experience
-                            </li>
-                            <li>
-                                Advanced degree or equivalent experience in graphic and web design
-                            </li>
-                        </ul>
-
-                        <h5 className="fw-semibold mb-3">Skill & Experience:</h5>
-                        <ul className="vstack gap-3 job-vstack mb-0">
-                            <li>
-                                Understanding of key Design Principal
-                            </li>
-                            <li>
-                                Proficiency With HTML, CSS, Bootstrap
-                            </li>
-                            <li>
-                                WordPress: 1 year (Required)
-                            </li>
-                            <li>
-                                Experience designing and developing responsive design websites
-                            </li>
-                            <li>
-                                web designing: 1 year (Preferred)
-                            </li>
-                        </ul>
+                        {/* Additional static content can go here if necessary */}
 
                         <div className="mt-4">
-                            <span className="badge badge-soft-warning me-1">PHP</span>
-                            <span className="badge badge-soft-warning me-1">Magento</span>
-                            <span className="badge badge-soft-warning me-1">Marketing</span>
-                            <span className="badge badge-soft-warning me-1">WordPress</span>
-                            <span className="badge badge-soft-warning">Bootstrap</span>
+                            {/* Skills or tags related to the task can be dynamically displayed here if available */}
+                            <span className="badge badge-soft-warning me-1">Task Tag</span>
+                            {/* Repeat for other tags */}
                         </div>
 
                         <div className="mt-4">
@@ -132,15 +92,54 @@ const DetailsSection = () => {
                                     Share this job:
                                 </li>
                                 <li className="list-inline-item mt-1">
-                                    <Link to="#" className="btn btn-outline-primary btn-hover"><i className="uil uil-facebook-f"></i> Facebook</Link>
+                                    <Link to="#" className="btn btn-outline-primary btn-hover">
+                                        <i className="uil uil-facebook-f"></i> Facebook
+                                    </Link>
                                 </li>
                                 <li className="list-inline-item mt-1">
-                                    <Link to="#" className="btn btn-outline-danger btn-hover"><i className="uil uil-google"></i> Google+</Link>
+                                    <Link to="#" className="btn btn-outline-danger btn-hover">
+                                        <i className="uil uil-google"></i> Google+
+                                    </Link>
                                 </li>
                                 <li className="list-inline-item mt-1">
-                                    <Link to="#" className="btn btn-outline-success btn-hover"><i className="uil uil-linkedin-alt"></i> linkedin</Link>
+                                    <Link to="#" className="btn btn-outline-success btn-hover">
+                                        <i className="uil uil-linkedin-alt"></i> LinkedIn
+                                    </Link>
                                 </li>
                             </ul>
+                        </div>
+                    </CardBody>
+                    <CardBody>
+                        {/* Comment Form */}
+                        <h5 className="fw-semibold mb-3">Leave a Comment</h5>
+                        <Form onSubmit={handleCommentSubmit}>
+                            <FormGroup>
+                                <Input
+                                    type="textarea"
+                                    value={comment}
+                                    onChange={handleCommentChange}
+                                    placeholder="Write your comment here..."
+                                />
+                            </FormGroup>
+                            <Button type="submit" color="primary">Submit Comment</Button>
+                        </Form>
+
+                        {/* Display Comments */}
+                        <div className="mt-4">
+                            <h5 className="fw-semibold">Comments</h5>
+                            {comments.length > 0 ? (
+                                <ul className="list-unstyled">
+                                    {comments.map((comment, index) => (
+                                        <li key={index} className="mb-2">
+                                            <div className="bg-light p-2 rounded">
+                                                {comment}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No comments yet. Be the first to comment!</p>
+                            )}
                         </div>
                     </CardBody>
                 </Card>
