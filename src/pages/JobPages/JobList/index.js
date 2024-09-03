@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import TableContainer from '../../../components/Common/TableContainer';
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
@@ -30,10 +29,12 @@ import {
     DropdownItem,
     Badge,
     Button,
+    Table,
 } from "reactstrap";
 import Spinners from "components/Common/Spinner";
 import { ToastContainer } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
 
 const TaskList = () => {
 
@@ -46,6 +47,8 @@ const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     // Fetch tasks function
     const fetchTasks = async () => {
@@ -65,26 +68,27 @@ const TaskList = () => {
     // Fetch tasks on component mount
     useEffect(() => {
         fetchTasks();
+        console.log('Fetched tasks:', tasks); // Add this line to see the tasks after fetching
     }, []);
 
     // Form validation
     const validation = useFormik({
         enableReinitialize: true,
         initialValues: {
-            taskId: (task && task.taskId) || '',
-            taskTitle: (task && task.taskTitle) || '',
+            task_id: (task && task.task_id) || '',
+            task_title: (task && task.task_title) || '',
             description: (task && task.description) || '',
-            assignedTo: (task && task.assignedTo) || '',
-            dueDate: (task && task.dueDate) || '',
+            assigned_to: (task && task.assigned_to) || '',
+            due_date: (task && task.due_date) || '',
             priority: (task && task.priority) || 'Medium',
             status: (task && task.status) || 'Pending',
         },
         validationSchema: Yup.object({
-            taskId: Yup.string().required("Please Enter Your Task Id"),
-            taskTitle: Yup.string().required("Please Enter Your Task Title"),
+            task_id: Yup.string().required("Please Enter Your Task Id"),
+            task_title: Yup.string().required("Please Enter Your Task Title"),
             description: Yup.string().required("Please Enter Your Description"),
-            assignedTo: Yup.string().required("Please Enter Assignee"),
-            dueDate: Yup.date().required("Please Enter Due Date"),
+            assigned_to: Yup.string().required("Please Enter Assignee"),
+            due_date: Yup.date().required("Please Enter Due Date"),
             priority: Yup.string().required("Please Enter Priority"),
             status: Yup.string().required("Please Enter Status"),
         }),
@@ -155,7 +159,7 @@ const TaskList = () => {
             },
             {
                 header: "Task Title",
-                accessorKey: "taskTitle",
+                accessorKey: "task_title",
             },
             {
                 header: 'Description',
@@ -163,11 +167,11 @@ const TaskList = () => {
             },
             {
                 header: 'Assigned To',
-                accessorKey: "assignedTo"
+                accessorKey: "assigned_to"
             },
             {
                 header: 'Due Date',
-                accessorKey: "dueDate"
+                accessorKey: "due_date"
             },
             {
                 header: "Priority",
@@ -198,6 +202,8 @@ const TaskList = () => {
                             return <Badge className="bg-success">Completed</Badge>
                         case "Cancelled":
                             return <Badge className="bg-danger">Cancelled</Badge>
+                        default:
+                            return <Badge className="bg-secondary">Unknown</Badge>;
                     }
                 }
             },
@@ -231,6 +237,30 @@ const TaskList = () => {
         ],
         []
     );
+
+    // Calculate total pages
+    const totalPages = Math.ceil(tasks.length / itemsPerPage);
+
+    // Handle page click
+    const handlePageClick = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
+    };
+
+    // Handle previous page click
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Handle next page click
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
     return (
         <React.Fragment>
@@ -267,18 +297,76 @@ const TaskList = () => {
                                             </div>
                                         </CardBody>
                                         <CardBody>
-                                            <TableContainer
-                                                columns={columns}
-                                                data={tasks}
-                                                isCustomPageSize={true}
-                                                isGlobalFilter={true}
-                                                isPagination={true}
-                                                SearchPlaceholder="Search for ..."
-                                                tableClass="align-middle table-nowrap dt-responsive nowrap w-100 table-check dataTable no-footer dtr-inline mt-4 border-top"
-                                                pagination="pagination"
-                                                paginationWrapper="dataTables_paginate paging_simple_numbers pagination-rounded"
-                                            />
-                                        </CardBody>
+    {tasks.length > 0 ? (
+        <Fragment>
+            <div className="table-responsive">
+                <Table hover className="table-nowrap">
+                    <thead className="thead-light">
+                        <tr>
+                            {columns.map((column, index) => (
+                                <th key={column.accessorKey || index}>
+                                    {column.header}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((task) => (
+                            <tr key={task.id}>
+                                {columns.map((column) => (
+                                    <td key={`${task.id}-${column.accessorKey}`}>
+                                        {column.cell ? column.cell({ row: { original: task } }) : task[column.accessorKey]}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+
+            {totalPages > 1 && (
+                <Row className="justify-content-between align-items-center mt-3">
+                    <Col sm={12} md={5}>
+                        <div className="text-muted">
+                            Page {currentPage} of {totalPages}
+                        </div>
+                    </Col>
+                    <Col sm={12} md={7}>
+                        <ul className="pagination">
+                            <li className={`page-item ${currentPage <= 1 ? "disabled" : ''}`}>
+                                <Link className="page-link" to="#" onClick={handlePreviousPage}>
+                                    <i className="mdi mdi-chevron-left"></i>
+                                </Link>
+                            </li>
+                            {[...Array(totalPages).keys()].map((page) => (
+                                <li
+                                    key={page + 1}
+                                    className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                                >
+                                    <Link
+                                        className="page-link"
+                                        to="#"
+                                        onClick={() => handlePageClick(page + 1)}
+                                    >
+                                        {page + 1}
+                                    </Link>
+                                </li>
+                            ))}
+                            <li className={`page-item ${currentPage >= totalPages ? "disabled" : ''}`}>
+                                <Link className="page-link" to="#" onClick={handleNextPage}>
+                                    <i className="mdi mdi-chevron-right"></i>
+                                </Link>
+                            </li>
+                        </ul>
+                    </Col>
+                </Row>
+            )}
+        </Fragment>
+    ) : (
+        <div>No tasks available.</div> // Display a message if there are no tasks
+    )}
+</CardBody>
+
                                     </Card>
                                 </Col>
                             </Row>
@@ -300,35 +388,35 @@ const TaskList = () => {
                                         <div className="mb-3">
                                             <Label> Task Id</Label>
                                             <Input
-                                                name="taskId"
+                                                name="task_id"
                                                 type="text"
                                                 placeholder="Insert Task Id"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.taskId || ""}
+                                                value={validation.values.task_id || ""}
                                                 invalid={
-                                                    validation.touched.taskId && validation.errors.taskId ? true : false
+                                                    validation.touched.task_id && validation.errors.task_id ? true : false
                                                 }
                                             />
-                                            {validation.touched.taskId && validation.errors.taskId ? (
-                                                <FormFeedback type="invalid">{validation.errors.taskId}</FormFeedback>
+                                            {validation.touched.task_id && validation.errors.task_id ? (
+                                                <FormFeedback type="invalid">{validation.errors.task_id}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
                                             <Label>Task Title</Label>
                                             <Input
-                                                name="taskTitle"
+                                                name="task_title"
                                                 type="text"
                                                 placeholder="Insert Task Title"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.taskTitle || ""}
+                                                value={validation.values.task_title || ""}
                                                 invalid={
-                                                    validation.touched.taskTitle && validation.errors.taskTitle ? true : false
+                                                    validation.touched.task_title && validation.errors.task_title ? true : false
                                                 }
                                             />
-                                            {validation.touched.taskTitle && validation.errors.taskTitle ? (
-                                                <FormFeedback type="invalid">{validation.errors.taskTitle}</FormFeedback>
+                                            {validation.touched.task_title && validation.errors.task_title ? (
+                                                <FormFeedback type="invalid">{validation.errors.task_title}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
@@ -351,34 +439,34 @@ const TaskList = () => {
                                         <div className="mb-3">
                                             <Label>Assigned To</Label>
                                             <Input
-                                                name="assignedTo"
+                                                name="assigned_to"
                                                 type="text"
                                                 placeholder="Assigned To"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.assignedTo || ""}
+                                                value={validation.values.assigned_to || ""}
                                                 invalid={
-                                                    validation.touched.assignedTo && validation.errors.assignedTo ? true : false
+                                                    validation.touched.assigned_to && validation.errors.assigned_to ? true : false
                                                 }
                                             />
-                                            {validation.touched.assignedTo && validation.errors.assignedTo ? (
-                                                <FormFeedback type="invalid">{validation.errors.assignedTo}</FormFeedback>
+                                            {validation.touched.assigned_to && validation.errors.assigned_to ? (
+                                                <FormFeedback type="invalid">{validation.errors.assigned_to}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
                                             <Label>Due Date</Label>
                                             <Input
-                                                name="dueDate"
+                                                name="due_date"
                                                 type="date"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.dueDate || ""}
+                                                value={validation.values.due_date || ""}
                                                 invalid={
-                                                    validation.touched.dueDate && validation.errors.dueDate ? true : false
+                                                    validation.touched.due_date && validation.errors.due_date ? true : false
                                                 }
                                             />
-                                            {validation.touched.dueDate && validation.errors.dueDate ? (
-                                                <FormFeedback type="invalid">{validation.errors.dueDate}</FormFeedback>
+                                            {validation.touched.due_date && validation.errors.due_date ? (
+                                                <FormFeedback type="invalid">{validation.errors.due_date}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
