@@ -18,6 +18,18 @@ export const getTaskList = async (page = 1, limit = 10, sortBy = 'created_at', o
     }
 };
 
+
+export const getTask = async (id) => {
+    try {
+        const response = await defaultInstance.get(`/api/tasks/${id}`);
+        return response.data;  // Ensure you're returning the actual data
+    } catch (error) {
+        console.error('Error fetching task:', error?.response?.data || error.message);
+        throw error;
+    }
+};
+
+
 // Create a new task
 export const createTask = async (data) => {
     try {

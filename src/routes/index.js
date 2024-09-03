@@ -271,7 +271,7 @@ const authProtectedRoutes = [
 
   //job
   { path: "/job-grid", component: <JobGrid /> },
-  { path: "/job-details", component: <JobDetails /> },
+  { path: "/it-tasks/:id", component: <JobDetails /> },
   { path: "/job-categories", component: <JobCategories /> },
   { path: "/it-tasks", component: <TaskList /> },
   { path: "/job-apply", component: <ApplyJobs /> },

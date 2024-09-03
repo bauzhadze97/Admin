@@ -56,14 +56,19 @@ const TaskList = () => {
         try {
             console.log("Fetching tasks...");  // Debugging line
             const response = await getTaskList();
+
+            console.log("respnse", response);
+            
             console.log("Tasks fetched successfully:", response.data);  // Debugging line
-            setTasks(response.data || []);  // Ensure it's always an array
+            setTasks(response|| []);  // Ensure it's always an array
         } catch (error) {
             console.error("Error fetching tasks:", error);
         } finally {
             setLoading(false);
         }
     };
+
+    
 
     // Fetch tasks on component mount
     useEffect(() => {
@@ -154,7 +159,7 @@ const TaskList = () => {
                 header: 'No',
                 accessorKey: "id",
                 cell: (cellProps) => {
-                    return <Link to="#" className="text-body fw-bold">{cellProps.row.original.id}</Link>
+                    return <Link to={`/it-tasks/${cellProps.row.original.id}`} className="text-body fw-bold">{cellProps.row.original.id}</Link>
                 }
             },
             {
@@ -214,7 +219,7 @@ const TaskList = () => {
                         <ul className="list-unstyled hstack gap-1 mb-0">
                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                 <Link
-                                    to="#"
+                                    to='#'
                                     className="btn btn-sm btn-soft-info"
                                     onClick={() => handleTaskClick(cellProps.row.original)}
                                 >
