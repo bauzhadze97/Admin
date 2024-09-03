@@ -89,7 +89,6 @@ const TaskList = () => {
             status: (task && task.status) || 'Pending',
         },
         validationSchema: Yup.object({
-            task_id: Yup.string().required("Please Enter Your Task Id"),
             task_title: Yup.string().required("Please Enter Your Task Title"),
             description: Yup.string().required("Please Enter Your Description"),
             assigned_to: Yup.string().required("Please Enter Assignee"),
@@ -390,23 +389,7 @@ const TaskList = () => {
                             >
                                 <Row>
                                     <Col className="col-12">
-                                        <div className="mb-3">
-                                            <Label> Task Id</Label>
-                                            <Input
-                                                name="task_id"
-                                                type="text"
-                                                placeholder="Insert Task Id"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.task_id || ""}
-                                                invalid={
-                                                    validation.touched.task_id && validation.errors.task_id ? true : false
-                                                }
-                                            />
-                                            {validation.touched.task_id && validation.errors.task_id ? (
-                                                <FormFeedback type="invalid">{validation.errors.task_id}</FormFeedback>
-                                            ) : null}
-                                        </div>
+                                  
                                         <div className="mb-3">
                                             <Label>Task Title</Label>
                                             <Input
