@@ -4,14 +4,14 @@ import { Card, CardBody, Col, Form, FormGroup, Input, Button } from 'reactstrap'
 
 // Import images
 import wechat from "../../../assets/images/companies/wechat.svg";
+import { createTaskComment } from 'services/taskComment';
 
 const DetailsSection = ({ task }) => {
-    // State to manage comment input
-    const [comment, setComment] = useState('');
-    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState('');  
+    const [comments, setComments] = useState(task.comments || []); 
 
-    // Destructure task properties for easy access
     const {
+        id: taskId,  // Assuming task has an `id` field
         task_title,
         description,
         assigned_to,
@@ -22,19 +22,38 @@ const DetailsSection = ({ task }) => {
         updated_at
     } = task;
 
-    // Handle comment input change
     const handleCommentChange = (event) => {
         setComment(event.target.value);
     };
 
-    // Handle form submission
-    const handleCommentSubmit = (event) => {
+    const handleCommentSubmit = async (event) => {
         event.preventDefault();
-        if (comment.trim()) {
-            setComments([...comments, comment]);
-            setComment(''); // Clear input after submission
+    
+        if (!comment.trim()) return;  // Prevent submitting empty comments
+    
+        try {
+            // Prepare data for creating a comment
+            const newCommentData = {
+                task_id: taskId,  // Include task_id here explicitly
+                comment_text: comment
+            };
+    
+            // Call the API to create a new comment with the required data
+            const newComment = await createTaskComment(taskId, newCommentData);
+    
+            // Update the comments state with the new comment
+            setComments((prevComments) => [...prevComments, newComment]);
+    
+            // Clear the comment input field after successful submission
+            setComment('');
+        } catch (error) {
+            console.error('Error creating comment:', error?.response?.data || error.message);
+            alert('Failed to add comment. Please try again.');
         }
     };
+
+    console.log(comments);
+    
 
     return (
         <React.Fragment>
@@ -132,7 +151,7 @@ const DetailsSection = ({ task }) => {
                                     {comments.map((comment, index) => (
                                         <li key={index} className="mb-2">
                                             <div className="bg-light p-2 rounded">
-                                                {comment}
+                                                {comment.comment_text}
                                             </div>
                                         </li>
                                     ))}
