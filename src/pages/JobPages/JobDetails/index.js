@@ -40,7 +40,7 @@ const JobDetails = () => {
                 <Container fluid>
                     <Breadcrumbs title="Jobs" breadcrumbItem="IT მხარდაჭერა" />
                     <Row>
-                        <Overview />
+                        <Overview task={task}/>
                         {/* Conditionally render DetailsSection only if task is defined */}
                         {task ? <DetailsSection task={task} /> : <div>Loading task details...</div>}
                     </Row>

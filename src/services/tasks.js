@@ -62,3 +62,25 @@ export const deleteTask = async (id) => {
         throw error;
     }
 };
+
+
+export const startTask = async (id) => {
+    try {
+        const response = await defaultInstance.patch(`/api/tasks/${id}/start`);
+        return response.data;  // Ensure you're returning the actual data
+    } catch (error) {
+        console.error('Error starting task:', error?.response?.data || error.message);
+        throw error;
+    }
+};
+
+// Finish a task
+export const finishTask = async (id) => {
+    try {
+        const response = await defaultInstance.patch(`/api/tasks/${id}/finish`);
+        return response.data;  // Ensure you're returning the actual data
+    } catch (error) {
+        console.error('Error finishing task:', error?.response?.data || error.message);
+        throw error;
+    }
+};

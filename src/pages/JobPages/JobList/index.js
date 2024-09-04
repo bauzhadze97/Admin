@@ -13,7 +13,13 @@ import { getTaskList, createTask, updateTask, deleteTask } from "../../../servic
 import {
     Col,
     Row,
-    UncontrolledTooltip,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Badge,
+    Button,
+    Table,
     Modal,
     ModalHeader,
     ModalBody,
@@ -23,22 +29,14 @@ import {
     Label,
     Card,
     CardBody,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Badge,
-    Button,
-    Table,
 } from "reactstrap";
 import Spinners from "components/Common/Spinner";
 import { ToastContainer } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
+import { Link } from "react-router-dom";
+import { useReactTable } from '@tanstack/react-table';
 
 const TaskList = () => {
 
-    // Meta title
     document.title = "Tasks List | Gorgia LLC";
 
     const [modal, setModal] = useState(false);
@@ -50,17 +48,13 @@ const TaskList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
-    // Fetch tasks function
     const fetchTasks = async () => {
         setLoading(true);
         try {
-            console.log("Fetching tasks...");  // Debugging line
+            console.log("Fetching tasks...");
             const response = await getTaskList();
-
-            console.log("respnse", response);
-            
-            console.log("Tasks fetched successfully:", response.data);  // Debugging line
-            setTasks(response|| []);  // Ensure it's always an array
+            console.log("Tasks fetched successfully:", response.data);
+            setTasks(response || []);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         } finally {
@@ -68,22 +62,17 @@ const TaskList = () => {
         }
     };
 
-    
-
-    // Fetch tasks on component mount
     useEffect(() => {
         fetchTasks();
-        console.log('Fetched tasks:', tasks); // Add this line to see the tasks after fetching
+        console.log('Fetched tasks:', tasks);
     }, []);
 
-    // Form validation
     const validation = useFormik({
         enableReinitialize: true,
         initialValues: {
             task_id: (task && task.task_id) || '',
             task_title: (task && task.task_title) || '',
             description: (task && task.description) || '',
-            assigned_to: (task && task.assigned_to) || '',
             due_date: (task && task.due_date) || '',
             priority: (task && task.priority) || 'Medium',
             status: (task && task.status) || 'Pending',
@@ -91,7 +80,6 @@ const TaskList = () => {
         validationSchema: Yup.object({
             task_title: Yup.string().required("Please Enter Your Task Title"),
             description: Yup.string().required("Please Enter Your Description"),
-            assigned_to: Yup.string().required("Please Enter Assignee"),
             due_date: Yup.date().required("Please Enter Due Date"),
             priority: Yup.string().required("Please Enter Priority"),
             status: Yup.string().required("Please Enter Status"),
@@ -99,24 +87,21 @@ const TaskList = () => {
         onSubmit: async (values) => {
             try {
                 if (isEdit) {
-                    // Update task
                     await updateTask(task.id, values);
                     console.log("Task updated successfully:", values);
                 } else {
-                    // Create new task
                     await createTask(values);
                     console.log("New task created successfully:", values);
                 }
                 validation.resetForm();
                 toggle();
-                fetchTasks(); // Refresh tasks after submit
+                fetchTasks();
             } catch (error) {
                 console.error("Error submitting form:", error);
             }
         },
     });
 
-    // Toggle modal visibility
     const toggle = () => {
         setModal(!modal);
         if (!modal) {
@@ -125,14 +110,12 @@ const TaskList = () => {
         }
     };
 
-    // Handle task click for edit
     const handleTaskClick = task => {
         setTask(task);
         setIsEdit(true);
         toggle();
     };
 
-    // Handle delete task
     const onClickDelete = (task) => {
         setTask(task);
         setDeleteModal(true);
@@ -151,7 +134,6 @@ const TaskList = () => {
         }
     };
 
-    // Define table columns
     const columns = useMemo(
         () => [
             {
@@ -168,10 +150,6 @@ const TaskList = () => {
             {
                 header: 'Description',
                 accessorKey: "description",
-            },
-            {
-                header: 'Assigned To',
-                accessorKey: "assigned_to"
             },
             {
                 header: 'Due Date',
@@ -212,6 +190,10 @@ const TaskList = () => {
                 }
             },
             {
+                header: 'Assigned To',
+                accessorKey: 'assigned_to',  // Ensure this is correct
+            },
+            {
                 header: 'Action',
                 cell: (cellProps) => {
                     return (
@@ -242,24 +224,20 @@ const TaskList = () => {
         []
     );
 
-    // Calculate total pages
     const totalPages = Math.ceil(tasks.length / itemsPerPage);
 
-    // Handle page click
     const handlePageClick = (page) => {
         if (page !== currentPage) {
             setCurrentPage(page);
         }
     };
 
-    // Handle previous page click
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
     };
 
-    // Handle next page click
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
@@ -301,76 +279,75 @@ const TaskList = () => {
                                             </div>
                                         </CardBody>
                                         <CardBody>
-    {tasks.length > 0 ? (
-        <Fragment>
-            <div className="table-responsive">
-                <Table hover className="table-nowrap">
-                    <thead className="thead-light">
-                        <tr>
-                            {columns.map((column, index) => (
-                                <th key={column.accessorKey || index}>
-                                    {column.header}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((task) => (
-                            <tr key={task.id}>
-                                {columns.map((column) => (
-                                    <td key={`${task.id}-${column.accessorKey}`}>
-                                        {column.cell ? column.cell({ row: { original: task } }) : task[column.accessorKey]}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </div>
+                                            {tasks.length > 0 ? (
+                                                <Fragment>
+                                                    <div className="table-responsive">
+                                                        <Table hover className="table-nowrap">
+                                                            <thead className="thead-light">
+                                                                <tr>
+                                                                    {columns.map((column, index) => (
+                                                                        <th key={column.accessorKey || index}>
+                                                                            {column.header}
+                                                                        </th>
+                                                                    ))}
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((task) => (
+                                                                    <tr key={task.id}>
+                                                                        {columns.map((column) => (
+                                                                            <td key={`${task.id}-${column.accessorKey}`}>
+                                                                                {column.cell ? column.cell({ row: { original: task } }) : task[column.accessorKey]}
+                                                                            </td>
+                                                                        ))}
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </Table>
+                                                    </div>
 
-            {totalPages > 1 && (
-                <Row className="justify-content-between align-items-center mt-3">
-                    <Col sm={12} md={5}>
-                        <div className="text-muted">
-                            Page {currentPage} of {totalPages}
-                        </div>
-                    </Col>
-                    <Col sm={12} md={7}>
-                        <ul className="pagination">
-                            <li className={`page-item ${currentPage <= 1 ? "disabled" : ''}`}>
-                                <Link className="page-link" to="#" onClick={handlePreviousPage}>
-                                    <i className="mdi mdi-chevron-left"></i>
-                                </Link>
-                            </li>
-                            {[...Array(totalPages).keys()].map((page) => (
-                                <li
-                                    key={page + 1}
-                                    className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
-                                >
-                                    <Link
-                                        className="page-link"
-                                        to="#"
-                                        onClick={() => handlePageClick(page + 1)}
-                                    >
-                                        {page + 1}
-                                    </Link>
-                                </li>
-                            ))}
-                            <li className={`page-item ${currentPage >= totalPages ? "disabled" : ''}`}>
-                                <Link className="page-link" to="#" onClick={handleNextPage}>
-                                    <i className="mdi mdi-chevron-right"></i>
-                                </Link>
-                            </li>
-                        </ul>
-                    </Col>
-                </Row>
-            )}
-        </Fragment>
-    ) : (
-        <div>No tasks available.</div> // Display a message if there are no tasks
-    )}
-</CardBody>
-
+                                                    {totalPages > 1 && (
+                                                        <Row className="justify-content-between align-items-center mt-3">
+                                                            <Col sm={12} md={5}>
+                                                                <div className="text-muted">
+                                                                    Page {currentPage} of {totalPages}
+                                                                </div>
+                                                            </Col>
+                                                            <Col sm={12} md={7}>
+                                                                <ul className="pagination">
+                                                                    <li className={`page-item ${currentPage <= 1 ? "disabled" : ''}`}>
+                                                                        <Link className="page-link" to="#" onClick={handlePreviousPage}>
+                                                                            <i className="mdi mdi-chevron-left"></i>
+                                                                        </Link>
+                                                                    </li>
+                                                                    {[...Array(totalPages).keys()].map((page) => (
+                                                                        <li
+                                                                            key={page + 1}
+                                                                            className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                                                                        >
+                                                                            <Link
+                                                                                className="page-link"
+                                                                                to="#"
+                                                                                onClick={() => handlePageClick(page + 1)}
+                                                                            >
+                                                                                {page + 1}
+                                                                            </Link>
+                                                                        </li>
+                                                                    ))}
+                                                                    <li className={`page-item ${currentPage >= totalPages ? "disabled" : ''}`}>
+                                                                        <Link className="page-link" to="#" onClick={handleNextPage}>
+                                                                            <i className="mdi mdi-chevron-right"></i>
+                                                                        </Link>
+                                                                    </li>
+                                                                </ul>
+                                                            </Col>
+                                                        </Row>
+                                                    )}
+                                                </Fragment>
+                                            ) : (
+                                                <div>No tasks available.</div>
+                                            )}
+                                        </CardBody>
                                     </Card>
                                 </Col>
                             </Row>
@@ -389,7 +366,6 @@ const TaskList = () => {
                             >
                                 <Row>
                                     <Col className="col-12">
-                                  
                                         <div className="mb-3">
                                             <Label>Task Title</Label>
                                             <Input
@@ -422,23 +398,6 @@ const TaskList = () => {
                                             />
                                             {validation.touched.description && validation.errors.description ? (
                                                 <FormFeedback type="invalid">{validation.errors.description}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>Assigned To</Label>
-                                            <Input
-                                                name="assigned_to"
-                                                type="text"
-                                                placeholder="Assigned To"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.assigned_to || ""}
-                                                invalid={
-                                                    validation.touched.assigned_to && validation.errors.assigned_to ? true : false
-                                                }
-                                            />
-                                            {validation.touched.assigned_to && validation.errors.assigned_to ? (
-                                                <FormFeedback type="invalid">{validation.errors.assigned_to}</FormFeedback>
                                             ) : null}
                                         </div>
                                         <div className="mb-3">

@@ -29,7 +29,7 @@ const DetailsSection = ({ task }) => {
     const handleCommentSubmit = async (event) => {
         event.preventDefault();
     
-        if (!comment.trim()) return;  // Prevent submitting empty comments
+        if (!comment.trim()) return;  
     
         try {
             const newCommentData = {
@@ -45,6 +45,12 @@ const DetailsSection = ({ task }) => {
             alert('Failed to add comment. Please try again.');
         }
     };
+
+    console.log(comments);
+
+    console.log(comments);
+
+    
 
     return (
         <React.Fragment>
@@ -119,8 +125,9 @@ const DetailsSection = ({ task }) => {
                                                     <img src="https://via.placeholder.com/40" alt="User Avatar" className="rounded-circle" />
                                                 </div>
                                                 <div className="bg-light p-3 rounded" style={{ flexGrow: 1, borderRadius: '15px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-                                                    <p className="mb-1" style={{ fontWeight: 'bold', fontSize: '14px', color: '#333' }}>სახელი გვარი</p>
+                                                    <p className="mb-1" style={{ fontWeight: 'bold', fontSize: '14px', color: '#333' }}>{comment.user.name} {comment.user.sur_name}</p>
                                                     <p className="mb-0" style={{ fontSize: '13px', color: '#555' }}>{comment.comment_text}</p>
+                                                    <p className="mb-0 mt-2" style={{ fontSize: '12px', color: '#555' }}>{comment.created_at}</p>
                                                 </div>
                                             </div>
                                         </li>
