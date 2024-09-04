@@ -38,7 +38,7 @@ const JobDetails = () => {
         <React.Fragment>
             <div className="page-content">
                 <Container fluid>
-                    <Breadcrumbs title="Jobs" breadcrumbItem="Job Details" />
+                    <Breadcrumbs title="Jobs" breadcrumbItem="IT მხარდაჭერა" />
                     <Row>
                         <Overview />
                         {/* Conditionally render DetailsSection only if task is defined */}
