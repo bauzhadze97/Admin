@@ -11,7 +11,7 @@ const DetailsSection = ({ task }) => {
     const [comments, setComments] = useState(task.comments || []); 
 
     const {
-        id: taskId,  // Assuming task has an `id` field
+        id: taskId,
         task_title,
         description,
         assigned_to,
@@ -32,28 +32,19 @@ const DetailsSection = ({ task }) => {
         if (!comment.trim()) return;  // Prevent submitting empty comments
     
         try {
-            // Prepare data for creating a comment
             const newCommentData = {
-                task_id: taskId,  // Include task_id here explicitly
+                task_id: taskId,
                 comment_text: comment
             };
     
-            // Call the API to create a new comment with the required data
             const newComment = await createTaskComment(taskId, newCommentData);
-    
-            // Update the comments state with the new comment
             setComments((prevComments) => [...prevComments, newComment]);
-    
-            // Clear the comment input field after successful submission
             setComment('');
         } catch (error) {
             console.error('Error creating comment:', error?.response?.data || error.message);
             alert('Failed to add comment. Please try again.');
         }
     };
-
-    console.log(comments);
-    
 
     return (
         <React.Fragment>
@@ -97,12 +88,8 @@ const DetailsSection = ({ task }) => {
                             </li>
                         </ul>
 
-                        {/* Additional static content can go here if necessary */}
-
                         <div className="mt-4">
-                            {/* Skills or tags related to the task can be dynamically displayed here if available */}
                             <span className="badge badge-soft-warning me-1">Task Tag</span>
-                            {/* Repeat for other tags */}
                         </div>
 
                         <div className="mt-4">
@@ -129,7 +116,6 @@ const DetailsSection = ({ task }) => {
                         </div>
                     </CardBody>
                     <CardBody>
-                        {/* Comment Form */}
                         <h5 className="fw-semibold mb-3">Leave a Comment</h5>
                         <Form onSubmit={handleCommentSubmit}>
                             <FormGroup>
@@ -138,20 +124,27 @@ const DetailsSection = ({ task }) => {
                                     value={comment}
                                     onChange={handleCommentChange}
                                     placeholder="Write your comment here..."
+                                    className="rounded-3"
+                                    style={{ borderColor: '#ddd', padding: '10px' }}
                                 />
                             </FormGroup>
                             <Button type="submit" color="primary">Submit Comment</Button>
                         </Form>
 
-                        {/* Display Comments */}
                         <div className="mt-4">
                             <h5 className="fw-semibold">Comments</h5>
                             {comments.length > 0 ? (
                                 <ul className="list-unstyled">
                                     {comments.map((comment, index) => (
-                                        <li key={index} className="mb-2">
-                                            <div className="bg-light p-2 rounded">
-                                                {comment.comment_text}
+                                        <li key={index} className="mb-3">
+                                            <div className="d-flex">
+                                                <div className="me-2">
+                                                    <img src="https://via.placeholder.com/40" alt="User Avatar" className="rounded-circle" />
+                                                </div>
+                                                <div className="bg-light p-3 rounded" style={{ flexGrow: 1, borderRadius: '15px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                                                    <p className="mb-1" style={{ fontWeight: 'bold', fontSize: '14px', color: '#333' }}>User Name</p>
+                                                    <p className="mb-0" style={{ fontSize: '13px', color: '#555' }}>{comment.comment_text}</p>
+                                                </div>
                                             </div>
                                         </li>
                                     ))}

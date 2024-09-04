@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardBody, Col } from 'reactstrap';
+import { Card, CardBody, Col, Button } from 'reactstrap';
 
-//import images
+// Import images
 import adobephotoshop from "../../../assets/images/companies/adobe-photoshop.svg";
 
 const Overview = () => {
+    // State to manage the task status and time tracking
+    const [isTaskStarted, setIsTaskStarted] = useState(false);
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+    const [elapsedTime, setElapsedTime] = useState(null);
+
+    const handleApplyNowClick = () => {
+        // Set the task as started and record the start time
+        setIsTaskStarted(true);
+        setStartTime(new Date());
+    };
+
+    const handleFinishTaskClick = () => {
+        if (isTaskStarted) {
+            const finishTime = new Date();
+            setEndTime(finishTime);
+
+            // Calculate the elapsed time in minutes
+            const timeDiff = (finishTime - startTime) / 1000 / 60; // converting milliseconds to minutes
+            setElapsedTime(timeDiff);
+
+            // Simulate task closing
+            setIsTaskStarted(false);
+            alert(`Task finished! Elapsed time: ${timeDiff.toFixed(2)} minutes.`);
+        }
+    };
+
     return (
         <React.Fragment>
             <Col xl={3}>
@@ -48,8 +75,16 @@ const Overview = () => {
                             </table>
                         </div>
                         <div className="hstack gap-2">
-                            <button className="btn btn-soft-primary w-100">Apply Now</button>
-                            <button className="btn btn-soft-danger w-100">Contact Us</button>
+                            {!isTaskStarted ? (
+                                <Button className="btn btn-soft-primary w-100" onClick={handleApplyNowClick}>
+                                    დაწყება
+                                </Button>
+                            ) : (
+                                <Button className="btn btn-soft-success w-100" onClick={handleFinishTaskClick}>
+                                    დასრულება
+                                </Button>
+                            )}
+                           
                         </div>
                     </CardBody>
                 </Card>

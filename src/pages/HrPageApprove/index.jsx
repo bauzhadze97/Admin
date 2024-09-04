@@ -45,7 +45,7 @@ const HrPageApprove = () => {
   };
 
 
-  console.log(documents);
+
   
 
   return (

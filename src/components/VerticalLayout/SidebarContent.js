@@ -262,6 +262,13 @@ const SidebarContent = props => {
               </Link>
          
             </li>
+            <li>
+              <Link to="/it-tasks">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("IT მხარდაჭერა")}</span>
+              </Link>
+         
+            </li>
           
              {/* <li className="menu-title">{props.t("Apps")}</li>
 
