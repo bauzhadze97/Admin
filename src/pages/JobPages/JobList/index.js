@@ -191,7 +191,11 @@ const TaskList = () => {
             },
             {
                 header: 'Assigned To',
-                accessorKey: 'assigned_to',  // Ensure this is correct
+                accessorKey: 'assigned_to',
+                cell: (cellProps) => {
+                    const user = cellProps.row.original.assigned_user;
+                    return user ? `${user.name} ${user.sur_name}` : 'Unassigned';
+                },
             },
             {
                 header: 'Action',
@@ -243,6 +247,10 @@ const TaskList = () => {
             setCurrentPage(currentPage + 1);
         }
     };
+
+
+    console.log(tasks);
+    
 
     return (
         <React.Fragment>
