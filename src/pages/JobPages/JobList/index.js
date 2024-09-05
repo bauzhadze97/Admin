@@ -53,7 +53,7 @@ const TaskList = () => {
         try {
             console.log("Fetching tasks...");
             const response = await getTaskList();
-            console.log("Tasks fetched successfully:", response.data);
+            console.log("Tasks fetched successfully:", response);
             setTasks(response || []);
         } catch (error) {
             console.error("Error fetching tasks:", error);
@@ -73,25 +73,33 @@ const TaskList = () => {
             task_id: (task && task.task_id) || '',
             task_title: (task && task.task_title) || '',
             description: (task && task.description) || '',
-            due_date: (task && task.due_date) || '',
             priority: (task && task.priority) || 'Medium',
             status: (task && task.status) || 'Pending',
+            ip_address: (task && task.ip_address) || '', // Add ip_address here
         },
         validationSchema: Yup.object({
             task_title: Yup.string().required("Please Enter Your Task Title"),
             description: Yup.string().required("Please Enter Your Description"),
-            due_date: Yup.date().required("Please Enter Due Date"),
             priority: Yup.string().required("Please Enter Priority"),
             status: Yup.string().required("Please Enter Status"),
+            ip_address: Yup.string()
+                .required("Please Enter IP Address")
+                .matches(
+                    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+                    "Invalid IP address format"
+                ), // Add validation for ip_address
         }),
         onSubmit: async (values) => {
             try {
+                const currentDate = new Date().toISOString().split('T')[0];
+                const payload = { ...values, due_date: currentDate };
+
                 if (isEdit) {
-                    await updateTask(task.id, values);
-                    console.log("Task updated successfully:", values);
+                    await updateTask(task.id, payload);
+                    console.log("Task updated successfully:", payload);
                 } else {
-                    await createTask(values);
-                    console.log("New task created successfully:", values);
+                    await createTask(payload);
+                    console.log("New task created successfully:", payload);
                 }
                 validation.resetForm();
                 toggle();
@@ -148,8 +156,9 @@ const TaskList = () => {
                 accessorKey: "task_title",
             },
             {
-                header: 'Description',
-                accessorKey: "description",
+                header: 'IP Address',
+                accessorKey: "ip_address",
+                cell: (cellProps) => cellProps.row.original.ip_address || 'N/A' // Show 'N/A' if IP address is not available
             },
             {
                 header: 'Due Date',
@@ -251,6 +260,7 @@ const TaskList = () => {
 
     console.log(tasks);
     
+
 
     return (
         <React.Fragment>
@@ -409,22 +419,6 @@ const TaskList = () => {
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <Label>Due Date</Label>
-                                            <Input
-                                                name="due_date"
-                                                type="date"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.due_date || ""}
-                                                invalid={
-                                                    validation.touched.due_date && validation.errors.due_date ? true : false
-                                                }
-                                            />
-                                            {validation.touched.due_date && validation.errors.due_date ? (
-                                                <FormFeedback type="invalid">{validation.errors.due_date}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
                                             <Label>Priority</Label>
                                             <Input
                                                 name="priority"
@@ -463,6 +457,23 @@ const TaskList = () => {
                                             </Input>
                                             {validation.touched.status && validation.errors.status ? (
                                                 <FormFeedback type="invalid">{validation.errors.status}</FormFeedback>
+                                            ) : null}
+                                        </div>
+                                        <div className="mb-3">
+                                            <Label>IP Address</Label>
+                                            <Input
+                                                name="ip_address"
+                                                type="text"
+                                                placeholder="Enter IP Address"
+                                                onChange={validation.handleChange}
+                                                onBlur={validation.handleBlur}
+                                                value={validation.values.ip_address || ""}
+                                                invalid={
+                                                    validation.touched.ip_address && validation.errors.ip_address ? true : false
+                                                }
+                                            />
+                                            {validation.touched.ip_address && validation.errors.ip_address ? (
+                                                <FormFeedback type="invalid">{validation.errors.ip_address}</FormFeedback>
                                             ) : null}
                                         </div>
                                     </Col>
