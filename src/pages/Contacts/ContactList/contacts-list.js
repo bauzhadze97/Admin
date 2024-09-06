@@ -24,10 +24,10 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 import DeleteModal from "components/Common/DeleteModal";
 
 import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
+  getContacts as onGetContacts,
+  addNewContact as onAddNewContact,
+  updateContact as onUpdateContact,
+  deleteContact as onDeleteContact,
 } from "store/contacts/actions";
 import { isEmpty } from "lodash";
 
@@ -40,7 +40,7 @@ import { ToastContainer } from "react-toastify";
 const ContactsList = () => {
 
   //meta title
-  document.title = "User List | Gorgia LLC";
+  document.title = "Contacts List | Gorgia LLC";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -51,46 +51,46 @@ const ContactsList = () => {
 
     initialValues: {
       name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
+      surname: (contact && contact.surname) || "",
+      id_number: (contact && contact.id_number) || "",
+      mobile_number: (contact && contact.mobile_number) || "",
       email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
+      name: Yup.string().required("Please Enter the Name"),
+      surname: Yup.string().required("Please Enter the Surname"),
+      id_number: Yup.string().required("Please Enter the ID Number"),
+      mobile_number: Yup.string().required("Please Enter the Mobile Number"),
       email: Yup.string().matches(
         /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
         "Please Enter Valid Email"
       ).required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
     }),
     onSubmit: values => {
       if (isEdit) {
-        const updateUser = {
+        const updateContact = {
           id: contact.id,
           name: values.name,
-          designation: values.designation,
-          tags: values.tags,
+          surname: values.surname,
+          id_number: values.id_number,
+          mobile_number: values.mobile_number,
           email: values.email,
-          projects: values.projects,
         };
-        // update user
-        dispatch(onUpdateUser(updateUser));
+        // update contact
+        dispatch(onUpdateContact(updateContact));
         setIsEdit(false);
         validation.resetForm();
       } else {
-        const newUser = {
+        const newContact = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
           name: values["name"],
-          designation: values["designation"],
+          surname: values["surname"],
+          id_number: values["id_number"],
+          mobile_number: values["mobile_number"],
           email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
         };
-        // save new user
-        dispatch(onAddNewUser(newUser));
+        // save new contact
+        dispatch(onAddNewContact(newContact));
         validation.resetForm();
       }
       toggle();
@@ -100,74 +100,74 @@ const ContactsList = () => {
   const ContactsProperties = createSelector(
     (state) => state.contacts,
     (Contacts) => ({
-      users: Contacts.users,
+      contacts: Contacts.contacts,
       loading: Contacts.loading
     })
   );
 
   const {
-    users, loading
+    contacts, loading
   } = useSelector(ContactsProperties);
 
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [isLoading, setLoading] = useState(loading)
+  const [isLoading, setLoading] = useState(loading);
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (contacts && !contacts.length) {
+      dispatch(onGetContacts());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, contacts]);
 
   useEffect(() => {
-    setContact(users);
+    setContact(contacts);
     setIsEdit(false);
-  }, [users]);
+  }, [contacts]);
 
   useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
+    if (!isEmpty(contacts) && !!isEdit) {
+      setContact(contacts);
       setIsEdit(false);
     }
-  }, [users]);
+  }, [contacts]);
 
   const toggle = () => {
     setModal(!modal);
   };
 
-  const handleUserClick = arg => {
-    const user = arg;
+  const handleContactClick = arg => {
+    const contact = arg;
 
     setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
+      id: contact.id,
+      name: contact.name,
+      surname: contact.surname,
+      id_number: contact.id_number,
+      mobile_number: contact.mobile_number,
+      email: contact.email,
     });
     setIsEdit(true);
 
     toggle();
   };
 
-  //delete customer
+  //delete contact
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users.id);
+  const onClickDelete = (contacts) => {
+    setContact(contacts.id);
     setDeleteModal(true);
   };
 
-  const handleDeleteUser = () => {
+  const handleDeleteContact = () => {
     if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
+      dispatch(onDeleteContact(contact.id));
     }
     setDeleteModal(false);
   };
 
-  const handleUserClicks = () => {
+  const handleContactClicks = () => {
     setContact("");
     setIsEdit(false);
     toggle();
@@ -205,37 +205,26 @@ const ContactsList = () => {
               <h5 className='font-size-14 mb-1'>
                 <Link to='#' className='text-dark'>{cell.getValue()}</Link>
               </h5>
-              <p className="text-muted mb-0">{cell.row.original.designation}</p>
+              <p className="text-muted mb-0">{cell.row.original.surname}</p>
             </>
           )
         }
       },
       {
+        header: 'ID Number',
+        accessorKey: 'id_number',
+        enableColumnFilter: false,
+        enableSorting: true,
+      },
+      {
+        header: 'Mobile Number',
+        accessorKey: 'mobile_number',
+        enableColumnFilter: false,
+        enableSorting: true,
+      },
+      {
         header: 'Email',
         accessorKey: 'email',
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: 'Tags',
-        accessorKey: 'tags',
-        enableColumnFilter: false,
-        enableSorting: true,
-        cell: (cell) => {
-          return (
-            <div>
-              {
-                cell.getValue()?.map((item, index) => (
-                  <Link to="#1" className="badge badge-soft-primary font-size-11 m-1" key={index}>{item}</Link>
-                ))
-              }
-            </div>
-          );
-        },
-      },
-      {
-        header: 'Projects',
-        accessorKey: 'projects',
         enableColumnFilter: false,
         enableSorting: true,
       },
@@ -248,8 +237,8 @@ const ContactsList = () => {
                 to="#"
                 className="text-success"
                 onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  const contactData = cellProps.row.original;
+                  handleContactClick(contactData);
                 }}
               >
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
@@ -258,7 +247,7 @@ const ContactsList = () => {
                 to="#"
                 className="text-danger"
                 onClick={() => {
-                  const userData = cellProps.row.original; onClickDelete(userData);
+                  const contactData = cellProps.row.original; onClickDelete(contactData);
                 }}>
                 <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
               </Link>
@@ -274,13 +263,13 @@ const ContactsList = () => {
     <React.Fragment>
       <DeleteModal
         show={deleteModal}
-        onDeleteClick={handleDeleteUser}
+        onDeleteClick={handleDeleteContact}
         onCloseClick={() => setDeleteModal(false)}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
+          <Breadcrumbs title="Contacts" breadcrumbItem="Contacts List" />
           <Row>
             {
               isLoading ? <Spinners setLoading={setLoading} />
@@ -290,13 +279,13 @@ const ContactsList = () => {
                     <CardBody>
                       <TableContainer
                         columns={columns}
-                        data={users || []}
+                        data={contacts || []}
                         isGlobalFilter={true}
                         isPagination={true}
                         SearchPlaceholder="Search..."
                         isCustomPageSize={true}
                         isAddButton={true}
-                        handleUserClick={handleUserClicks}
+                        handleUserClick={handleContactClicks}
                         buttonClass="btn btn-success btn-rounded waves-effect waves-light addContact-modal mb-2"
                         buttonName="New Contact"
                         tableClass="align-middle table-nowrap table-hover dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
@@ -311,7 +300,7 @@ const ContactsList = () => {
 
             <Modal isOpen={modal} toggle={toggle}>
               <ModalHeader toggle={toggle} tag="h4">
-                {!!isEdit ? "Edit User" : "Add User"}
+                {!!isEdit ? "Edit Contact" : "Add Contact"}
               </ModalHeader>
               <ModalBody>
                 <Form
@@ -347,26 +336,72 @@ const ContactsList = () => {
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Designation</Label>
+                        <Label className="form-label">Surname</Label>
                         <Input
-                          name="designation"
-                          label="Designation"
-                          placeholder="Insert Designation"
+                          name="surname"
+                          label="Surname"
+                          placeholder="Insert Surname"
                           type="text"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.designation || ""}
+                          value={validation.values.surname || ""}
                           invalid={
-                            validation.touched.designation &&
-                              validation.errors.designation
+                            validation.touched.surname &&
+                              validation.errors.surname
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.designation &&
-                          validation.errors.designation ? (
+                        {validation.touched.surname &&
+                          validation.errors.surname ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.designation}
+                            {validation.errors.surname}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
+                        <Label className="form-label">ID Number</Label>
+                        <Input
+                          name="id_number"
+                          type="text"
+                          placeholder="Insert ID Number"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.id_number || ""}
+                          invalid={
+                            validation.touched.id_number &&
+                              validation.errors.id_number
+                              ? true
+                              : false
+                          }
+                        />
+                        {validation.touched.id_number &&
+                          validation.errors.id_number ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.id_number}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
+                        <Label className="form-label">Mobile Number</Label>
+                        <Input
+                          name="mobile_number"
+                          type="text"
+                          placeholder="Insert Mobile Number"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.mobile_number || ""}
+                          invalid={
+                            validation.touched.mobile_number &&
+                              validation.errors.mobile_number
+                              ? true
+                              : false
+                          }
+                        />
+                        {validation.touched.mobile_number &&
+                          validation.errors.mobile_number ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.mobile_number}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -391,64 +426,6 @@ const ContactsList = () => {
                           validation.errors.email ? (
                           <FormFeedback type="invalid">
                             {validation.errors.email}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                      <div className="mb-3">
-                        <Label className="form-label">Option</Label>
-                        <Input
-                          type="select"
-                          name="tags"
-                          className="form-select"
-                          multiple={true}
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.tags || []}
-                          invalid={
-                            validation.touched.tags &&
-                              validation.errors.tags
-                              ? true
-                              : false
-                          }
-                        >
-                          <option>Photoshop</option>
-                          <option>illustrator</option>
-                          <option>Html</option>
-                          <option>Php</option>
-                          <option>Java</option>
-                          <option>Python</option>
-                          <option>UI/UX Designer</option>
-                          <option>Ruby</option>
-                          <option>Css</option>
-                        </Input>
-                        {validation.touched.tags &&
-                          validation.errors.tags ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.tags}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                      <div className="mb-3">
-                        <Label className="form-label">Projects</Label>
-                        <Input
-                          name="projects"
-                          label="Projects"
-                          type="text"
-                          placeholder="Insert Projects"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.projects || ""}
-                          invalid={
-                            validation.touched.projects &&
-                              validation.errors.projects
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.projects &&
-                          validation.errors.projects ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.projects}
                           </FormFeedback>
                         ) : null}
                       </div>

@@ -1,6 +1,5 @@
-// store/contacts/actions.js
-
-import api from '../../plugins/axios';
+// src/services/contactActions.js
+import api from '../plugins/axios';
 
 // Action Types
 export const FETCH_CONTACTS_REQUEST = 'FETCH_CONTACTS_REQUEST';
@@ -20,7 +19,7 @@ export const DELETE_CONTACT_SUCCESS = 'DELETE_CONTACT_SUCCESS';
 export const DELETE_CONTACT_FAIL = 'DELETE_CONTACT_FAIL';
 
 // Fetch all contacts
-export const getContacts = () => async (dispatch) => {
+export const fetchContacts = () => async (dispatch) => {
   try {
     dispatch({ type: FETCH_CONTACTS_REQUEST });
 
@@ -38,7 +37,7 @@ export const getContacts = () => async (dispatch) => {
 };
 
 // Add new contact
-export const addNewContact = (contactData) => async (dispatch) => {
+export const addContact = (contactData) => async (dispatch) => {
   try {
     dispatch({ type: ADD_CONTACT_REQUEST });
 

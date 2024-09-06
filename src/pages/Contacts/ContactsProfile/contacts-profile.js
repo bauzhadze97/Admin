@@ -28,7 +28,7 @@ import profile1 from "assets/images/profile-img.png";
 
 // import charts
 import ApexRevenue from "../ApexRevenue";
-import { getUserProfile } from "store/actions";
+import { getContacts } from 'store/contacts/actions';  // Or whichever action you need
 
 const ContactsProfile = props => {
 
