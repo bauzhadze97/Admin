@@ -60,9 +60,6 @@ const LawyerPageApprove = () => {
 
   return (
     <React.Fragment>
-      <div className="page-content">
-        <div className="container-fluid">
-          <Breadcrumbs title="ხელშეკრულებები" breadcrumbItem="ვიზირება" />
 
           <Row>
             <Col xl={12}>
@@ -166,8 +163,6 @@ const LawyerPageApprove = () => {
               </Card>
             </Col>
           </Row>
-        </div>
-      </div>
     </React.Fragment>
   );
 };

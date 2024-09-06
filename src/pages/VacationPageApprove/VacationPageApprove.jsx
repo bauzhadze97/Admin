@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Row, Col, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { getHrDocuments, updateHrDocumentStatus } from "services/hrDocument";
+import { getVacations, approveVacation } from "services/admin/vacation"; // Make sure this points to the correct file
 
-const HrPageApprove = () => {
-  document.title = "ვიზირება | Gorgia LLC";
+const VacationPageApprove = () => {
+  document.title = "შვებულების ვიზირება | Gorgia LLC";
 
-  const [expandedRows, setExpandedRows] = useState([]);
-  const [documents, setDocuments] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]); // State to track expanded rows
+  const [vacations, setVacations] = useState([]); // State to store vacation requests
 
+  // Function to toggle row expansion
   const toggleRow = (index) => {
     const isRowExpanded = expandedRows.includes(index);
     if (isRowExpanded) {
@@ -18,35 +19,33 @@ const HrPageApprove = () => {
     }
   };
 
-  const fetchDocuments = async () => {
+  // Function to fetch vacation data
+  const fetchVacations = async () => {
     try {
-      const response = await getHrDocuments();
-      setDocuments(response.data);
+      const response = await getVacations();
+      setVacations(response.data.vocations); // Assuming vacations are stored in response.data.vocations
     } catch (err) {
-      console.error("Error fetching HR documents:", err);
+      console.error("Error fetching vacation requests:", err);
     }
   };
 
   useEffect(() => {
-    fetchDocuments();
+    fetchVacations();
   }, []);
 
-  const handleUpdateStatus = async (documentId, status) => {
+  // Function to update vacation status (approve/reject)
+  const handleUpdateStatus = async (vacationId, status) => {
     try {
-      await updateHrDocumentStatus(documentId, status);
-      setDocuments((prevDocuments) =>
-        prevDocuments.map((document) =>
-          document.id === documentId ? { ...document, status } : document
+      await approveVacation(vacationId, { status }); // Pass status in request payload
+      setVacations((prevVacations) =>
+        prevVacations.map((vacation) =>
+          vacation.id === vacationId ? { ...vacation, status } : vacation
         )
       );
     } catch (err) {
-      console.error("Error updating document status:", err);
+      console.error("Error updating vacation status:", err);
     }
   };
-
-
-
-  
 
   return (
     <React.Fragment>
@@ -54,6 +53,10 @@ const HrPageApprove = () => {
             <Col xl={12}>
               <Card>
                 <CardBody>
+                  <CardTitle className="h4">შვებულების ვიზირების გვერდი</CardTitle>
+                  <CardSubtitle className="card-title-desc">
+                    ქვემოთ მოცემულია შვებულების მოთხოვნები
+                  </CardSubtitle>
 
                   <div className="table-responsive">
                     <Table className="table mb-0">
@@ -61,19 +64,20 @@ const HrPageApprove = () => {
                         <tr>
                           <th>#</th>
                           <th>მომთხოვნი პირი</th>
-                          <th>მოთხოვნილი ფორმის სტილი</th>
-                          <th>სამსახურის დაწყების თარიღი</th>
+                          <th>დაწყების თარიღი</th>
+                          <th>დასრულების თარიღი</th>
+                          <th>სტატუსი</th>
                           <th>ვიზირება</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {documents.map((document, index) => (
-                          <React.Fragment key={document.id}>
+                        {vacations.map((vacation, index) => (
+                          <React.Fragment key={vacation.id}>
                             <tr
                               className={
-                                document.status === "rejected"
+                                vacation.status === "rejected"
                                   ? "table-danger"
-                                  : document.status === "approved"
+                                  : vacation.status === "approved"
                                   ? "table-success"
                                   : "table-warning"
                               }
@@ -81,16 +85,17 @@ const HrPageApprove = () => {
                               style={{ cursor: "pointer" }}
                             >
                               <th scope="row">{index + 1}</th>
-                              <td>{document.user.name}</td>
-                              <td>{document.name}</td>
-                              <td>{new Date(document.created_at).toLocaleDateString()}</td>
+                              <td>{vacation.user.name}</td>
+                              <td>{new Date(vacation.start_date).toLocaleDateString()}</td>
+                              <td>{new Date(vacation.end_date).toLocaleDateString()}</td>
+                              <td>{vacation.status}</td>
                               <td>
-                                {document.status === "rejected" ? (
+                                {vacation.status === "rejected" ? (
                                   <Button color="danger" disabled>
                                     <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                     უარყოფილია
                                   </Button>
-                                ) : document.status === "approved" ? (
+                                ) : vacation.status === "approved" ? (
                                   <Button color="success" disabled>
                                     <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                     დადასტურებულია
@@ -101,7 +106,7 @@ const HrPageApprove = () => {
                                       type="button"
                                       color="success"
                                       style={{ marginRight: "10px" }}
-                                      onClick={() => handleUpdateStatus(document.id, "approved")}
+                                      onClick={() => handleUpdateStatus(vacation.id, "approved")}
                                     >
                                       <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                       დადასტურება
@@ -109,7 +114,7 @@ const HrPageApprove = () => {
                                     <Button
                                       type="button"
                                       color="danger"
-                                      onClick={() => handleUpdateStatus(document.id, "rejected")}
+                                      onClick={() => handleUpdateStatus(vacation.id, "rejected")}
                                     >
                                       <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                       უარყოფა
@@ -120,14 +125,14 @@ const HrPageApprove = () => {
                             </tr>
                             {expandedRows.includes(index) && (
                               <tr>
-                                <td colSpan="5">
+                                <td colSpan="6">
                                   <div className="p-3">
-                                    {/* Detailed data fields go here */}
                                     <p>დეტალური ინფორმაცია</p>
                                     <ul>
-                                      <li>მიმდინარე პოზიცია: {document.user.position}</li>
-                                      <li>საიდენტიფიკაციო კოდი ან პირადი ნომერი: {document.user.id}</li>
-                                      <li>იურიდიული მისამართი / ფაქტიური მისამართი: {document.user.location}</li>
+                                      <li>პოზიცია: {vacation.user.position}</li>
+                                      <li>ID: {vacation.user.id}</li>
+                                      <li>მისამართი: {vacation.user.location}</li>
+                                      <li>სულ დღეები: {vacation.total_days}</li>
                                     </ul>
                                   </div>
                                 </td>
@@ -146,4 +151,4 @@ const HrPageApprove = () => {
   );
 };
 
-export default HrPageApprove;
+export default VacationPageApprove;

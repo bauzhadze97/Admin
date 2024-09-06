@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Row, Col, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { getHrDocuments, updateHrDocumentStatus } from "services/hrDocument";
+import { getTripList } from "services/trip";
 
-const HrPageApprove = () => {
-  document.title = "ვიზირება | Gorgia LLC";
+const TripPageApprove = () => {
+  document.title = "მივლინებების ვიზირება | Georgia LLC"; // Page title
 
-  const [expandedRows, setExpandedRows] = useState([]);
-  const [documents, setDocuments] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]); // To handle expanded rows
+  const [trips, setTrips] = useState([]); // To store the fetched trip requests
 
+  // Toggle row expansion to show detailed trip info
   const toggleRow = (index) => {
     const isRowExpanded = expandedRows.includes(index);
     if (isRowExpanded) {
@@ -18,35 +19,33 @@ const HrPageApprove = () => {
     }
   };
 
-  const fetchDocuments = async () => {
+  // Fetch trip requests from the backend
+  const fetchTrips = async () => {
     try {
-      const response = await getHrDocuments();
-      setDocuments(response.data);
+      const response = await getTripList();
+      setTrips(response.data.business); // Assuming business contains the trip data
     } catch (err) {
-      console.error("Error fetching HR documents:", err);
+      console.error("Error fetching trip requests:", err);
     }
   };
 
   useEffect(() => {
-    fetchDocuments();
+    fetchTrips();
   }, []);
 
-  const handleUpdateStatus = async (documentId, status) => {
+  // Handle status update (approve/reject)
+  const handleUpdateStatus = async (tripId, status) => {
     try {
-      await updateHrDocumentStatus(documentId, status);
-      setDocuments((prevDocuments) =>
-        prevDocuments.map((document) =>
-          document.id === documentId ? { ...document, status } : document
+      await approveTrip(tripId, { status }); // Pass status in request payload
+      setTrips((prevTrips) =>
+        prevTrips.map((trip) =>
+          trip.id === tripId ? { ...trip, status } : trip
         )
       );
     } catch (err) {
-      console.error("Error updating document status:", err);
+      console.error("Error updating trip status:", err);
     }
   };
-
-
-
-  
 
   return (
     <React.Fragment>
@@ -54,6 +53,10 @@ const HrPageApprove = () => {
             <Col xl={12}>
               <Card>
                 <CardBody>
+                  <CardTitle className="h4">მივლინებების ვიზირების გვერდი</CardTitle>
+                  <CardSubtitle className="card-title-desc">
+                    ქვემოთ მოცემულია მიმდინარე მივლინების მოთხოვნები
+                  </CardSubtitle>
 
                   <div className="table-responsive">
                     <Table className="table mb-0">
@@ -61,19 +64,21 @@ const HrPageApprove = () => {
                         <tr>
                           <th>#</th>
                           <th>მომთხოვნი პირი</th>
-                          <th>მოთხოვნილი ფორმის სტილი</th>
-                          <th>სამსახურის დაწყების თარიღი</th>
+                          <th>მივლინების ადგილი</th>
+                          <th>დაწყების თარიღი</th>
+                          <th>დასრულების თარიღი</th>
+                          <th>სტატუსი</th>
                           <th>ვიზირება</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {documents.map((document, index) => (
-                          <React.Fragment key={document.id}>
+                        {trips.map((trip, index) => (
+                          <React.Fragment key={trip.id}>
                             <tr
                               className={
-                                document.status === "rejected"
+                                trip.status === "rejected"
                                   ? "table-danger"
-                                  : document.status === "approved"
+                                  : trip.status === "approved"
                                   ? "table-success"
                                   : "table-warning"
                               }
@@ -81,16 +86,18 @@ const HrPageApprove = () => {
                               style={{ cursor: "pointer" }}
                             >
                               <th scope="row">{index + 1}</th>
-                              <td>{document.user.name}</td>
-                              <td>{document.name}</td>
-                              <td>{new Date(document.created_at).toLocaleDateString()}</td>
+                              <td>{trip.subtitle_user_name} {trip.subtitle_user_sur_name}</td>
+                              <td>{trip.place_of_trip}</td>
+                              <td>{new Date(trip.start_date).toLocaleDateString()}</td>
+                              <td>{new Date(trip.end_date).toLocaleDateString()}</td>
+                              <td>{trip.status}</td>
                               <td>
-                                {document.status === "rejected" ? (
+                                {trip.status === "rejected" ? (
                                   <Button color="danger" disabled>
                                     <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                     უარყოფილია
                                   </Button>
-                                ) : document.status === "approved" ? (
+                                ) : trip.status === "approved" ? (
                                   <Button color="success" disabled>
                                     <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                     დადასტურებულია
@@ -101,7 +108,7 @@ const HrPageApprove = () => {
                                       type="button"
                                       color="success"
                                       style={{ marginRight: "10px" }}
-                                      onClick={() => handleUpdateStatus(document.id, "approved")}
+                                      onClick={() => handleUpdateStatus(trip.id, "approved")}
                                     >
                                       <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                       დადასტურება
@@ -109,7 +116,7 @@ const HrPageApprove = () => {
                                     <Button
                                       type="button"
                                       color="danger"
-                                      onClick={() => handleUpdateStatus(document.id, "rejected")}
+                                      onClick={() => handleUpdateStatus(trip.id, "rejected")}
                                     >
                                       <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                       უარყოფა
@@ -120,14 +127,15 @@ const HrPageApprove = () => {
                             </tr>
                             {expandedRows.includes(index) && (
                               <tr>
-                                <td colSpan="5">
+                                <td colSpan="7">
                                   <div className="p-3">
-                                    {/* Detailed data fields go here */}
                                     <p>დეტალური ინფორმაცია</p>
                                     <ul>
-                                      <li>მიმდინარე პოზიცია: {document.user.position}</li>
-                                      <li>საიდენტიფიკაციო კოდი ან პირადი ნომერი: {document.user.id}</li>
-                                      <li>იურიდიული მისამართი / ფაქტიური მისამართი: {document.user.location}</li>
+                                      <li>მიზანი: {trip.purpose_of_trip}</li>
+                                      <li>სრული ხარჯი: {trip.total_expense}₾</li>
+                                      <li>ტრანსპორტის ხარჯი: {trip.expense_transport}₾</li>
+                                      <li>საცხოვრებელი: {trip.expense_living}₾</li>
+                                      <li>კვების ხარჯი: {trip.expense_meal}₾</li>
                                     </ul>
                                   </div>
                                 </td>
@@ -146,4 +154,4 @@ const HrPageApprove = () => {
   );
 };
 
-export default HrPageApprove;
+export default TripPageApprove;

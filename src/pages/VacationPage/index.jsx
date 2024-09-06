@@ -16,6 +16,7 @@ import { createPurchase } from '../../services/vacation';
 import { getApprovalVacations, getVacations } from '../../services/admin/vacation';
 import { toast } from 'react-toastify';
 import './index.css';
+import RequestCard from 'components/Vacation/RequestCard';
 
 const VacationPage = () => {
   const { t } = useTranslation();
@@ -51,6 +52,8 @@ const VacationPage = () => {
     const fetchVacations = async () => {
       try {
         const res = await getVacations();
+        console.log(res);
+        
         setVacations(res.data.vocations);
       } catch (err) {
         console.error(err);
@@ -157,6 +160,9 @@ const VacationPage = () => {
     return totalDays;
   };
 
+  console.log(vacations);
+  
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -257,7 +263,7 @@ const VacationPage = () => {
                   </Form>
 
                   {/* Display the list of vacation requests */}
-                  {/* <div className="w-[80%] h-[600px] overflow-y-auto pt-2 flex flex-col items-center">
+                  <div className="w-[80%] h-[600px] overflow-y-auto pt-2 flex flex-col items-center">
                     {vacations.map((vacation, idx) => (
                       <RequestCard
                         key={idx}
@@ -268,7 +274,7 @@ const VacationPage = () => {
                         status={vacation.status}
                       />
                     ))}
-                  </div> */}
+                  </div>
                 </CardBody>
               </Card>
             </Col>

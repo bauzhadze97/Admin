@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Row, Col, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { getHrDocuments, updateHrDocumentStatus } from "services/hrDocument";
+import { getPurchaseList } from "services/purchase";
 
-const HrPageApprove = () => {
-  document.title = "ვიზირება | Gorgia LLC";
+const PurchasePageApprove = () => {
+  document.title = "შესყიდვების ვიზირება | Gorgia LLC"; // Page title
 
-  const [expandedRows, setExpandedRows] = useState([]);
-  const [documents, setDocuments] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]); // To handle expanded rows
+  const [purchases, setPurchases] = useState([]); // To store the fetched purchase requests
 
+  // Toggle row expansion to show detailed purchase info
   const toggleRow = (index) => {
     const isRowExpanded = expandedRows.includes(index);
     if (isRowExpanded) {
@@ -18,35 +19,33 @@ const HrPageApprove = () => {
     }
   };
 
-  const fetchDocuments = async () => {
+  // Fetch purchase requests from the backend
+  const fetchPurchases = async () => {
     try {
-      const response = await getHrDocuments();
-      setDocuments(response.data);
+      const response = await getPurchaseList();
+      setPurchases(response.data.internal_purchases); // Assuming internal_purchases contains the purchase data
     } catch (err) {
-      console.error("Error fetching HR documents:", err);
+      console.error("Error fetching purchase requests:", err);
     }
   };
 
   useEffect(() => {
-    fetchDocuments();
+    fetchPurchases();
   }, []);
 
-  const handleUpdateStatus = async (documentId, status) => {
+  // Handle status update (approve/reject)
+  const handleUpdateStatus = async (purchaseId, status) => {
     try {
-      await updateHrDocumentStatus(documentId, status);
-      setDocuments((prevDocuments) =>
-        prevDocuments.map((document) =>
-          document.id === documentId ? { ...document, status } : document
+      await updatePurchaseStatus(purchaseId, { status }); // Pass status in request payload
+      setPurchases((prevPurchases) =>
+        prevPurchases.map((purchase) =>
+          purchase.id === purchaseId ? { ...purchase, status } : purchase
         )
       );
     } catch (err) {
-      console.error("Error updating document status:", err);
+      console.error("Error updating purchase status:", err);
     }
   };
-
-
-
-  
 
   return (
     <React.Fragment>
@@ -54,6 +53,10 @@ const HrPageApprove = () => {
             <Col xl={12}>
               <Card>
                 <CardBody>
+                  <CardTitle className="h4">შესყიდვების ვიზირების გვერდი</CardTitle>
+                  <CardSubtitle className="card-title-desc">
+                    ქვემოთ მოცემულია შესყიდვის მოთხოვნები
+                  </CardSubtitle>
 
                   <div className="table-responsive">
                     <Table className="table mb-0">
@@ -61,19 +64,21 @@ const HrPageApprove = () => {
                         <tr>
                           <th>#</th>
                           <th>მომთხოვნი პირი</th>
-                          <th>მოთხოვნილი ფორმის სტილი</th>
-                          <th>სამსახურის დაწყების თარიღი</th>
+                          <th>შესყიდვის ობიექტი</th>
+                          <th>დაწყების თარიღი</th>
+                          <th>დასრულების თარიღი</th>
+                          <th>სტატუსი</th>
                           <th>ვიზირება</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {documents.map((document, index) => (
-                          <React.Fragment key={document.id}>
+                        {purchases.map((purchase, index) => (
+                          <React.Fragment key={purchase.id}>
                             <tr
                               className={
-                                document.status === "rejected"
+                                purchase.status === "rejected"
                                   ? "table-danger"
-                                  : document.status === "approved"
+                                  : purchase.status === "approved"
                                   ? "table-success"
                                   : "table-warning"
                               }
@@ -81,16 +86,18 @@ const HrPageApprove = () => {
                               style={{ cursor: "pointer" }}
                             >
                               <th scope="row">{index + 1}</th>
-                              <td>{document.user.name}</td>
-                              <td>{document.name}</td>
-                              <td>{new Date(document.created_at).toLocaleDateString()}</td>
+                              <td>{purchase.user.name}</td>
+                              <td>{purchase.objective}</td>
+                              <td>{new Date(purchase.start_date).toLocaleDateString()}</td>
+                              <td>{new Date(purchase.deadline).toLocaleDateString()}</td>
+                              <td>{purchase.status}</td>
                               <td>
-                                {document.status === "rejected" ? (
+                                {purchase.status === "rejected" ? (
                                   <Button color="danger" disabled>
                                     <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                     უარყოფილია
                                   </Button>
-                                ) : document.status === "approved" ? (
+                                ) : purchase.status === "approved" ? (
                                   <Button color="success" disabled>
                                     <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                     დადასტურებულია
@@ -101,7 +108,7 @@ const HrPageApprove = () => {
                                       type="button"
                                       color="success"
                                       style={{ marginRight: "10px" }}
-                                      onClick={() => handleUpdateStatus(document.id, "approved")}
+                                      onClick={() => handleUpdateStatus(purchase.id, "approved")}
                                     >
                                       <i className="bx bx-check-double font-size-10 align-left me-2"></i>{" "}
                                       დადასტურება
@@ -109,7 +116,7 @@ const HrPageApprove = () => {
                                     <Button
                                       type="button"
                                       color="danger"
-                                      onClick={() => handleUpdateStatus(document.id, "rejected")}
+                                      onClick={() => handleUpdateStatus(purchase.id, "rejected")}
                                     >
                                       <i className="bx bx-block font-size-10 align-right me-2"></i>{" "}
                                       უარყოფა
@@ -120,14 +127,14 @@ const HrPageApprove = () => {
                             </tr>
                             {expandedRows.includes(index) && (
                               <tr>
-                                <td colSpan="5">
+                                <td colSpan="7">
                                   <div className="p-3">
-                                    {/* Detailed data fields go here */}
                                     <p>დეტალური ინფორმაცია</p>
                                     <ul>
-                                      <li>მიმდინარე პოზიცია: {document.user.position}</li>
-                                      <li>საიდენტიფიკაციო კოდი ან პირადი ნომერი: {document.user.id}</li>
-                                      <li>იურიდიული მისამართი / ფაქტიური მისამართი: {document.user.location}</li>
+                                      <li>პოზიცია: {purchase.user.position}</li>
+                                      <li>ID: {purchase.user.id}</li>
+                                      <li>მისამართი: {purchase.delivery_address}</li>
+                                      <li>სულ დღეები: {purchase.total_days}</li>
                                     </ul>
                                   </div>
                                 </td>
@@ -146,4 +153,4 @@ const HrPageApprove = () => {
   );
 };
 
-export default HrPageApprove;
+export default PurchasePageApprove;

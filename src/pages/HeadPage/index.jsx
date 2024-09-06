@@ -10,6 +10,11 @@ import {
 import { Nav, NavItem, NavLink, TabContent, TabPane, Row, Col, CardText, Container } from 'reactstrap';
 import classnames from 'classnames';
 import { approveVacation, getApprovalVacations } from '../../services/admin/vacation';
+import HrPageApprove from 'pages/HrPageApprove';
+import VacationPageApprove from 'pages/VacationPageApprove/VacationPageApprove';
+import PurchasePageApprove from 'pages/PurchasePageApprove/PurchasePageApprove';
+import TripPageApprove from 'pages/TripPageApprove/TripPageApprove';
+import LawyerPageApprove from 'pages/LawyerPageApprove';
 
 const HeadPage = () => {
   const navigate = useNavigate();
@@ -118,50 +123,21 @@ const HeadPage = () => {
 
               <TabContent activeTab={activeTab} className="p-3 text-muted">
                 <TabPane tabId="1">
-                  <Row>
-                    <Col sm="12">
-                      <CardText className="mb-0">
-                        Content for ხელშეკრულებები tab.
-                      </CardText>
-                    </Col>
-                  </Row>
+                  <LawyerPageApprove/>
                 </TabPane>
                 <TabPane tabId="2">
-                  <Row>
-                    <Col sm="12">
-                      <CardText className="mb-0">
-                        Content for მივლინება tab.
-                      </CardText>
-                    </Col>
-                  </Row>
+                  <TripPageApprove/>
                 </TabPane>
                 <TabPane tabId="3">
-                  <Row>
-                    <Col sm="12">
-                      <CardText className="mb-0">
-                        Content for შესყიდვები tab.
-                      </CardText>
-                    </Col>
-                  </Row>
+                  <PurchasePageApprove/>
                 </TabPane>
                 <TabPane tabId="4">
-                  <Row>
-                    <Col sm="12">
-                      <CardText className="mb-0">
-                        Content for შვებულება tab.
-                      </CardText>
-                    </Col>
-                  </Row>
+                  <VacationPageApprove/>
                 </TabPane>
                 <TabPane tabId="5">
-                  <Row>
-                    <Col sm="12">
-                      <CardText className="mb-0">
-                        Content for დოკუმენტები tab.
-                      </CardText>
-                    </Col>
-                  </Row>
+                  <HrPageApprove/>
                 </TabPane>
+                
               </TabContent>
 
               {/* Existing Modal Logic */}
