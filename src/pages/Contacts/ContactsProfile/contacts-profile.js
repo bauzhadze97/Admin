@@ -28,12 +28,12 @@ import profile1 from "assets/images/profile-img.png";
 
 // import charts
 import ApexRevenue from "../ApexRevenue";
-import { getContacts } from 'store/contacts/actions';  // Or whichever action you need
+import { getUserProfile } from "store/actions";
 
 const ContactsProfile = props => {
 
   //meta title
-  document.title = "Profile | Gorgia LLC";
+  document.title = "Profile | Skote - React Admin & Dashboard Template";
 
   const { userProfile, onGetUserProfile } = props;
 

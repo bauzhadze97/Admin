@@ -14,13 +14,13 @@ import CardContact from "./card-contact";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
-import { getContacts as onGetContacts } from '../../store/contacts/actions';
+import { getUsers as onGetUsers } from "../../store/contacts/actions";
 import Spinners from "components/Common/Spinner";
 
 const ContactsGrid = () => {
 
   //meta title
-  document.title = "User Grid | Gorgia LLC";
+  document.title = "User Grid | Skote - React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
 
