@@ -269,6 +269,13 @@ const SidebarContent = props => {
               </Link>
          
             </li>
+            <li>
+              <Link to="/contacts-list">
+                <i className="bx bxs-user-detail"></i>
+                <span>{props.t("ლოიალობის ბარათი")}</span>
+              </Link>
+         
+            </li>
           
              {/* <li className="menu-title">{props.t("Apps")}</li>
 
@@ -295,7 +302,7 @@ const SidebarContent = props => {
         
 
             {/* <li>
-              <Link to="/#" className="has-arrow ">
+              <Link to="/contacts-list" className="has-arrow ">
                 <i className="bx bxs-user-detail"></i>
                 <span>{props.t("Contacts")}</span>
               </Link>
