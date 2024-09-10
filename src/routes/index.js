@@ -218,20 +218,23 @@ const authProtectedRoutes = [
   { path: "/business", component: <BusinessPage /> },
   { path: "/vacation", component: <VacationPage /> },
   { path: "/procurement", component: <ProcurementPage /> },
-  { path: "/head", component: <HeadPage />},
-  { path: "/it", component: <ItHelpPage />},
-  { path: "/hr", component: <HrPage />},
-  { path: "/hr-approve", component: <HrPageApprove />},
-  { path: "/lawyer", component: <LawyerPage />},
-  { path: "/lawyer-approve", component: <LawyerPageApprove />},
-  { path: "/lawyer-history", component: <LawyerPageArchive />},
-  { path: "/lawyer-doc", component: <LawyerPageDoc />},
-  { path: "/admin", component: <AdminPage />},
-  { path: "/notes", component: <NotesPage />},
-  { path: "/notes-editor/:id", component: <NotesEditor />},
+  { path: "/head", component: <HeadPage /> },
+  { path: "/it", component: <ItHelpPage /> },
+  { path: "/hr", component: <HrPage /> },
+  { path: "/hr-approve", component: <HrPageApprove /> },
+  { path: "/lawyer", component: <LawyerPage /> },
+  { path: "/lawyer-approve", component: <LawyerPageApprove /> },
+  { path: "/lawyer-history", component: <LawyerPageArchive /> },
+  { path: "/lawyer-doc", component: <LawyerPageDoc /> },
+  { path: "/admin", component: <AdminPage /> },
+  { path: "/notes", component: <NotesPage /> },
+  { path: "/notes-editor/:id?", component: <NotesEditor /> },
 
   //Ecommerce
-  { path: "/ecommerce-product-detail/:id", component: <EcommerceProductDetail /> },
+  {
+    path: "/ecommerce-product-detail/:id",
+    component: <EcommerceProductDetail />,
+  },
   { path: "/ecommerce-products", component: <EcommerceProducts /> },
   { path: "/ecommerce-orders", component: <EcommerceOrders /> },
   { path: "/ecommerce-customers", component: <EcommerceCustomers /> },
@@ -354,7 +357,7 @@ const authProtectedRoutes = [
     exact: true,
     component: <Navigate to="/dashboard" />,
   },
-];
+]
 
 const publicRoutes = [
   { path: "/login", component: <Login /> },
