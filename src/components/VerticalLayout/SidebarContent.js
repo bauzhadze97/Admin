@@ -204,35 +204,40 @@ const SidebarContent = props => {
                 </li>
               </ul>
             </li> 
+        
             <li>
-              <Link to="/profile">
-                <i className="bx bxs-report"></i>
-                <span>{props.t("პროფილი")}</span>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-horizontal-center"></i>
+                <span>{props.t("განცხადებები")}</span>
               </Link>
-         
-            </li>
-
-            <li>
-              <Link to="/business">
-                <i className="bx bxs-report"></i>
-                <span>{props.t("მივლინება")}</span>
-              </Link>
-         
-            </li>
-            <li>
-              <Link to="/vacation">
-                <i className="bx bxs-file-doc"></i>
-                <span>{props.t("შვებულება")}</span>
-              </Link>
-         
-            </li>
-            <li>
+              <ul className="sub-menu">
+              <li>
               <Link to="/procurement">
-                <i className="bx bxs-report"></i>
+            
                 <span>{props.t("შესყიდვები")}</span>
               </Link>
          
             </li>
+                <li>
+              <Link to="/vacation">
+                
+                <span>{props.t("შვებულება")}</span>
+              </Link>
+         
+            </li>
+                <li>
+              <Link to="/business">
+              
+                <span>{props.t("მივლინება")}</span>
+              </Link>
+         
+            </li>
+              </ul>
+            </li> 
+
+         
+           
+         
             
             <li>
               <Link to="/#" className="has-arrow ">
@@ -255,6 +260,13 @@ const SidebarContent = props => {
              
               </ul>
             </li> 
+            <li>
+              <Link to="/profile">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("პროფილი")}</span>
+              </Link>
+         
+            </li>
             <li>
               <Link to="/notes">
                 <i className="bx bxs-report"></i>

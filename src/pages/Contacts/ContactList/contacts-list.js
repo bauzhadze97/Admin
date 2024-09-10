@@ -356,7 +356,7 @@ const ContactsList = () => {
 
           <Modal isOpen={modal} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal} tag="h4">
-              {isEdit ? "Edit Contact" : "Add Contact"}
+              {isEdit ? "კონტაქტის რედაკტირება" : "კონტაქტის დამატება"}
             </ModalHeader>
             <ModalBody>
               <Form
