@@ -17,14 +17,21 @@ const NotesEditor = () => {
   const [error, setError] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
+
+  
+  
+
   useEffect(() => {
     if (id) {
       setIsEdit(true);
       const fetchNote = async () => {
         try {
           const response = await getNote(id);
-          setTitle(response.data.discount.title);
-          setContent(response.data.discount.note);
+
+          console.log(response);
+          
+          setTitle(response.data.title)
+          setContent(response.data.content);
         } catch (error) {
           setError('Failed to load note data.');
         }
@@ -50,6 +57,10 @@ const NotesEditor = () => {
       setLoading(false);
     }
   };
+
+
+  console.log(content);
+  
 
   return (
     <div className="page-content">
