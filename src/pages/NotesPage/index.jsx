@@ -71,13 +71,13 @@ const NotesPage = () => {
             variant="h4"
             sx={{ fontWeight: "bold", color: "#105D8D" }}
           >
-            My Notes
+            Notes
           </Typography>
           <Box sx={{ display: "flex", gap: "10px" }}>
             <TextField
               variant="outlined"
               size="small"
-              placeholder="Search notes..."
+              placeholder="ძებნა..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               InputProps={{
@@ -109,7 +109,7 @@ const NotesPage = () => {
                 }}
               >
                 <img src={SaveIcon} alt="Save Icon" style={{ width: "16px" }} />
-                Add Note
+                დამატება
               </Button>
             </Link>
           </Box>
