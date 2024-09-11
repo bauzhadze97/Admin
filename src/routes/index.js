@@ -187,6 +187,7 @@ import LawyerPageDoc from "pages/LawyerPageDoc";
 import HrPageApprove from "pages/HrPageApprove";
 import ItHelpPage from "pages/ItHelpPage";
 import TaskList from "../pages/JobPages/JobList";
+import VisitorsTraffic from "pages/VisitorsTraffic/VisitorsTraffic";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -284,6 +285,7 @@ const authProtectedRoutes = [
   // Contacts
   { path: "/contacts-grid", component: <ContactsGrid /> },
   { path: "/contacts-list", component: <ContactsList /> },
+  { path: "/visitors", component: <VisitorsTraffic /> },
   { path: "/contacts-profile", component: <ContactsProfile /> },
 
   //Charts
