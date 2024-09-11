@@ -145,13 +145,11 @@ const SidebarContent = props => {
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
-            
             <li>
               <Link to="/#">
                 <i className="bx bx-home-circle"></i>
                 <span>{props.t("მთავარი გვერდი")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/tables-datatable">
@@ -161,23 +159,25 @@ const SidebarContent = props => {
                 </span>
                 <span>{props.t("დღის საკითხები")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/admin">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("სამართავი პანელი")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/head">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("ვიზირება")}</span>
               </Link>
-         
             </li>
-
+            <li>
+              <Link to="/archive">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("არქივი")}</span>
+              </Link>
+            </li>
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bx-task"></i>
@@ -185,60 +185,47 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li>
-                <Link to="/lawyer">
-               
-                <span>{props.t("მოთხოვნა")}</span>
-              </Link>
+                  <Link to="/lawyer">
+                    <span>{props.t("მოთხოვნა")}</span>
+                  </Link>
                 </li>
                 <li>
-                <Link to="/lawyer-approve">
-               
-                <span>{props.t("ვიზირება")}</span>
-              </Link>
+                  <Link to="/lawyer-approve">
+                    <span>{props.t("ვიზირება")}</span>
+                  </Link>
                 </li>
                 <li>
-                <Link to="/lawyer-history">
-               
-                <span>{props.t("არქივი")}</span>
-              </Link>
+                  <Link to="/lawyer-history">
+                    <span>{props.t("არქივი")}</span>
+                  </Link>
                 </li>
               </ul>
-            </li> 
-        
+            </li>
+
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bx-horizontal-center"></i>
                 <span>{props.t("განცხადებები")}</span>
               </Link>
               <ul className="sub-menu">
-              <li>
-              <Link to="/procurement">
-            
-                <span>{props.t("შესყიდვები")}</span>
-              </Link>
-         
-            </li>
                 <li>
-              <Link to="/vacation">
-                
-                <span>{props.t("შვებულება")}</span>
-              </Link>
-         
-            </li>
+                  <Link to="/procurement">
+                    <span>{props.t("შესყიდვები")}</span>
+                  </Link>
+                </li>
                 <li>
-              <Link to="/business">
-              
-                <span>{props.t("მივლინება")}</span>
-              </Link>
-         
-            </li>
+                  <Link to="/vacation">
+                    <span>{props.t("შვებულება")}</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/business">
+                    <span>{props.t("მივლინება")}</span>
+                  </Link>
+                </li>
               </ul>
-            </li> 
+            </li>
 
-         
-           
-         
-            
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bxs-file-doc"></i>
@@ -246,56 +233,48 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li>
-                <Link to="/hr">
-               
-                <span>{props.t("ცნობები")}</span>
-              </Link>
+                  <Link to="/hr">
+                    <span>{props.t("ცნობები")}</span>
+                  </Link>
                 </li>
                 <li>
-                <Link to="/hr-approve">
-               
-                <span>{props.t("ვიზირება")}</span>
-              </Link>
+                  <Link to="/hr-approve">
+                    <span>{props.t("ვიზირება")}</span>
+                  </Link>
                 </li>
-             
               </ul>
-            </li> 
+            </li>
             <li>
               <Link to="/profile">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("პროფილი")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/notes">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("Notes")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/it-tasks">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("IT მხარდაჭერა")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/contacts-list">
                 <i className="bx bxs-user-detail"></i>
                 <span>{props.t("ლოიალობის ბარათი")}</span>
               </Link>
-         
             </li>
             <li>
               <Link to="/visitors">
                 <i className="bx bx-building"></i>
                 <span>{props.t("ვიზიტორები")}</span>
               </Link>
-         
             </li>
-             {/* <li className="menu-title">{props.t("Apps")}</li>
+            {/* <li className="menu-title">{props.t("Apps")}</li>
 
             <li>
               <Link to="/calendar" >
@@ -317,8 +296,6 @@ const SidebarContent = props => {
               </Link>
             </li> */}
 
-        
-
             {/* <li>
               <Link to="/contacts-list" className="has-arrow ">
                 <i className="bx bxs-user-detail"></i>
@@ -336,7 +313,6 @@ const SidebarContent = props => {
                 </li>
               </ul>
             </li> */}
-
 
             {/* <li>
               <Link to="/#" className="has-arrow">                
@@ -541,9 +517,7 @@ const SidebarContent = props => {
                   <Link to="/ui-rating">{props.t("Rating")}</Link>
                 </li> */}
                 <li>
-                  <Link to="/ui-notifications">
-                    {props.t("Notifications")}
-                  </Link>
+                  <Link to="/ui-notifications">{props.t("Notifications")}</Link>
                 </li>
                 {/* <li>
                   <Link to="/ui-breadcrumb">
@@ -551,10 +525,7 @@ const SidebarContent = props => {
                   </Link>
                 </li> */}
                 <li>
-                  <Link to="/ui-utilities">
-                    {props.t("Utilities")}
-                    
-                  </Link>
+                  <Link to="/ui-utilities">{props.t("Utilities")}</Link>
                 </li>
               </ul>
             </li>
@@ -605,15 +576,15 @@ const SidebarContent = props => {
 
             {/* <li>
               <Link to="/#" className="has-arrow "> */}
-                {/* <i className="bx bx-list-ul"></i> */}
-                {/* <span>{props.t("Tables")}</span> */}
-              {/* </Link> */}
-              {/* <ul className="sub-menu"> */}
-                {/* <li>
+            {/* <i className="bx bx-list-ul"></i> */}
+            {/* <span>{props.t("Tables")}</span> */}
+            {/* </Link> */}
+            {/* <ul className="sub-menu"> */}
+            {/* <li>
                   <Link to="/tables-basic">{props.t("Basic Tables")}</Link>
                 </li> */}
-                
-                {/* <li>
+
+            {/* <li>
                   <Link to="/tables-responsive">
                     {props.t("Responsive Table")}
                   </Link>
@@ -621,7 +592,7 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/tables-dragndrop">{props.t("Drag & Drop Table")}</Link>
                 </li> */}
-              {/* </ul>
+            {/* </ul>
             </li> */}
 
             {/* <li>
@@ -718,7 +689,7 @@ const SidebarContent = props => {
         </div>
       </SimpleBar>
     </React.Fragment>
-  );
+  )
 };
 
 SidebarContent.propTypes = {

@@ -188,6 +188,7 @@ import HrPageApprove from "pages/HrPageApprove";
 import ItHelpPage from "pages/ItHelpPage";
 import TaskList from "../pages/JobPages/JobList";
 import VisitorsTraffic from "pages/VisitorsTraffic/VisitorsTraffic";
+import ArchivePage from "pages/Archive";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -220,6 +221,7 @@ const authProtectedRoutes = [
   { path: "/vacation", component: <VacationPage /> },
   { path: "/procurement", component: <ProcurementPage /> },
   { path: "/head", component: <HeadPage /> },
+  { path: "/archive", component: <ArchivePage /> },
   { path: "/it", component: <ItHelpPage /> },
   { path: "/hr", component: <HrPage /> },
   { path: "/hr-approve", component: <HrPageApprove /> },
