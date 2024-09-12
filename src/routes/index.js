@@ -189,6 +189,7 @@ import ItHelpPage from "pages/ItHelpPage";
 import TaskList from "../pages/JobPages/JobList";
 import VisitorsTraffic from "pages/VisitorsTraffic/VisitorsTraffic";
 import ArchivePage from "pages/Archive";
+import InvoicePage from "pages/InvoicePage/InvoicePage";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -288,6 +289,7 @@ const authProtectedRoutes = [
   { path: "/contacts-grid", component: <ContactsGrid /> },
   { path: "/contacts-list", component: <ContactsList /> },
   { path: "/visitors", component: <VisitorsTraffic /> },
+  { path: "/payment-monitoring", component: <InvoicePage /> },
   { path: "/contacts-profile", component: <ContactsProfile /> },
 
   //Charts
