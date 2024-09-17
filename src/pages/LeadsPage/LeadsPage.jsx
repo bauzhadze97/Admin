@@ -20,7 +20,7 @@ import {
   createLead,
   updateLead,
   deleteLead,
-} from '../../services/leadsService'; // Make sure these functions are implemented
+} from '../../services/leadsService'; // Ensure these functions are implemented
 import Breadcrumbs from 'components/Common/Breadcrumb';
 
 const LeadsPage = () => {
@@ -30,16 +30,17 @@ const LeadsPage = () => {
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const fetchLeads = async () => {
+    try {
+      const response = await getLeads();
+      setLeads(response || []);
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+      setLeads([]);
+    }
+  };
+
   useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const response = await getLeads(); // Ensure this function is implemented correctly
-        setLeads(response.data || []); // Provide a fallback to ensure we always set an array
-      } catch (error) {
-        console.error('Error fetching leads:', error);
-        setLeads([]); // Ensure the state is always set to an array even in error
-      }
-    };
     fetchLeads();
   }, []);
 
@@ -52,15 +53,11 @@ const LeadsPage = () => {
     { Header: 'Comment', accessor: 'comment' },
     {
       Header: 'Actions',
-      id: 'actions', // unique ID for 'key' prop purposes
+      id: 'actions',
       Cell: ({ row }) => (
         <div className="d-flex gap-2">
-          <Button color="primary" onClick={() => handleEditClick(row.original)}>
-            Edit
-          </Button>
-          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>
-            Delete
-          </Button>
+          <Button color="primary" onClick={() => handleEditClick(row.original)}>Edit</Button>
+          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>Delete</Button>
         </div>
       )
     }
@@ -72,10 +69,7 @@ const LeadsPage = () => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns,
-    data: leads
-  }, useSortBy, usePagination);
+  } = useTable({ columns, data: leads }, useSortBy, usePagination);
 
   const handleAddClick = () => {
     setLead(null);
@@ -106,23 +100,23 @@ const LeadsPage = () => {
 
   const handleSaveLead = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = {
-      first_name: formData.get('first_name'),
-      last_name: formData.get('last_name'),
-      request: formData.get('request'),
-      responsible_person: formData.get('responsible_person'),
-      status: formData.get('status'),
-      comment: formData.get('comment'),
+    const data = new FormData(event.target);
+    const leadData = {
+      first_name: data.get('first_name'),
+      last_name: data.get('last_name'),
+      request: data.get('request'),
+      responsible_person: data.get('responsible_person'),
+      status: data.get('status'),
+      comment: data.get('comment'),
     };
 
     try {
       if (isEdit) {
-        await updateLead(lead.id, data);
+        await updateLead(lead.id, leadData);
       } else {
-        await createLead(data);
+        await createLead(leadData);
       }
-      fetchLeads();
+      fetchLeads(); // Refresh leads to include newly added/edited lead
       setModal(false);
     } catch (error) {
       console.error('Error saving lead:', error);
@@ -155,9 +149,9 @@ const LeadsPage = () => {
                 <CardBody>
                   <table {...getTableProps()} className="table">
                     <thead>
-                      {headerGroups.map((headerGroup, index) => (
-                        <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                          {headerGroup.headers.map((column) => (
+                      {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                          {headerGroup.headers.map(column => (
                             <th {...column.getHeaderProps(column.getSortByToggleProps())} key={column.id}>
                               {column.render('Header')}
                               <span>
@@ -169,12 +163,12 @@ const LeadsPage = () => {
                       ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
-                      {rows.map((row, rowIndex) => {
+                      {rows.map(row => {
                         prepareRow(row);
                         return (
-                          <tr {...row.getRowProps()} key={rowIndex}>
-                            {row.cells.map((cell, cellIndex) => (
-                              <td {...cell.getCellProps()} key={cellIndex}>{cell.render('Cell')}</td>
+                          <tr {...row.getRowProps()} key={row.id}>
+                            {row.cells.map(cell => (
+                              <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
                             ))}
                           </tr>
                         );
@@ -198,11 +192,11 @@ const LeadsPage = () => {
                 <Label for="responsible_person">Responsible Person</Label>
                 <Input id="responsible_person" name="responsible_person" defaultValue={lead ? lead.responsible_person : ''} required />
                 <Label for="status">Status</Label>
-                <Input type="select" id="status" name="status" defaultValue={lead ? lead.status : 'Active'}>
+                {/* <Input type="select" id="status" name="status" defaultValue={lead ? lead.status : 'Active'}>
                   <option>Active</option>
                   <option>Closed</option>
                   <option>Problem</option>
-                </Input>
+                </Input> */}
                 <Label for="comment">Comment</Label>
                 <Input type="textarea" id="comment" name="comment" defaultValue={lead ? lead.comment : ''} />
                 <Button type="submit" color="primary">{isEdit ? 'Update Lead' : 'Add Lead'}</Button>
