@@ -24,15 +24,15 @@ const ProfileMenu = props => {
   const [username, setusername] = useState("Admin");
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
+    if (sessionStorage.getItem("authUser")) {
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
+        const obj = JSON.parse(sessionStorage.getItem("authUser"));
         setusername(obj.displayName);
       } else if (
         process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
+        const obj = JSON.parse(sessionStorage.getItem("authUser"));
         setusername(obj.username);
       }
     }

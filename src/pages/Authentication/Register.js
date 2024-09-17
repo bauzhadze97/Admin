@@ -1,86 +1,77 @@
-import React, { useEffect } from "react";
-import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
-
-// Formik Validation
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
-// action
-import { registerUser, apiError } from "../../store/actions";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
-
 import { Link, useNavigate } from "react-router-dom";
-
-// import images
+import { Row, Col, CardBody, Card, Container, Form, Label, Input, FormFeedback } from "reactstrap";
 import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
+import lightlogo from "../../assets/images/logo-light.svg";
+import { registerUser } from "services/auth";
 
-const Register = props => {
+
+const Register = () => {
 
   //meta title
   document.title = "Register | Gorgia LLC";
 
-  const dispatch = useDispatch();
+  // State to track API response
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
+
+  //form validation
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
       email: '',
       username: '',
       password: '',
+      mobile_number: '', 
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      username: Yup.string().required("Please Enter Your Username"),
-      password: Yup.string().required("Please Enter Your Password"),
+      email: Yup.string()
+        .required("გთხოვთ შეიყვანოთ Email")
+        .email("არასწორი Email ფორმატი")
+        .matches(/@gorgia\.ge$/, "Email უნდა მთავრდებოდეს @gorgia.ge-ით"),
+      username: Yup.string().required("გთხოვთ შეიყვანოთ სახელი"),
+      password: Yup.string().required("გთხოვთ შეიყვანოთ პაროლი"),
+      mobile_number: Yup.string()
+        .nullable()
+        .matches(/^[0-9]+$/, "ტელეფონის ნომერი უნდა შეიცავდეს მხოლოდ ციფრებს")
+        .min(9, "ტელეფონის ნომერი უნდა იყოს მინიმუმ 9 ციფრი"),
     }),
-    onSubmit: (values) => {
-      dispatch(registerUser(values));
+    onSubmit: async (values) => {
+      try {
+        setErrorMessage("");
+        setSuccessMessage("");
+        navigate('/')
+        console.log("someeeeeeeeeee");
+        
+        const response = await registerUser(values);
+          if (response.status === 201) {
+          setSuccessMessage("User registered successfully!");
+          console.log('Registration successful:', response.data);
+
+        }
+      } catch (error) {
+        if (error.response && error.response.data) {
+          setErrorMessage("Registration failed: " + error.response.data.message);
+        } else {
+          setErrorMessage("Registration failed. Please try again.");
+        }
+        console.error('Registration error:', error);
+      }
     }
   });
 
-
-  const AccountProperties = createSelector(
-    (state) => state.Account,
-    (account) => ({
-      user: account.user,
-      registrationError: account.registrationError,
-      success: account.success
-      // loading: account.loading,
-    })
-  );
-
-  const {
-    user,
-    registrationError, success
-    // loading
-  } = useSelector(AccountProperties);
-
-  useEffect(() => {
-    dispatch(apiError(""));
-  }, []);
-
-  useEffect(() => {
-    success && setTimeout(() => navigate("/login"), 2000)
-  }, [success])
-
   return (
     <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="bx bx-home h2" />
-        </Link>
-      </div>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
-            <Col md={8} lg={6} xl={5}>
+            <Col md={8} lg={8} xl={5}>
               <Card className="overflow-hidden">
                 <div className="bg-primary-subtle">
                   <Row>
@@ -97,38 +88,41 @@ const Register = props => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                    <Link to="/">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logoImg}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
-                    </Link>
+                    <div className="auth-logo">
+                      <Link to="/" className="auth-logo-light">
+                        <div className="avatar-md profile-user-wid mb-4">
+                          <span className="avatar-title rounded-circle bg-light">
+                            <img
+                              src={lightlogo}
+                              alt=""
+                              className="rounded-circle"
+                              height="34"
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                      <Link to="/" className="auth-logo-dark">
+                        <div className="avatar-md profile-user-wid mb-4">
+                          <span className="avatar-title rounded-circle bg-light">
+                            <img
+                              src={logoImg}
+                              alt=""
+                              className="rounded-circle"
+                              height="34"
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                   <div className="p-2">
-                    <Form
-                      className="form-horizontal"
+                    <Form className="form-horizontal"
                       onSubmit={(e) => {
                         e.preventDefault();
                         validation.handleSubmit();
                         return false;
                       }}
                     >
-                      {user && user ? (
-                        <Alert color="success">
-                          Register User Successfully
-                        </Alert>
-                      ) : null}
-
-                      {registrationError && registrationError ? (
-                        <Alert color="danger">{registrationError}</Alert>
-                      ) : null}
-
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -166,12 +160,31 @@ const Register = props => {
                           <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
                         ) : null}
                       </div>
+                      
+                      <div className="mb-3">
+                        <Label className="form-label">Phone Number</Label>
+                        <Input
+                          name="mobile_number"
+                          type="text"
+                          placeholder="Enter phone number"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.mobile_number || ""}
+                          invalid={
+                            validation.touched.mobile_number && validation.errors.mobile_number ? true : false
+                          }
+                        />
+                        {validation.touched.mobile_number && validation.errors.mobile_number ? (
+                          <FormFeedback type="invalid">{validation.errors.mobile_number}</FormFeedback>
+                        ) : null}
+                      </div>
+
                       <div className="mb-3">
                         <Label className="form-label">Password</Label>
                         <Input
                           name="password"
                           type="password"
-                          placeholder="Enter Password"
+                          placeholder="Enter password"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.password || ""}
@@ -184,7 +197,11 @@ const Register = props => {
                         ) : null}
                       </div>
 
-                      <div className="mt-4">
+                      {/* Display success or error message */}
+                      {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
+                      {successMessage && <div className="text-success mb-3">{successMessage}</div>}
+
+                      <div className="mt-4 d-grid">
                         <button
                           className="btn btn-primary btn-block "
                           type="submit"
@@ -193,23 +210,16 @@ const Register = props => {
                         </button>
                       </div>
 
-                      <div className="mt-4 text-center">
-                        <p className="mb-0">
-                          By registering you agree to the Gorgia LLC{" "}
-                          <Link to="#" className="text-primary">
-                            Terms of Use
-                          </Link>
-                        </p>
-                      </div>
                     </Form>
                   </div>
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Already have an account ?{" "} <Link to="/login" className="font-weight-medium text-primary">
-                    {" "}
-                    Login
+                  Already have an account ?{" "} <Link
+                    to="/pages-login"
+                    className="fw-medium text-primary"
+                  >Login
                   </Link>{" "}
                 </p>
                 <p>

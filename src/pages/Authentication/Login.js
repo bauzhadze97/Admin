@@ -39,8 +39,8 @@ const Login = (props) => {
           toast.error(res.data.message);
           
         } else {
-          localStorage.setItem('token', res.data.token);          
-          localStorage.setItem('authUser', JSON.stringify(res.data.user));
+          sessionStorage.setItem('token', res.data.token);          
+          sessionStorage.setItem('authUser', JSON.stringify(res.data.user));
           dispatch(fetchUserSuccess(res.data.user))
           
           toast.success(res.data.message);

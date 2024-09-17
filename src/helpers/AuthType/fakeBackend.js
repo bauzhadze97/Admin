@@ -162,8 +162,8 @@ const fakeBackend = () => {
             users[objIndex].username = user.username
 
             // Assign a value to locastorage
-            localStorage.removeItem("authUser")
-            localStorage.setItem("authUser", JSON.stringify(users[objIndex]))
+            sessionStorage.removeItem("authUser")
+            sessionStorage.setItem("authUser", JSON.stringify(users[objIndex]))
 
             resolve([200, "Profile Updated Successfully"])
           } else {
@@ -193,8 +193,8 @@ const fakeBackend = () => {
           users[objIndex].username = user.username
 
           // Assign a value to locastorage
-          localStorage.removeItem("authUser")
-          localStorage.setItem("authUser", JSON.stringify(users[objIndex]))
+          sessionStorage.removeItem("authUser")
+          sessionStorage.setItem("authUser", JSON.stringify(users[objIndex]))
 
           resolve([200, "Profile Updated Successfully"])
         } else {

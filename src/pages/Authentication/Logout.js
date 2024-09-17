@@ -17,10 +17,11 @@ const Logout = () => {
     // dispatch(logoutUser(history));
     const handleLogout = async () => {
       try {
-        const res = await logoutUser()
+        const res = await logoutUser();
+        if(res.status == 20)
         toast.success(res.data.message);
-        localStorage.removeItem('token')
-        localStorage.removeItem('authUser')
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('authUser')
         navigate('/login');
       } catch(err) {
         console.error(err);

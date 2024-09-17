@@ -36,7 +36,7 @@ const ChantBox = () => {
 
 
   const onSendMessage = () => {
-    const obj = JSON.parse(localStorage.getItem("authUser") || "");
+    const obj = JSON.parse(ses.getItem("authUser") || "");
     const name = obj && obj.username ? obj.username : "Admin";
 
     const today = new Date();
