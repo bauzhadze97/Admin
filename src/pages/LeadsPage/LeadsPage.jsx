@@ -44,12 +44,36 @@ const LeadsPage = () => {
     fetchLeads();
   }, []);
 
+  const handleStatusChange = async (rowIndex, newStatus) => {
+    const updatedLead = { ...leads[rowIndex], status: newStatus };
+    try {
+      await updateLead(updatedLead.id, updatedLead); // Ensure this function updates the backend correctly
+      fetchLeads(); // Refresh leads to reflect the updated status
+    } catch (error) {
+      console.error('Error updating lead status:', error);
+    }
+  };
+
   const columns = useMemo(() => [
     { Header: 'First Name', accessor: 'first_name' },
     { Header: 'Last Name', accessor: 'last_name' },
     { Header: 'Request', accessor: 'request' },
     { Header: 'Responsible Person', accessor: 'responsible_person' },
-    { Header: 'Status', accessor: 'status' },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      Cell: ({ row }) => (
+        <Input
+          type="select"
+          value={row.original.status}
+          onChange={(e) => handleStatusChange(row.index, e.target.value)}
+        >
+          <option value="Active">Active</option>
+          <option value="Closed">Closed</option>
+          <option value="Problem">Problem</option>
+        </Input>
+      ),
+    },
     { Header: 'Comment', accessor: 'comment' },
     {
       Header: 'Actions',
@@ -192,11 +216,11 @@ const LeadsPage = () => {
                 <Label for="responsible_person">Responsible Person</Label>
                 <Input id="responsible_person" name="responsible_person" defaultValue={lead ? lead.responsible_person : ''} required />
                 <Label for="status">Status</Label>
-                {/* <Input type="select" id="status" name="status" defaultValue={lead ? lead.status : 'Active'}>
+                <Input type="select" id="status" name="status" defaultValue={lead ? lead.status : 'Active'}>
                   <option>Active</option>
                   <option>Closed</option>
                   <option>Problem</option>
-                </Input> */}
+                </Input>
                 <Label for="comment">Comment</Label>
                 <Input type="textarea" id="comment" name="comment" defaultValue={lead ? lead.comment : ''} />
                 <Button type="submit" color="primary">{isEdit ? 'Update Lead' : 'Add Lead'}</Button>
