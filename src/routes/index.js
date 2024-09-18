@@ -191,6 +191,7 @@ import VisitorsTraffic from "pages/VisitorsTraffic/VisitorsTraffic";
 import ArchivePage from "pages/Archive";
 import InvoicePage from "pages/InvoicePage/InvoicePage";
 import LeadsPage from "pages/LeadsPage/LeadsPage";
+import VipLeadsPage from "pages/VipLeadsPage/VipLeadsPage";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -290,6 +291,7 @@ const authProtectedRoutes = [
   { path: "/contacts-grid", component: <ContactsGrid /> },
   { path: "/contacts-list", component: <ContactsList /> },
   { path: "/visitors", component: <VisitorsTraffic /> },
+  { path: "/vip-leads", component: <VipLeadsPage /> },
   { path: "/corporate-leads", component: <LeadsPage /> },
   { path: "/payment-monitoring", component: <InvoicePage /> },
   { path: "/contacts-profile", component: <ContactsProfile /> },

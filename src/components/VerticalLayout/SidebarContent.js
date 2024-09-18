@@ -280,11 +280,24 @@ const SidebarContent = props => {
                 <span>{props.t("გადახდების მონიტორინგი")}</span>
               </Link>
             </li>
+          
             <li>
-              <Link to="/corporate-leads">
-                <i className="bx bx-credit-card-alt"></i>
-                <span>{props.t("კორპორატიული ლიდები")}</span>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-phone-call"></i>
+                <span>{props.t("ლიდები")}</span>
               </Link>
+              <ul className="sub-menu">
+              <li>
+              <Link to="/vip-leads">
+                <span>{props.t("VIP")}</span>
+              </Link>
+            </li>
+                <li>
+              <Link to="/corporate-leads">
+                <span>{props.t("კორპორატიული")}</span>
+              </Link>
+            </li>
+              </ul>
             </li>
             {/* <li className="menu-title">{props.t("Apps")}</li>
 
