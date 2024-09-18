@@ -26,16 +26,17 @@ const VipLeadsPage = () => {
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const fetchVipLeads = async () => {
+    try {
+      const response = await getVipLeads();
+      setVipLeads(response || []);
+    } catch (error) {
+      console.error('Error fetching VIP leads:', error);
+      setVipLeads([]);
+    }
+  };
   useEffect(() => {
-    const fetchVipLeads = async () => {
-      try {
-        const response = await getVipLeads();
-        setVipLeads(response || []);
-      } catch (error) {
-        console.error('Error fetching VIP leads:', error);
-        setVipLeads([]);
-      }
-    };
+    
     fetchVipLeads();
   }, []);
 

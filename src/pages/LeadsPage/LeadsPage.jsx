@@ -44,15 +44,22 @@ const LeadsPage = () => {
     fetchLeads();
   }, []);
 
-  const handleStatusChange = async (rowIndex, newStatus) => {
-    const updatedLead = { ...leads[rowIndex], status: newStatus };
+  const handleStatusChange = async (leadId, newStatus) => {
+    const leadToUpdate = leads.find(lead => lead.id === leadId);
+  
+    
+  
+    const updatedLead = { ...leadToUpdate, status: newStatus };
+  
     try {
-      await updateLead(updatedLead.id, updatedLead); // Ensure this function updates the backend correctly
-      fetchLeads(); // Refresh leads to reflect the updated status
+      await updateLead(leadId, updatedLead); 
+      console.log('Updated Lead:', updatedLead);
+      fetchLeads(); 
     } catch (error) {
       console.error('Error updating lead status:', error);
     }
   };
+  
 
   const columns = useMemo(() => [
     { Header: 'First Name', accessor: 'first_name' },
@@ -66,7 +73,7 @@ const LeadsPage = () => {
         <Input
           type="select"
           value={row.original.status}
-          onChange={(e) => handleStatusChange(row.index, e.target.value)}
+          onChange={(e) => handleStatusChange(row.original.id, e.target.value)} 
         >
           <option value="Active">Active</option>
           <option value="Closed">Closed</option>
@@ -140,12 +147,15 @@ const LeadsPage = () => {
       } else {
         await createLead(leadData);
       }
-      fetchLeads(); // Refresh leads to include newly added/edited lead
+      fetchLeads(); 
       setModal(false);
     } catch (error) {
       console.error('Error saving lead:', error);
     }
   };
+
+  console.log(rows);
+  
 
   return (
     <React.Fragment>
@@ -216,14 +226,23 @@ const LeadsPage = () => {
                 <Label for="responsible_person">Responsible Person</Label>
                 <Input id="responsible_person" name="responsible_person" defaultValue={lead ? lead.responsible_person : ''} required />
                 <Label for="status">Status</Label>
-                <Input type="select" id="status" name="status" defaultValue={lead ? lead.status : 'Active'}>
+                {/* <Input type="select" id="status" name="status" >
                   <option>Active</option>
                   <option>Closed</option>
                   <option>Problem</option>
+                </Input> */}
+                <Input
+                  type="select"
+                  name='status'
+                  defaultValue={lead ? lead.status : 'Active'}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Closed">Closed</option>
+                  <option value="Problem">Problem</option>
                 </Input>
                 <Label for="comment">Comment</Label>
                 <Input type="textarea" id="comment" name="comment" defaultValue={lead ? lead.comment : ''} />
-                <Button type="submit" color="primary">{isEdit ? 'Update Lead' : 'Add Lead'}</Button>
+                <Button style={{marginTop:"10px"}} type="submit" color="primary">{isEdit ? 'Update Lead' : 'Add Lead'}</Button>
               </Form>
             </ModalBody>
           </Modal>
