@@ -26,6 +26,7 @@ const VipLeadsPage = () => {
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  // Fetch VIP leads from the server
   const fetchVipLeads = async () => {
     try {
       const response = await getVipLeads();
@@ -35,17 +36,45 @@ const VipLeadsPage = () => {
       setVipLeads([]);
     }
   };
+
   useEffect(() => {
-    
     fetchVipLeads();
   }, []);
 
+  // Handle status change directly from the table
+  const handleStatusChange = async (leadId, newStatus) => {
+    const leadToUpdate = vipLeads.find(lead => lead.id === leadId);
+    const updatedLead = { ...leadToUpdate, status: newStatus };
+    try {
+      await updateVipLead(leadId, updatedLead);
+      console.log('Updated Lead:', updatedLead);
+      fetchVipLeads();
+    } catch (error) {
+      console.error('Error updating lead status:', error);
+    }
+  };
+
+  // Define table columns and actions, including the status dropdown
   const columns = useMemo(() => [
     { Header: 'First Name', accessor: 'first_name' },
     { Header: 'Last Name', accessor: 'last_name' },
     { Header: 'Request', accessor: 'request' },
     { Header: 'Responsible Person', accessor: 'responsible_person' },
-    { Header: 'Status', accessor: 'status' },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      Cell: ({ row }) => (
+        <Input
+          type="select"
+          value={row.original.status}
+          onChange={(e) => handleStatusChange(row.original.id, e.target.value)}
+        >
+          <option value="Active">Active</option>
+          <option value="Closed">Closed</option>
+          <option value="Problem">Problem</option>
+        </Input>
+      ),
+    },
     { Header: 'Comment', accessor: 'comment' },
     {
       Header: 'Actions',
@@ -55,10 +84,11 @@ const VipLeadsPage = () => {
           <Button color="primary" onClick={() => handleEditClick(row.original)}>Edit</Button>
           <Button color="danger" onClick={() => handleDeleteClick(row.original)}>Delete</Button>
         </div>
-      )
-    }
-  ], []);
+      ),
+    },
+  ], [vipLeads]);
 
+  // Initialize table with pagination and sorting
   const {
     getTableProps,
     getTableBodyProps,
@@ -67,18 +97,21 @@ const VipLeadsPage = () => {
     prepareRow,
   } = useTable({ columns, data: vipLeads }, useSortBy, usePagination);
 
+  // Open modal for adding new VIP lead
   const handleAddClick = () => {
     setVipLead(null);
     setIsEdit(false);
     setModal(true);
   };
 
+  // Open modal for editing an existing VIP lead
   const handleEditClick = (leadData) => {
     setVipLead(leadData);
     setIsEdit(true);
     setModal(true);
   };
 
+  // Handle deletion of a VIP lead
   const handleDeleteClick = (leadData) => {
     setVipLead(leadData);
     setDeleteModal(true);
@@ -94,6 +127,7 @@ const VipLeadsPage = () => {
     }
   };
 
+  // Save new or edited VIP lead
   const handleSaveVipLead = async (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -194,6 +228,18 @@ const VipLeadsPage = () => {
                 <FormGroup>
                   <Label for="responsible_person">Responsible Person</Label>
                   <Input id="responsible_person" name="responsible_person" defaultValue={vipLead ? vipLead.responsible_person : ''} required />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="status">Status</Label>
+                  <Input
+                    type="select"
+                    name="status"
+                    defaultValue={vipLead ? vipLead.status : 'Active'} 
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Problem">Problem</option>
+                  </Input>
                 </FormGroup>
                 <FormGroup>
                   <Label for="comment">Comment</Label>
