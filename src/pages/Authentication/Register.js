@@ -77,8 +77,8 @@ const Register = () => {
                   <Row>
                     <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5 className="text-primary">Free Register</h5>
-                        <p>Get your free Gorgia LLC account now.</p>
+                        <h5 className="text-primary">რეგისტრაცია</h5>
+                        <p>შექმენით თქვენი ანგარიში</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -124,12 +124,12 @@ const Register = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label">ელ-ფოსტა</Label>
                         <Input
                           id="email"
                           name="email"
                           className="form-control"
-                          placeholder="Enter email"
+                          placeholder="ჩაწერეთ ელ-ფოსტა აუცილებელია @gorgia.ge-ის ელ-ფოსტა"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -144,11 +144,11 @@ const Register = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Username</Label>
+                        <Label className="form-label">სახელი</Label>
                         <Input
                           name="username"
                           type="text"
-                          placeholder="Enter username"
+                          placeholder="ჩაწერეთ თქვენი სახელი"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
@@ -162,11 +162,11 @@ const Register = () => {
                       </div>
                       
                       <div className="mb-3">
-                        <Label className="form-label">Phone Number</Label>
+                        <Label className="form-label">მობილურის ნომერი</Label>
                         <Input
                           name="mobile_number"
                           type="text"
-                          placeholder="Enter phone number"
+                          placeholder="ჩაწერეთ მობილურის ნომერი"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.mobile_number || ""}
@@ -180,11 +180,11 @@ const Register = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Password</Label>
+                        <Label className="form-label">პაროლი</Label>
                         <Input
                           name="password"
                           type="password"
-                          placeholder="Enter password"
+                          placeholder="ჩაწერეთ პაროლი"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.password || ""}
@@ -206,7 +206,7 @@ const Register = () => {
                           className="btn btn-primary btn-block "
                           type="submit"
                         >
-                          Register
+                          რეგისტრაცია
                         </button>
                       </div>
 
@@ -216,10 +216,10 @@ const Register = () => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Already have an account ?{" "} <Link
+                  გაქვთ უკვე ანგარიში?{" "} <Link
                     to="/pages-login"
                     className="fw-medium text-primary"
-                  >Login
+                  >ავტორიზაცია
                   </Link>{" "}
                 </p>
                 <p>
