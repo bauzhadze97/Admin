@@ -152,54 +152,54 @@ const TaskList = () => {
                 }
             },
             {
-                header: "Task Title",
+                header: "პრობლემის ტიპი",
                 accessorKey: "task_title",
             },
             {
-                header: 'IP Address',
+                header: 'IP მისამართი',
                 accessorKey: "ip_address",
                 cell: (cellProps) => cellProps.row.original.ip_address || 'N/A' // Show 'N/A' if IP address is not available
             },
             {
-                header: 'Due Date',
+                header: 'თარიღი',
                 accessorKey: "due_date"
             },
             {
-                header: "Priority",
+                header: "პრიორიტეტი",
                 accessorKey: "priority",
                 cell: (cellProps) => {
                     switch (cellProps.row.original.priority) {
                         case "High":
-                            return <Badge className="bg-danger">High</Badge>;
+                            return <Badge className="bg-danger">მაღალი</Badge>;
                         case "Medium":
-                            return <Badge className="bg-warning">Medium</Badge>;
+                            return <Badge className="bg-warning">საშუალო</Badge>;
                         case "Low":
-                            return <Badge className="bg-success">Low</Badge>;
+                            return <Badge className="bg-success">დაბალი</Badge>;
                         default:
-                            return <Badge className="bg-secondary">Unknown</Badge>;
+                            return <Badge className="bg-secondary">უცნობი</Badge>;
                     }
                 },
             },
             {
-                header: 'Status',
+                header: 'სტატუსი',
                 accessorKey: "status",
                 cell: (cellProps) => {
                     switch (cellProps.row.original.status) {
                         case "Pending":
-                            return <Badge className="bg-warning">Pending</Badge>
+                            return <Badge className="bg-warning">ახალი</Badge>
                         case "In Progress":
-                            return <Badge className="bg-info">In Progress</Badge>
+                            return <Badge className="bg-info">მიმდინარე</Badge>
                         case "Completed":
-                            return <Badge className="bg-success">Completed</Badge>
+                            return <Badge className="bg-success">დასრულებული</Badge>
                         case "Cancelled":
-                            return <Badge className="bg-danger">Cancelled</Badge>
+                            return <Badge className="bg-danger">გაუქმებული</Badge>
                         default:
-                            return <Badge className="bg-secondary">Unknown</Badge>;
+                            return <Badge className="bg-secondary">უცნობი</Badge>;
                     }
                 }
             },
             {
-                header: 'Assigned To',
+                header: 'პასუხისმგებელი პირი',
                 accessorKey: 'assigned_to',
                 cell: (cellProps) => {
                     const user = cellProps.row.original.assigned_user;
@@ -207,7 +207,7 @@ const TaskList = () => {
                 },
             },
             {
-                header: 'Action',
+                header: 'მოქმედება',
                 cell: (cellProps) => {
                     return (
                         <ul className="list-unstyled hstack gap-1 mb-0">
@@ -271,7 +271,7 @@ const TaskList = () => {
             />
             <div className="page-content">
                 <div className="container-fluid">
-                    <Breadcrumbs title="Tasks" breadcrumbItem="Tasks Lists" />
+                    <Breadcrumbs title="IT" breadcrumbItem="მხარდაჭერა" />
                     {
                         isLoading ? <Spinners setLoading={setLoading} />
                             :
@@ -280,19 +280,11 @@ const TaskList = () => {
                                     <Card>
                                         <CardBody className="border-bottom">
                                             <div className="d-flex align-items-center">
-                                                <h5 className="mb-0 card-title flex-grow-1">Tasks List</h5>
+                                                <h5 className="mb-0 card-title flex-grow-1">ბილეთების სია</h5>
                                                 <div className="flex-shrink-0">
-                                                    <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">Add New Task</Link>
-                                                    <Link to="#!" className="btn btn-light me-1"><i className="mdi mdi-refresh"></i></Link>
-                                                    <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                                                        <DropdownToggle type="menu" className="btn btn-success" id="dropdownMenuButton1">
-                                                            <i className="mdi mdi-dots-vertical"></i></DropdownToggle>
-                                                        <DropdownMenu>
-                                                            <li><DropdownItem href="#">Action</DropdownItem></li>
-                                                            <li><DropdownItem href="#">Another action</DropdownItem></li>
-                                                            <li><DropdownItem href="#">Something else here</DropdownItem></li>
-                                                        </DropdownMenu>
-                                                    </UncontrolledDropdown>
+                                                    <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">ახალი ბილეთის გახსნა</Link>
+                                                   
+                                                   
                                                 </div>
                                             </div>
                                         </CardBody>
@@ -370,126 +362,136 @@ const TaskList = () => {
                                 </Col>
                             </Row>
                     }
-                    <Modal isOpen={modal} toggle={toggle}>
-                        <ModalHeader toggle={toggle} tag="h4">
-                            {!!isEdit ? "Edit Task" : "Add Task"}
-                        </ModalHeader>
-                        <ModalBody>
-                            <Form
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    validation.handleSubmit();
-                                    return false;
-                                }}
-                            >
-                                <Row>
-                                    <Col className="col-12">
-                                        <div className="mb-3">
-                                            <Label>Task Title</Label>
-                                            <Input
-                                                name="task_title"
-                                                type="text"
-                                                placeholder="Insert Task Title"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.task_title || ""}
-                                                invalid={
-                                                    validation.touched.task_title && validation.errors.task_title ? true : false
-                                                }
-                                            />
-                                            {validation.touched.task_title && validation.errors.task_title ? (
-                                                <FormFeedback type="invalid">{validation.errors.task_title}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>Description</Label>
-                                            <Input
-                                                name="description"
-                                                type="textarea"
-                                                placeholder="Insert Description"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.description || ""}
-                                                invalid={
-                                                    validation.touched.description && validation.errors.description ? true : false
-                                                }
-                                            />
-                                            {validation.touched.description && validation.errors.description ? (
-                                                <FormFeedback type="invalid">{validation.errors.description}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>Priority</Label>
-                                            <Input
-                                                name="priority"
-                                                type="select"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.priority || ""}
-                                                invalid={
-                                                    validation.touched.priority && validation.errors.priority ? true : false
-                                                }
-                                            >
-                                                <option>Low</option>
-                                                <option>Medium</option>
-                                                <option>High</option>
-                                            </Input>
-                                            {validation.touched.priority && validation.errors.priority ? (
-                                                <FormFeedback type="invalid">{validation.errors.priority}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>Status</Label>
-                                            <Input
-                                                name="status"
-                                                type="select"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.status || ""}
-                                                invalid={
-                                                    validation.touched.status && validation.errors.status ? true : false
-                                                }
-                                            >
-                                                <option>Pending</option>
-                                                <option>In Progress</option>
-                                                <option>Completed</option>
-                                                <option>Cancelled</option>
-                                            </Input>
-                                            {validation.touched.status && validation.errors.status ? (
-                                                <FormFeedback type="invalid">{validation.errors.status}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                        <div className="mb-3">
-                                            <Label>IP Address</Label>
-                                            <Input
-                                                name="ip_address"
-                                                type="text"
-                                                placeholder="Enter IP Address"
-                                                onChange={validation.handleChange}
-                                                onBlur={validation.handleBlur}
-                                                value={validation.values.ip_address || ""}
-                                                invalid={
-                                                    validation.touched.ip_address && validation.errors.ip_address ? true : false
-                                                }
-                                            />
-                                            {validation.touched.ip_address && validation.errors.ip_address ? (
-                                                <FormFeedback type="invalid">{validation.errors.ip_address}</FormFeedback>
-                                            ) : null}
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <div className="text-end">
-                                            <Button color="success" type="submit" className="save-task">
-                                                Save
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </ModalBody>
-                    </Modal>
+                   <Modal isOpen={modal} toggle={toggle}>
+    <ModalHeader toggle={toggle} tag="h4">
+        {!!isEdit ? "Edit Task" : "Add Task"}
+    </ModalHeader>
+    <ModalBody>
+        <Form
+            onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
+            }}
+        >
+            <Row>
+                <Col className="col-12">
+                    <div className="mb-3">
+                        <Label>აირჩიეთ პრობლემის ტიპი</Label>
+                        <Input
+                            name="task_title"
+                            type="select"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.task_title || ""}
+                            invalid={
+                                validation.touched.task_title && validation.errors.task_title ? true : false
+                            }
+                        >
+                            <option value="" disabled hidden>აირჩიეთ პრობლემის ტიპი</option>
+                            <option value="პრინტერის პრობლემა">პრინტერის პრობლემა</option>
+                            <option value="სერვისი">სერვისი</option>
+                            <option value="პაროლის აღდგენა">პაროლის აღდგენა</option>
+                            <option value="ელ-ფოსტის პრობლემა">ელ-ფოსტის პრობლემა</option>
+                            <option value="ტექნიკური პრობლემა">ტექნიკური პრობლემა</option>
+                            <option value="სერვისის პრობლემა">სერვისის პრობლემა</option>
+                            <option value="ფაილების აღდგენა">ფაილების აღდგენა</option>
+                            <option value="სხვა">სხვა</option>
+                        </Input>
+                        {validation.touched.task_title && validation.errors.task_title ? (
+                            <FormFeedback type="invalid">{validation.errors.task_title}</FormFeedback>
+                        ) : null}
+                    </div>
+                    <div className="mb-3">
+                        <Label>აღწერა</Label>
+                        <Input
+                            name="description"
+                            type="textarea"
+                            placeholder="აღწერეთ პრობლემა"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.description || ""}
+                            invalid={
+                                validation.touched.description && validation.errors.description ? true : false
+                            }
+                        />
+                        {validation.touched.description && validation.errors.description ? (
+                            <FormFeedback type="invalid">{validation.errors.description}</FormFeedback>
+                        ) : null}
+                    </div>
+                    <div className="mb-3">
+                        <Label>პრიორიტეტი</Label>
+                        <Input
+                            name="priority"
+                            type="select"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.priority || ""}
+                            invalid={
+                                validation.touched.priority && validation.errors.priority ? true : false
+                            }
+                        >
+                            <option>დაბალი</option>
+                            <option>საშუალო</option>
+                            <option>მაღალი</option>
+                        </Input>
+                        {validation.touched.priority && validation.errors.priority ? (
+                            <FormFeedback type="invalid">{validation.errors.priority}</FormFeedback>
+                        ) : null}
+                    </div>
+                    <div className="mb-3">
+                        <Label>სტატუსი</Label>
+                        <Input
+                            name="status"
+                            type="select"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.status || ""}
+                            invalid={
+                                validation.touched.status && validation.errors.status ? true : false
+                            }
+                        >
+                            <option>ახალი</option>
+                            <option>მიმდინარე</option>
+                            <option>დასრულებული</option>
+                            <option>გაუქმებული</option>
+                        </Input>
+                        {validation.touched.status && validation.errors.status ? (
+                            <FormFeedback type="invalid">{validation.errors.status}</FormFeedback>
+                        ) : null}
+                    </div>
+                    <div className="mb-3">
+                        <Label>IP მისამართი</Label>
+                        <Input
+                            name="ip_address"
+                            type="text"
+                            placeholder="ჩაწერეთ თქვენი იპ მისამართი"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.ip_address || ""}
+                            invalid={
+                                validation.touched.ip_address && validation.errors.ip_address ? true : false
+                            }
+                        />
+                        {validation.touched.ip_address && validation.errors.ip_address ? (
+                            <FormFeedback type="invalid">{validation.errors.ip_address}</FormFeedback>
+                        ) : null}
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <div className="text-end">
+                        <Button color="success" type="submit" className="save-task">
+                            გაგზავნა
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+        </Form>
+    </ModalBody>
+</Modal>
+
                 </div>
             </div>
             <ToastContainer />
