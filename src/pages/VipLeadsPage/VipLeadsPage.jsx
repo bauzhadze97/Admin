@@ -35,8 +35,8 @@ const VipLeadsPage = () => {
       setVipLeads([]);
     }
   };
+  
   useEffect(() => {
-    
     fetchVipLeads();
   }, []);
 
@@ -119,6 +119,8 @@ const VipLeadsPage = () => {
     }
   };
 
+  console.log(vipLeads);
+
   return (
     <React.Fragment>
       <DeleteModal
@@ -194,6 +196,18 @@ const VipLeadsPage = () => {
                 <FormGroup>
                   <Label for="responsible_person">Responsible Person</Label>
                   <Input id="responsible_person" name="responsible_person" defaultValue={vipLead ? vipLead.responsible_person : ''} required />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="status">Status</Label>
+                  <Input
+                    type="select"
+                    name="status"
+                    defaultValue={vipLead ? vipLead.status : 'Active'} 
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Problem">Problem</option>
+                  </Input>
                 </FormGroup>
                 <FormGroup>
                   <Label for="comment">Comment</Label>
