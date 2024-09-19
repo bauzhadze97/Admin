@@ -56,12 +56,12 @@ const VipLeadsPage = () => {
 
   // Define table columns and actions, including the status dropdown
   const columns = useMemo(() => [
-    { Header: 'First Name', accessor: 'first_name' },
-    { Header: 'Last Name', accessor: 'last_name' },
-    { Header: 'Request', accessor: 'request' },
-    { Header: 'Responsible Person', accessor: 'responsible_person' },
+    { Header: 'სახელი', accessor: 'first_name' },
+    { Header: 'გვარი', accessor: 'last_name' },
+    { Header: 'მოთხოვნა', accessor: 'request' },
+    { Header: 'პასუხისმგებელი პირი', accessor: 'responsible_person' },
     {
-      Header: 'Status',
+      Header: 'სტატუსი',
       accessor: 'status',
       Cell: ({ row }) => (
         <Input
@@ -69,20 +69,20 @@ const VipLeadsPage = () => {
           value={row.original.status}
           onChange={(e) => handleStatusChange(row.original.id, e.target.value)}
         >
-          <option value="Active">Active</option>
-          <option value="Closed">Closed</option>
-          <option value="Problem">Problem</option>
+          <option value="Active">აქტიური</option>
+          <option value="Closed">დახურული</option>
+          <option value="Problem">პრობლემური</option>
         </Input>
       ),
     },
-    { Header: 'Comment', accessor: 'comment' },
+    { Header: 'კომენტარი', accessor: 'comment' },
     {
-      Header: 'Actions',
+      Header: 'მოქმედება',
       id: 'actions',
       Cell: ({ row }) => (
         <div className="d-flex gap-2">
-          <Button color="primary" onClick={() => handleEditClick(row.original)}>Edit</Button>
-          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>Delete</Button>
+          <Button color="primary" onClick={() => handleEditClick(row.original)}>რედაკტირება</Button>
+          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>წაშლა</Button>
         </div>
       ),
     },
@@ -162,14 +162,14 @@ const VipLeadsPage = () => {
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="VIP Leads Management" breadcrumbItem="VIP Leads" />
+          <Breadcrumbs title="ლიდები" breadcrumbItem="VIP" />
           <Row className="mb-3">
-            <Col>
+            <Col style={{ textAlign: 'right' }}>
               <Button
                 color="success"
                 className="btn-rounded waves-effect waves-light mb-2"
                 onClick={handleAddClick}>
-                Add VIP Lead
+                დამატება
               </Button>
             </Col>
           </Row>
@@ -210,42 +210,43 @@ const VipLeadsPage = () => {
             </Col>
           </Row>
           <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'Edit VIP Lead' : 'Add VIP Lead'}</ModalHeader>
+            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'განახლება' : 'დამატება'}</ModalHeader>
             <ModalBody>
               <Form onSubmit={handleSaveVipLead}>
                 <FormGroup>
-                  <Label for="first_name">First Name</Label>
+                  <Label for="first_name">სახელი</Label>
                   <Input id="first_name" name="first_name" defaultValue={vipLead ? vipLead.first_name : ''} required />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="last_name">Last Name</Label>
+                  <Label for="last_name">გვარი</Label>
                   <Input id="last_name" name="last_name" defaultValue={vipLead ? vipLead.last_name : ''} required />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="request">Request</Label>
+                  <Label for="request">მოთხოვნა</Label>
                   <Input id="request" name="request" defaultValue={vipLead ? vipLead.request : ''} required />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="responsible_person">Responsible Person</Label>
+                  <Label for="responsible_person">პასუხისმგებელი პირი</Label>
                   <Input id="responsible_person" name="responsible_person" defaultValue={vipLead ? vipLead.responsible_person : ''} required />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="status">Status</Label>
+                  <Label for="status">სტატუსი</Label>
                   <Input
                     type="select"
                     name="status"
                     defaultValue={vipLead ? vipLead.status : 'Active'} 
                   >
-                    <option value="Active">Active</option>
-                    <option value="Closed">Closed</option>
-                    <option value="Problem">Problem</option>
+                    <option value="Active">აქტიური</option>
+                    <option value="Closed">დახურული</option>
+                    <option value="Problem">პრობლემური</option>
                   </Input>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="comment">Comment</Label>
+                  <Label for="comment">კომენტარი</Label>
                   <Input type="textarea" id="comment" name="comment" defaultValue={vipLead ? vipLead.comment : ''} />
                 </FormGroup>
-                <Button type="submit" color="primary">{isEdit ? 'Update VIP Lead' : 'Add VIP Lead'}</Button>
+                <Col style={{ textAlign: 'right' }}>
+                <Button type="submit" color="primary">{isEdit ? 'განახლება' : 'დამატება'}</Button></Col>
               </Form>
             </ModalBody>
           </Modal>

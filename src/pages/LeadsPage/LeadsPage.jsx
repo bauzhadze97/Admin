@@ -62,12 +62,12 @@ const LeadsPage = () => {
   
 
   const columns = useMemo(() => [
-    { Header: 'First Name', accessor: 'first_name' },
-    { Header: 'Last Name', accessor: 'last_name' },
-    { Header: 'Request', accessor: 'request' },
-    { Header: 'Responsible Person', accessor: 'responsible_person' },
+    { Header: 'სახელი', accessor: 'first_name' },
+    { Header: 'გვარი', accessor: 'last_name' },
+    { Header: 'მოთხოვნა', accessor: 'request' },
+    { Header: 'პასუხისმგებელი პირი', accessor: 'responsible_person' },
     {
-      Header: 'Status',
+      Header: 'სტატუსი',
       accessor: 'status',
       Cell: ({ row }) => (
         <Input
@@ -75,20 +75,20 @@ const LeadsPage = () => {
           value={row.original.status}
           onChange={(e) => handleStatusChange(row.original.id, e.target.value)} 
         >
-          <option value="Active">Active</option>
-          <option value="Closed">Closed</option>
-          <option value="Problem">Problem</option>
+          <option value="Active">აქტიური</option>
+          <option value="Closed">დახურული</option>
+          <option value="Problem">პრობლემური</option>
         </Input>
       ),
     },
-    { Header: 'Comment', accessor: 'comment' },
+    { Header: 'კომენტარი', accessor: 'comment' },
     {
-      Header: 'Actions',
+      Header: 'მოქმედება',
       id: 'actions',
       Cell: ({ row }) => (
         <div className="d-flex gap-2">
-          <Button color="primary" onClick={() => handleEditClick(row.original)}>Edit</Button>
-          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>Delete</Button>
+          <Button color="primary" onClick={() => handleEditClick(row.original)}>რედაკტირება</Button>
+          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>წაშლა</Button>
         </div>
       )
     }
@@ -166,14 +166,14 @@ const LeadsPage = () => {
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Leads Management" breadcrumbItem="Leads" />
+          <Breadcrumbs title="ლიდები" breadcrumbItem="კორპორატიული" />
           <Row className="mb-3">
-            <Col>
+            <Col style={{ textAlign: 'right' }}>
               <Button
                 color="success"
                 className="btn-rounded waves-effect waves-light mb-2"
                 onClick={handleAddClick}>
-                Add Lead
+                დამატება
               </Button>
             </Col>
           </Row>
@@ -214,18 +214,18 @@ const LeadsPage = () => {
             </Col>
           </Row>
           <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'Edit Lead' : 'Add Lead'}</ModalHeader>
+            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'რედაკტირება' : 'დამატება'}</ModalHeader>
             <ModalBody>
               <Form onSubmit={handleSaveLead}>
-                <Label for="first_name">First Name</Label>
+                <Label for="first_name">სახელი</Label>
                 <Input id="first_name" name="first_name" defaultValue={lead ? lead.first_name : ''} required />
-                <Label for="last_name">Last Name</Label>
+                <Label for="last_name">გვარი</Label>
                 <Input id="last_name" name="last_name" defaultValue={lead ? lead.last_name : ''} required />
-                <Label for="request">Request</Label>
+                <Label for="request">მოთხოვნა</Label>
                 <Input id="request" name="request" defaultValue={lead ? lead.request : ''} required />
-                <Label for="responsible_person">Responsible Person</Label>
+                <Label for="responsible_person">პასუხისმგებელი პირი</Label>
                 <Input id="responsible_person" name="responsible_person" defaultValue={lead ? lead.responsible_person : ''} required />
-                <Label for="status">Status</Label>
+                <Label for="status">სტატუსი</Label>
                 {/* <Input type="select" id="status" name="status" >
                   <option>Active</option>
                   <option>Closed</option>
@@ -236,13 +236,14 @@ const LeadsPage = () => {
                   name='status'
                   defaultValue={lead ? lead.status : 'Active'}
                 >
-                  <option value="Active">Active</option>
-                  <option value="Closed">Closed</option>
-                  <option value="Problem">Problem</option>
+                  <option value="Active">აქტიური</option>
+                  <option value="Closed">დახურული</option>
+                  <option value="Problem">პრობლემური</option>
                 </Input>
-                <Label for="comment">Comment</Label>
+                <Label for="comment">კომენტარი</Label>
                 <Input type="textarea" id="comment" name="comment" defaultValue={lead ? lead.comment : ''} />
-                <Button style={{marginTop:"10px"}} type="submit" color="primary">{isEdit ? 'Update Lead' : 'Add Lead'}</Button>
+                <Col style={{ textAlign: 'right' }}>
+                <Button style={{marginTop:"10px"}} type="submit" color="primary">{isEdit ? 'განახლება' : 'დამატება'}</Button></Col>
               </Form>
             </ModalBody>
           </Modal>
