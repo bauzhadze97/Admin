@@ -1,320 +1,373 @@
-import React from 'react';
-import { useEffect, useState } from "react"
-import { assignHead, createDepartment, deleteDepartment, getDepartments, getUsers, deleteUser } from "../../services/admin/department";
-import { FaTrash, FaPlus } from "react-icons/fa";
-import { Link, useNavigate  } from "react-router-dom";
+import React, { useEffect, useState, useMemo } from "react";
+import { useTable, usePagination, useSortBy } from "react-table";
+import { FaTrash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import {
-    Breadcrumbs,
-    Dialog,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-  } from '@mui/material';
-  import { toast } from 'react-toastify';
+  Breadcrumbs,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Grid,
+} from "@mui/material";
+import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import {
+  getDepartments,
+  getUsers,
+  deleteUser,
+ 
+} from "../../services/admin/department";
 
 export default function AdminPage() {
-    const { t } = useTranslation();
-    const queryParams = new URLSearchParams(location.search);
-    const initialActiveSide = queryParams.get('activeSide') || 'departments';
-    const navigate = useNavigate();
+  const { t } = useTranslation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialActiveSide = queryParams.get("activeSide") || "departments";
+  const navigate = useNavigate();
 
-    const [modalIsOpen, setModalIsOpen] = useState(false)
-    const [activeSide, setActiveSide] = useState(initialActiveSide);
-    const [departments, setDepartments] = useState([]);
-    const [chosenDepartment, setChosenDepartment] = useState(null);
-    const [users, setUsers] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState(users);
-    const [searchedUsers, setSearchedUsers] = useState(users);
-    const [srchTerm, setSrchTerm] = useState('');
-    const handleSearchChange = (event) => {
-        const searchTerm = event.target.value.toLowerCase();
-        setSearchTerm(searchTerm);
-    
-        const filteredUsers = users.filter(user =>
-          user.name.toLowerCase().includes(searchTerm) ||
-          user.email.toLowerCase().includes(searchTerm)
-        );
-        setFilteredUsers(filteredUsers);
-      };
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [activeSide, setActiveSide] = useState(initialActiveSide);
+  const [departments, setDepartments] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [offices, setOffices] = useState(["Office1", "Office2", "Office3"]); 
 
-      const handleSearchUser = (event) => {
-        const searchTerm = event.target.value.toLowerCase();
-        setSrchTerm(searchTerm)
-
-        const filteredUsers = users.filter(user =>
-            user.name.toLowerCase().includes(searchTerm) ||
-            user.email.toLowerCase().includes(searchTerm)
-          );
-          setSearchedUsers(filteredUsers);
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const res = await getDepartments();
+        setDepartments(res.data.departments);
+      } catch (err) {
+        console.log(err);
       }
-
-    useEffect(() => {
-        const fecthDepartments = async () => {
-            try {
-                const res = await getDepartments();
-                setDepartments(res.data.departments)
-            } catch (err) {
-                console.log(err)
-            }
-        };
-
-        const fetchUsers = async () => {
-            try {
-                const res = await getUsers();
-                setUsers(res.data.users)
-                setFilteredUsers(res.data.users)
-                setSearchedUsers(res.data.users);
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-        fecthDepartments()
-        fetchUsers();
-    }, [])
-
-    const addDepartment = async (e) => {
-        e.preventDefault();
-
-        try {
-            const res = await createDepartment({
-                name: e.target.name.value,
-                type: e.target.type.value,
-                status: 'active'
-            })
-            if(res) {
-                window.location.reload();
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const confirmDelete = async (depId, name) => {
-        if (window.confirm(`ნამდვილად გსურს წაშალო ${name}?`)) {
-            try {
-                const res = await deleteDepartment({id: depId});
-                console.log(res);
-                if(res) {
-                    window.location.reload()
-                }
-            } catch(err) {
-                console.log(err)
-            }
-        }
-      };
-
-      const handleDeleteUser = async (user) => {
-        if (window.confirm(`ნამდვილად გსურს წაშალო ${user.name + ' ' + user.sur_name}?`)) {
-            try {
-                const res = await deleteUser(user.id);
-                if(res) {
-                    window.location.reload()
-                }
-            } catch(err) {
-                console.log(err)
-            }
-        }
-      }
-
-      const closeModal = () => {
-        setModalIsOpen(false)
-        setChosenDepartment(null);
-      }
-
-      const openModal = (department) => {
-        setChosenDepartment(department);
-
-        setModalIsOpen(true)
-      }
-      
-      const assignHeadSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const res = await assignHead({
-                user_id: e.target.user_id.value,
-                department_id: e.target.department_id.value
-            })
-
-            if(res) {
-                toast.success("წარმატებით მიენიჭა");
-                closeModal();
-                window.location.reload();
-            }
-        } catch(err) {
-            console.log(err);
-        }
-      }
-
-      const handleSideChange = (side) => {
-        setActiveSide(side);
-        navigate(`?activeSide=${side}`);
     };
 
-   
-    return (
-        <div className="page-content">
-            <div className="container-fluid">
-                <Breadcrumbs title="Admin" breadcrumbItem="Daily Report" />
-                <div className="flex">
-        <div className="flex flex-col bg-[#d1e1e8] bg-opacity-[.8] h-[100vh] text-[#fff] p-8">
-            <Link to={'https://crm.gorgia.ge/profile'} className="p-2 bg-[#2bc0ff] text-center rounded-lg w-[160px] mb-3 animate-link">crm.gorgia.ge</Link>
-            <button className={`p-2 ${activeSide === 'departments' ? 'bg-[#018AD1]' : 'bg-[#2bc0ff]' } animate-link  rounded-lg w-[160px] mb-3`} onClick={() => handleSideChange('departments')}>დეპარტამენტები</button>
-            <button className={`p-2 ${activeSide === 'users' ? 'bg-[#018AD1]' : 'bg-[#2bc0ff]' } animate-link  rounded-lg w-[160px] mb-3`} onClick={() => handleSideChange('users')}>მომხმარებლები</button>
-        </div>
+    const fetchUsers = async () => {
+      try {
+        const res = await getUsers();
+        setUsers(res.data.users);
+        setFilteredUsers(res.data.users);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-        <div className="bg-[#e1f0f7] bg-opacity-[.6] w-[100%]">
-            {
-                activeSide === 'departments' && (
-                    <div className="p-8 flex justify-around">
-                        <div>
-                            <h1 className="font-semibold text-xl ">{t("for_now_there_are")} {departments.length} {t("departments")}.</h1>
-                            <div className="container mx-auto my-8">
-                                <div className="overflow-x-auto">
-                                    <table className="min-w-full bg-white">
-                                    <thead className="bg-[#018AD1] text-white">
-                                        <tr>
-                                        <th className="py-2 px-4">#</th>
-                                        <th className="py-2 px-4">{t("department_name")}</th>
-                                        <th className="py-2 px-4">{t("department_head")}</th>
-                                        <th className="py-2 px-4">{t("action")}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {departments.map((dep, index) => (
-                                        <tr key={dep.id} className="text-center">
-                                            <td className="border px-4 py-2">{index + 1}</td>
-                                            <td className="border px-4 py-2">{dep.name}</td>
-                                            <td className="border px-4 py-2">{dep.head?.name}</td>
-                                            <td className="border px-4 py-2">
-                                            <button className="text-[#0090e3] mr-2" onClick={() => openModal(dep)}>
-                                                <FaPlus />
-                                            </button>
-                                            <button
-                                                onClick={() => confirmDelete(dep.id, dep.name)}
-                                                className="text-[#990500]"
-                                            >
-                                                <FaTrash />
-                                            </button>
-                                            </td>
-                                        </tr>
-                                        ))}
-                                    </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+    fetchDepartments();
+    fetchUsers();
+  }, []);
 
-                        <Dialog
-                            open={modalIsOpen}
-                            onClose={closeModal}
-                            aria-labelledby="modal-title"
-                            aria-describedby="modal-description"
-                            >
-                            <DialogTitle id="modal-title" className="text-center">{t("approve_a_head_to")} {chosenDepartment?.name}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="modal-description">
-                                <form onSubmit={assignHeadSubmit}>
-                                    <div className='vacation-form-wrapper'>
-                                        <label>{t("user")}</label>
-                                        <input
-                                            type="text"
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                            name="search"
-                                            placeholder="მარტივად ასარჩევად გაფილტრე სახელით/მეილით"
-                                            className="border border-gray-300 rounded px-3 py-2 mb-2 w-[430px]"
-                                        />
-                                        <input type="hidden" name="department_id" value={chosenDepartment?.id} />
-                                        <select name="user_id">
-                                            <option>{t("choose_head")}</option>
-                                            {filteredUsers.map((user) => (
-                                            <option key={user.email} value={user.id}>
-                                                {user.name} - {user.email}
-                                            </option>
-                                            ))}
-                                        </select>
-                                    </div>  
-                                    <button type="submit" className='vacation-form-submit'>{t("add")}</button>
-                                </form>
-                                </DialogContentText>
-                            
-                            </DialogContent>
-                            
-                            </Dialog>
-
-                        <form className="border border-[#536c8c] p-2 rounded-md" onSubmit={addDepartment}>
-                            <h3 className="text-xl text-center">{t("add_department")}</h3>
-                            <div className="flex flex-col mb-2">
-                                <label className="mb-1 text-md">{t("department_name")}:</label>
-                                <input type="text" name="name" className="bg-[#536c8c] p-2 placeholder:text-black rounded-md bg-opacity-20 text-black" placeholder={t("enter_name")} />
-                            </div>
-                            <label className="mr-2">{t("is_it_purchase_department")}</label>
-                            <select className=" w-32 p-2 mb-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" name="type">
-                            <option value="department">
-                                    {t("no")}
-                                </option>
-                                <option value="purchase_head">
-                                    {t("yes")}
-                                </option>
-                            </select>
-                            <button type="submit" className="bg-[#018AD1] w-[100%] transition-all ease-in-out delay-50 text-[#fff] hover:bg-[#2bc0ff] py-2 mt-2 rounded-md">{t("add")}</button>
-                        </form>
-                    </div>
-                )
-            }
-
-            {
-                activeSide === 'users' && (
-                    <div className="container mx-auto my-8">
-                        <div className="overflow-x-auto max-h-[80vh]">
-                            <input  value={srchTerm} onChange={handleSearchUser} type="text" name="search" placeholder={t("search_by_name_and_surname_or_email")} className="rounded border border-[#018AD1] w-[100%] mb-2 p-4 text-lg text-black" />
-                            <table className="min-w-full bg-white">
-                            <thead className="bg-[#018AD1] text-white">
-                                <tr>
-                                <th className="w-1/6 py-2 px-4">{t('name')}</th>
-                                <th className="w-1/6 py-2 px-4">{t("surname")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("email")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("mobile")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("department")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("position")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("location")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("role")}</th>
-                                <th className="w-1/6 py-2 px-4">{t("action")}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {searchedUsers.map(user => (
-                                <tr key={user?.id} className="text-center">
-                                    <td className="border px-4 py-2">{user?.name}</td>
-                                    <td className="border px-4 py-2">{user?.sur_name}</td>
-                                    <td className="border px-4 py-2">{user?.email}</td>
-                                    <td className="border px-4 py-2">{user?.mobile_number}</td>
-                                    <td className="border px-4 py-2">{user?.department ? user?.department?.name : 'N/A'}</td>
-                                    <td className="border px-4 py-2">{user?.position}</td>
-                                    <td className="border px-4 py-2">{user?.location}</td>
-                                    <td className="border px-4 py-2">{user?.type}</td>
-                                    <td className="border px-4 py-2">
-                                        <button className="text-[#990500]" onClick={() => handleDeleteUser(user)}>
-                                            <FaTrash />
-                                        </button>
-                                    </td>
-                                </tr>
-                                ))}
-                            </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )
-            }
-        </div>
-    </div>
-                
-            </div>
-        </div>
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    const filtered = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchTerm) ||
+        user.email.toLowerCase().includes(searchTerm)
     );
+    setFilteredUsers(filtered);
+  };
 
+  const handleSideChange = (side) => {
+    setActiveSide(side);
+    navigate(`?activeSide=${side}`);
+  };
+
+  const openEditModal = (user) => {
+    setSelectedUser(user);
+    setEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setSelectedUser(null);
+    setEditModalOpen(false);
+  };
+
+  const handleEditSubmit = async (event) => {
+    event.preventDefault();
+    const updatedUserData = {
+      name: event.target.name.value,
+      sur_name: event.target.sur_name.value,
+      email: event.target.email.value,
+      mobile_number: event.target.mobile_number.value,
+      office: event.target.office.value,
+      position: event.target.position.value,
+      location: event.target.location.value,
+    };
+
+    try {
+      await updateUser(selectedUser.id, updatedUserData);
+      toast.success(t("მომხმარებელი წარმატებით განახლდა!"));
+      closeEditModal();
+      // Optionally reload to fetch updated data
+      const res = await getUsers();
+      setUsers(res.data.users);
+      setFilteredUsers(res.data.users);
+    } catch (err) {
+      console.error(err);
+      toast.error(t("მოხდა შეცდომა მომხმარებლის განახლებისას!"));
+    }
+  };
+
+  const columnsForUsers = useMemo(
+    () => [
+      { Header: t("სახელი"), accessor: "name" },
+      { Header: t("გვარი"), accessor: "sur_name" },
+      { Header: t("ელ.ფოსტა"), accessor: "email" },
+      { Header: t("მობილური"), accessor: "mobile_number" },
+      { Header: t("დეპარტამენტი"), accessor: "department.name" },
+      { Header: t("პოზიცია"), accessor: "position" },
+      { Header: t("ადგილმდებარეობა"), accessor: "location" },
+      { Header: t("როლი"), accessor: "type" },
+      {
+        Header: t("მოქმედება"),
+        Cell: ({ row }) => (
+          <div className="d-flex gap-2">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => openEditModal(row.original)}
+            >
+              {t("რედაქტირება")}
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => handleDeleteUser(row.original)}
+            >
+              {t("წაშლა")}
+            </Button>
+          </div>
+        ),
+      },
+    ],
+    [t]
+  );
+
+  const tableInstanceForUsers = useTable(
+    { columns: columnsForUsers, data: filteredUsers, initialState: { pageSize: 10 } },
+    useSortBy,
+    usePagination
+  );
+
+  const renderTable = (tableInstance) => {
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      page,
+      prepareRow,
+      canPreviousPage,
+      canNextPage,
+      previousPage,
+      nextPage,
+      state: { pageIndex },
+    } = tableInstance;
+
+    return (
+      <>
+        <table {...getTableProps()} className="table table-hover table-bordered table-striped">
+          <thead>
+            {headerGroups.map((headerGroup, headerGroupIndex) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    key={column.id || column.accessor}
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, rowIndex) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={rowIndex}>
+                  {row.cells.map((cell, cellIndex) => (
+                    <td {...cell.getCellProps()} key={cellIndex}>
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+        <div className="pagination">
+          <Button
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
+            {"<"}
+          </Button>
+          <span>
+            {t("გვერდი")} {pageIndex + 1}
+          </span>
+          <Button
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          >
+            {">"}
+          </Button>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="page-content">
+      <div className="container-fluid">
+        <Breadcrumbs title="ადმინისტრაცია" breadcrumbItem="ყოველდღიური ანგარიში" />
+        <div className="flex">
+          <div className="flex flex-col bg-[#d1e1e8] bg-opacity-[.8] h-[100vh] text-[#fff] p-8">
+            <Link
+              to="https://crm.gorgia.ge/profile"
+              className="p-2 bg-[#2bc0ff] text-center rounded-lg w-[160px] mb-3"
+            >
+              crm.gorgia.ge
+            </Link>
+            <Button
+              variant="contained"
+              className={`mb-3 ${activeSide === "departments" ? "bg-[#018AD1]" : "bg-[#2bc0ff]"}`}
+              onClick={() => handleSideChange("departments")}
+            >
+              {t("დეპარტამენტები")}
+            </Button>
+            <Button
+              variant="contained"
+              className={`mb-3 ${activeSide === "users" ? "bg-[#018AD1]" : "bg-[#2bc0ff]"}`}
+              onClick={() => handleSideChange("users")}
+            >
+              {t("მომხმარებლები")}
+            </Button>
+          </div>
+
+          <div className="bg-[#e1f0f7] bg-opacity-[.6] w-[100%] p-8">
+            {activeSide === "users" && (
+              <>
+                <TextField
+                  type="text"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  placeholder={t("სახელის, გვარის ან ელ. ფოსტის ძიება")}
+                  fullWidth
+                  margin="normal"
+                />
+                {renderTable(tableInstanceForUsers)}
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Edit User Modal */}
+        <Dialog open={editModalOpen} onClose={closeEditModal} fullWidth maxWidth="sm">
+          <DialogTitle>
+            {t("მომხმარებლის რედაქტირება")}
+          </DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleEditSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("სახელი")}
+                    name="name"
+                    defaultValue={selectedUser?.name}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("გვარი")}
+                    name="sur_name"
+                    defaultValue={selectedUser?.sur_name}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("ელ. ფოსტა")}
+                    name="email"
+                    defaultValue={selectedUser?.email}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("მობილური")}
+                    name="mobile_number"
+                    defaultValue={selectedUser?.mobile_number}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel>{t("ფილიალი")}</InputLabel>
+                    <Select
+                      name="office"
+                      defaultValue={selectedUser?.office}
+                    >
+                      {offices.map((office, index) => (
+                        <MenuItem value={office} key={index}>
+                          {office}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("პოზიცია")}
+                    name="position"
+                    defaultValue={selectedUser?.position}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label={t("ადგილი")}
+                    name="location"
+                    defaultValue={selectedUser?.location}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+              <DialogActions>
+                <Button onClick={closeEditModal} color="secondary">
+                  {t("გაუქმება")}
+                </Button>
+                <Button type="submit" color="primary">
+                  {t("შენახვა")}
+                </Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </div>
+  );
 }

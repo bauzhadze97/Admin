@@ -32,7 +32,6 @@ const VisitorsTraffic = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [filterType, setFilterType] = useState("daily");
 
-  // List of offices
   const offices = [
     "დიდუბის ფილიალი",
     "გლდანის ფილიალი",

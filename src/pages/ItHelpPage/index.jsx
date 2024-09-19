@@ -21,16 +21,13 @@ const ItHelpPage = () => {
                 <CardBody>
                   <CardTitle className="h4">IT დახმარება </CardTitle>
                   <CardSubtitle className="card-title-desc d-flex justify-content-between align-items-center">
-  <div>
-    {/* ქვევით ნაჩვენებია უკვე დადასტურებული ან უარყოფილი მოთხოვნილი ცნობები */}
-  </div>
-  <div>
- 
-  </div>
-</CardSubtitle>
-
-
-<div className="table-responsive">
+                  <div>
+                  </div>
+                  <div>
+                
+                  </div>
+                </CardSubtitle>
+                  <div className="table-responsive">
                     <Table className="table mb-0">
                       <thead>
                         <tr>
