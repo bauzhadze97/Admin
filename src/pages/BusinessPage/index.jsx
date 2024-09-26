@@ -15,6 +15,7 @@ import Breadcrumbs from '../../components/Common/Breadcrumb';
 import { createTrip, getTripList } from '../../services/trip';
 import { toast } from 'react-toastify';
 import './index.css';
+import SuccessPopup from 'components/SuccessPopup';
 
 const BusinessPage = () => {
   // Meta title
@@ -23,6 +24,7 @@ const BusinessPage = () => {
   const { t } = useTranslation();
   const [errors, setErrors] = useState({}); // State for validation errors
   const [list, setList] = useState([]);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
   const [formData, setFormData] = useState({
     trip_type: 'regional',
@@ -63,10 +65,9 @@ const BusinessPage = () => {
       [name]: value,
     }));
 
-    validateField(name, value); // Validate the field on each change
+    validateField(name, value); 
   };
 
-  // Function to validate a specific field
   const validateField = (field, value) => {
     let errorMsg = '';
 
@@ -122,8 +123,25 @@ const BusinessPage = () => {
     try {
       const res = await createTrip(formData);
       if (res) {
-        toast.success('თქვენი მოთხოვნა წარმატებით გაიგზავნა!');
-        window.location.reload();
+        setIsSuccessModalOpen(true)
+        // setFormData({
+        //   trip_type: 'regional',
+        //   place_of_trip: '',
+        //   expense_vocation: '',
+        //   expense_transport: '',
+        //   expense_living: '',
+        //   expense_meal: '',
+        //   total_expense: '',
+        //   start_date: '',
+        //   end_date: '',
+        //   subtitle_user_name: '',
+        //   subtitle_user_sur_name: '',
+        //   business_trip_basis: '',
+        //   purpose_of_trip: '',
+        //   description: '',
+        //   business_trip_arrangement: '',
+        //   expected_result_business_trip: '',
+        // })
       }
     } catch (err) {
       console.log(err);
@@ -146,7 +164,6 @@ const BusinessPage = () => {
       <div className="page-content">
         <Container fluid={true}>
           <Breadcrumbs title="CRM" breadcrumbItem="მივლინების მოთხოვნის გვერდი" />
-
           <Row>
             <Col lg="12">
               <Card>
@@ -363,6 +380,7 @@ const BusinessPage = () => {
           </Row>
         </Container>
       </div>
+      {isSuccessModalOpen && (<SuccessPopup/>)}
     </React.Fragment>
   );
 };

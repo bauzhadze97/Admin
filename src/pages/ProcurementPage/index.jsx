@@ -84,12 +84,19 @@ const ProcurementPage = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  
+    if (name === "department_purchase_id") {
+      setFormData((prevData) => ({
+        ...prevData,
+        department_id: value,  
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -358,7 +365,7 @@ const ProcurementPage = () => {
           </Row>
         </Container>
       </div>
-      <SuccessPopup/>
+      {/* <SuccessPopup/> */}
     </React.Fragment>
   );
 };
