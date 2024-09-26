@@ -45,7 +45,11 @@ const ProfilePage = () => {
     email: '',
     mobile_number: '',
     password: '',
-  });
+    type: '',
+    status: '',
+    profile_image: '', 
+});
+
 
   const [profileError, setProfileError] = useState({
     position: '',
@@ -125,16 +129,33 @@ const ProfilePage = () => {
     }
   };
 
+  // Inside submitProfileForm
   const submitProfileForm = async (e) => {
     e.preventDefault();
-
+  
+    const formData = new FormData();
+    
+    // Append all other fields except profile_image
+    Object.keys(profileForm).forEach((key) => {
+      if (key !== 'profile_image') {
+        formData.append(key, profileForm[key]);
+      }
+    });
+  
+    // Append the profile image separately if it exists
+    if (profileForm.profile_image) {
+      formData.append('profile_image', profileForm.profile_image); // Append the actual File object
+    }
+  
     try {
-      const res = await updateUser(profileForm);
+      const res = await updateUser(formData); 
       if (res.data.status === 401) {
         setPassError({ old_password: res.data.message });
       } else {
         toast.success(res.data.message);
         setProfileError({
+          name: '',
+          sur_name: '',
           position: '',
           department: '',
           location: '',
@@ -143,6 +164,9 @@ const ProfilePage = () => {
           email: '',
           mobile_number: '',
           password: '',
+          type: '',
+          status: '',
+          profile_image: '',
         });
       }
     } catch (err) {
@@ -152,6 +176,8 @@ const ProfilePage = () => {
       }
     }
   };
+  
+
 
   useEffect(() => {
     let departmentsArray = [];
@@ -182,6 +208,8 @@ const ProfilePage = () => {
     fetchDepartments();
     fetchPurchaseDepartments();
   }, []);
+
+  console.log(profileForm)
 
   return (
     <div className="profile-dashboard-container">
@@ -225,6 +253,29 @@ const ProfilePage = () => {
                       <p className="error-text">{profileError?.department}</p>
                     </div>
                   </div>
+                  <div className="form-row">
+                    <div className="profile-form-wrapper">
+                        <label>{t("Name")}</label>
+                        <input
+                            type="text"
+                            name="name"
+                            onChange={handleChangeProfile}
+                            value={profileForm.name}
+                        />
+                        <p className="error-text">{profileError?.name}</p>
+                    </div>
+
+                    <div className="profile-form-wrapper">
+                        <label>{t("Surname")}</label>
+                        <input
+                            type="text"
+                            name="sur_name"
+                            onChange={handleChangeProfile}
+                            value={profileForm.sur_name}
+                        />
+                        <p className="error-text">{profileError?.sur_name}</p>
+                    </div>
+                </div>
 
                   <div className="form-row">
                     <div className="profile-form-wrapper">
@@ -298,7 +349,23 @@ const ProfilePage = () => {
                       <p className="error-text">{profileError?.password}</p>
                     </div>
                   </div>
-
+                  <div className="form-row">
+                  <div className="profile-form-wrapper">
+                      <label>{t("Profile Image")}</label>
+                      <input
+                          type="file"
+                          name="profile_image"
+                          onChange={(e) => {
+                              const file = e.target.files[0];
+                              setProfileForm({
+                                  ...profileForm,
+                                  profile_image: file, // Store the image file in the form state
+                              });
+                          }}
+                      />
+                      <p className="error-text">{profileError?.profile_image}</p>
+                  </div>
+                  </div>
                   <button className="save-button">
                     {t('save')}
                   </button>

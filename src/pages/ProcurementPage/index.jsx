@@ -17,6 +17,7 @@ import { getDepartments, getPurchaseDepartments } from '../../services/auth';
 import { toast } from 'react-toastify';
 import RequestCard from '../../components/Vacation/RequestCard';
 import './index.css';
+import SuccessPopup from 'components/SuccessPopup';
 
 const ProcurementPage = () => {
   const { t } = useTranslation();
@@ -38,6 +39,8 @@ const ProcurementPage = () => {
     reason: '',
     planned_next_month: '',
   });
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -355,6 +358,7 @@ const ProcurementPage = () => {
           </Row>
         </Container>
       </div>
+      <SuccessPopup/>
     </React.Fragment>
   );
 };

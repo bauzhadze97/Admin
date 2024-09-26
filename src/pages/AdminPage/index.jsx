@@ -116,7 +116,7 @@ const AdminPage = () => {
   };
 
   const handleDeleteUser = async (user) => {
-    if (window.confirm(`${t("are_you_sure_you_want_to_delete")} ${user.name}?`)) {
+    if (window.confirm(`${t("დარწმუნებული ხართ რომ გსურთ იუზერ")} ${user.name}-ის წაშლა?`)) {
       try {
         const res = await deleteUser(user.id);
         if (res) {
@@ -160,25 +160,25 @@ const AdminPage = () => {
     <div className="page-content">
       <Container fluid>
         <Breadcrumbs title="Admin" breadcrumbItem="Dashboard" />
-        <Row>
-          <Col lg="2" className="sidebar">
-          
+        <Col>
+        <Col lg="2" className="sidebar">
+          <div className="d-flex  gap-3 mb-3">
             <Button
               color={activeSide === "departments" ? "primary" : "secondary"}
               onClick={() => handleSideChange("departments")}
-              className="mb-3"
             >
               {t("departments")}
             </Button>
             <Button
               color={activeSide === "users" ? "primary" : "secondary"}
               onClick={() => handleSideChange("users")}
-              className="mb-3"
             >
               {t("users")}
             </Button>
-          </Col>
-          <Col lg="10">
+          </div>
+        </Col>
+
+          <Col >
             {activeSide === "departments" && (
               <>
                 <Card>
@@ -316,7 +316,7 @@ const AdminPage = () => {
               </Card>
             )}
           </Col>
-        </Row>
+          </Col>
       </Container>
     </div>
   );

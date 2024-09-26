@@ -17,12 +17,14 @@ import { getApprovalVacations, getVacations } from '../../services/admin/vacatio
 import { toast } from 'react-toastify';
 import './index.css';
 import RequestCard from 'components/Vacation/RequestCard';
+import SuccessPopup from 'components/SuccessPopup';
 
 const VacationPage = () => {
   const { t } = useTranslation();
   const [userData, setUserData] = useState({});
   const [approvalList, setApprovalList] = useState([]);
   const [vacations, setVacations] = useState([]);
+  const [isShowSuccessPopup, setIsShowSuccessPopup] = useState(false);
   const [formData, setFormData] = useState({
     name_and_surname: 'საბა დუმბაძე',
     start_date: '',
@@ -94,11 +96,10 @@ const VacationPage = () => {
 
     try {
       const res = await createPurchase(formData);
-      if (res) {
-        toast.success('თქვენი მოთხოვნა წარმატებით გაიგზავნა!');
-        // Clear form after submission
+      if (res.status == 200) {
+        setIsShowSuccessPopup(true)
         setFormData({
-          name_and_surname: 'საბა დუმბაძე',
+          name_and_surname: '',
           start_date: '',
           end_date: '',
           type_of_vocations: '',
@@ -159,8 +160,6 @@ const VacationPage = () => {
 
     return totalDays;
   };
-
-  console.log(vacations);
   
 
   return (
@@ -281,6 +280,7 @@ const VacationPage = () => {
           </Row>
         </Container>
       </div>
+      {isShowSuccessPopup && (<SuccessPopup/>) }
     </React.Fragment>
   );
 };

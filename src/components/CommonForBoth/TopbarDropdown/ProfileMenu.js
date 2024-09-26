@@ -16,12 +16,12 @@ import withRouter from "components/Common/withRouter";
 
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
+import { fetchUser } from "services/user";
 
 const ProfileMenu = props => {
-  // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-
   const [username, setusername] = useState("Admin");
+  const [user, setUser] = useState();
 
   useEffect(() => {
     if (sessionStorage.getItem("authUser")) {
@@ -38,6 +38,22 @@ const ProfileMenu = props => {
     }
   }, [props.success]);
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const response = await fetchUser();
+        setUser(response.data)
+    }
+
+    fetchData();
+}, [])
+
+
+console.log(`${process.env.REACT_APP_BASE_URL}/${user?.profile_image}`);
+
+
+console.log(process.env);
+
   return (
     <React.Fragment>
       <Dropdown
@@ -52,7 +68,7 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user"
-            src={user1}
+            src={`${process.env.REACT_APP_BASE_URL}/${user?.profile_image}`} 
             alt="Header Avatar"
           />
           <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
