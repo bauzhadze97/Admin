@@ -192,6 +192,9 @@ import ArchivePage from "pages/Archive";
 import InvoicePage from "pages/InvoicePage/InvoicePage";
 import LeadsPage from "pages/LeadsPage/LeadsPage";
 import VipLeadsPage from "pages/VipLeadsPage/VipLeadsPage";
+import VacationPageApprove from "pages/VacationPageApprove/VacationPageApprove";
+import TripPageApprove from "pages/TripPageApprove/TripPageApprove";
+import PurchasePageApprove from "pages/PurchasePageApprove/PurchasePageApprove";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -221,8 +224,11 @@ const authProtectedRoutes = [
   // { path: "/profile", component: <UserProfile /> },
   { path: "/profile", component: <ProfilePage /> },
   { path: "/business", component: <BusinessPage /> },
+  { path: "/business/manage", component: <TripPageApprove/> },
   { path: "/vacation", component: <VacationPage /> },
+  { path: "/vacation/manage", component: <VacationPageApprove /> },
   { path: "/procurement", component: <ProcurementPage /> },
+  { path: "/procurement/manage", component: <PurchasePageApprove/> },
   { path: "/head", component: <HeadPage /> },
   { path: "/archive", component: <ArchivePage /> },
   { path: "/it", component: <ItHelpPage /> },

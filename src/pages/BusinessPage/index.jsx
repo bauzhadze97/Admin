@@ -370,9 +370,16 @@ const BusinessPage = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Button type="submit" color="primary">
-                      {t('Submit')}
-                    </Button>
+                    <div style={{
+                      width:"100%",
+                      display:"flex",
+                      justifyContent:"end"
+
+                    }}>
+                      <Button type="submit" color="primary">
+                        {t('გაგზავნა')}
+                      </Button>
+                    </div>
                   </Form>
                 </CardBody>
               </Card>

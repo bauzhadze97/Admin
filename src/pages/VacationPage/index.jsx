@@ -256,9 +256,17 @@ const VacationPage = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Button type="submit" color="primary">
-                      გაგზავნა
-                    </Button>
+                    <div style={{
+                      width:"100%",
+                      display:"flex",
+                      justifyContent:"end"
+
+                    }} >
+                      <Button type="submit" color="primary">
+                        გაგზავნა
+                      </Button>
+                    </div>
+                   
                   </Form>
 
                   {/* Display the list of vacation requests */}

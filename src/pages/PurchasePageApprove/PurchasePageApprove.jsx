@@ -13,12 +13,12 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 import { getPurchaseList } from "services/purchase"
 
 const PurchasePageApprove = ({ filterStatus }) => {
-  document.title = "შესყიდვების ვიზირება | Gorgia LLC" // Page title
+  document.title = "შესყიდვების ვიზირება | Gorgia LLC" 
 
-  const [expandedRows, setExpandedRows] = useState([]) // To handle expanded rows
-  const [purchases, setPurchases] = useState([]) // To store the fetched purchase requests
+  const [expandedRows, setExpandedRows] = useState([]) 
+  const [purchases, setPurchases] = useState([]) 
 
-  // Toggle row expansion to show detailed purchase info
+
   const toggleRow = index => {
     const isRowExpanded = expandedRows.includes(index)
     if (isRowExpanded) {

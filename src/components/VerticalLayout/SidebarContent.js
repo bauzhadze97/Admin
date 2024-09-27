@@ -202,8 +202,8 @@ const SidebarContent = props => {
               </ul>
             </li>
 
-            <li>
-              <Link to="/#" className="has-arrow ">
+            {/* <li>
+              <Link to="/#" className="has-arrow">
                 <i className="bx bx-horizontal-center"></i>
                 <span>{props.t("განცხადებები")}</span>
               </Link>
@@ -223,8 +223,77 @@ const SidebarContent = props => {
                     <span>{props.t("მივლინება")}</span>
                   </Link>
                 </li>
+                <li>
+                  <Link to="/procurement">
+                    <span>{props.t("განცხადების დამატება")}</span>
+                  </Link>
+                </li>
+              </ul>
+            </li> */}
+
+
+            <li>
+              <Link to="/#" className="has-arrow">
+                <i className="bx bx-horizontal-center"></i>
+                <span>{props.t("განცხადებები")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span>{props.t("შესყიდვები")}</span>
+                  </Link>
+                  <ul className="sub-menu">
+                    <li>
+                      <Link to="/procurement">
+                        <span>{props.t("დამატება")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/procurement/manage">
+                        <span>{props.t("ვიზირება")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span>{props.t("შვებულება")}</span>
+                  </Link>
+                  <ul className="sub-menu">
+                    <li>
+                      <Link to="/vacation">
+                        <span>{props.t("დამატება")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/vacation/manage">
+                        <span>{props.t("ვიზირება")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span>{props.t("მივლინება")}</span>
+                  </Link>
+                  <ul className="sub-menu">
+                    <li>
+                      <Link to="/business">
+                        <span>{props.t("დამატება")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/business/manage">
+                        <span>{props.t("ვიზირება")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             </li>
+
+
+
 
             <li>
               <Link to="/#" className="has-arrow ">
