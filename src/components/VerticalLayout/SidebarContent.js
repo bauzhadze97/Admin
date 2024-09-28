@@ -199,6 +199,11 @@ const SidebarContent = props => {
                     <span>{props.t("არქივი")}</span>
                   </Link>
                 </li>
+                <li>
+                  <Link to="/user-agreements">
+                    <span>{props.t("გაგზავნილი")}</span>
+                  </Link>
+                </li>
               </ul>
             </li>
 

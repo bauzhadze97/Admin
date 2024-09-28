@@ -12,3 +12,7 @@ export const updateAgreementStatus = async (agreementId, status) => {
 export const getDepartmentAgreements = async () => {
     return defaultInstance.get('/api/agreements/departments');
 }
+
+export const getUserAgreemnets = async () => {
+    return defaultInstance.get('/api/agreements/user');
+}

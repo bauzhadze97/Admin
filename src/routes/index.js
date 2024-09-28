@@ -195,6 +195,7 @@ import VipLeadsPage from "pages/VipLeadsPage/VipLeadsPage";
 import VacationPageApprove from "pages/VacationPageApprove/VacationPageApprove";
 import TripPageApprove from "pages/TripPageApprove/TripPageApprove";
 import PurchasePageApprove from "pages/PurchasePageApprove/PurchasePageApprove";
+import UserAgreements from "pages/UserAgreements";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -219,6 +220,10 @@ const authProtectedRoutes = [
 
   // //calendar
   { path: "/calendar", component: <Calendar /> },
+
+
+  //agreements
+  { path: "/user-agreements", component: <UserAgreements/> },
 
   // //profile
   // { path: "/profile", component: <UserProfile /> },
