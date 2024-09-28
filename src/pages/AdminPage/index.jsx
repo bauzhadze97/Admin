@@ -1,29 +1,24 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  Input,
   Button,
-  Form,
+  Input,
+  Table,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
 } from "reactstrap";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Breadcrumbs,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
+import classnames from "classnames";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import {
   assignHead,
   createDepartment,
@@ -31,23 +26,24 @@ import {
   getDepartments,
   getUsers,
   deleteUser,
+  updateUserById,
 } from "../../services/admin/department";
+import DepartmentForm from "components/DepartmentForm";
+import UserForm from "components/UserForm"; // Import the new UserForm component
+import { updateUser } from "services/user";
 
 const AdminPage = () => {
   const { t } = useTranslation();
-  const queryParams = new URLSearchParams(location.search);
-  const initialActiveSide = queryParams.get("activeSide") || "departments";
   const navigate = useNavigate();
-
-  const [modal, setModal] = useState(false);
-  const [isAddDepartmentModal, setIsAddDepartmentModal] = useState(false);
-  const [activeSide, setActiveSide] = useState(initialActiveSide);
+  const [activeTab, setActiveTab] = useState("1"); // To toggle between Department and User tabs
+  const [isDepartmentModalOpen, setIsDepartmentModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [chosenDepartment, setChosenDepartment] = useState(null);
+  const [chosenUser, setChosenUser] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState(users);
-  const [chosenDepartment, setChosenDepartment] = useState(null);
-  const [searchedUsers, setSearchedUsers] = useState(users);
 
   useEffect(() => {
     fetchDepartments();
@@ -67,136 +63,134 @@ const AdminPage = () => {
     try {
       const res = await getUsers();
       setUsers(res.data.users);
-      setFilteredUsers(res.data.users);
-      setSearchedUsers(res.data.users);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-
-    const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm) ||
-      user.email.toLowerCase().includes(searchTerm)
-    );
-    setFilteredUsers(filtered);
+  const openDepartmentModal = (department = null) => {
+    setChosenDepartment(department);
+    setIsEditMode(!!department);
+    setIsDepartmentModalOpen(true);
   };
 
-  const handleAddDepartment = async (e) => {
-    e.preventDefault();
+  const openUserModal = (user = null) => {
+    setChosenUser(user);
+    setIsEditMode(!!user);
+    setIsUserModalOpen(true);
+  };
+
+  const handleAddDepartment = async (data) => {
     try {
-      const res = await createDepartment({
-        name: e.target.name.value,
-        type: e.target.type.value,
-        status: "active",
-      });
-      if (res) {
-        fetchDepartments();
-        setModal(false);
-      }
-    } catch (err) {
-      console.error(err);
+      await createDepartment(data);
+      toast.success(t("Department added successfully"));
+      fetchDepartments();
+      setIsDepartmentModalOpen(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const confirmDelete = async (depId, name) => {
-    if (window.confirm(`${t("are_you_sure_you_want_to_delete")} ${name}?`)) {
+  const handleAddUser = async (data) => {
+    try {
+      await updateUserById(chosenUser.id, data); // Use updateUserById here
+      toast.success(t("User updated successfully"));
+      fetchUsers();
+      setIsUserModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAssignHead = async (data) => {
+    try {
+      await assignHead(data);
+      toast.success(t("Department head assigned successfully"));
+      fetchDepartments();
+      setIsDepartmentModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteDepartment = async (id, name) => {
+    if (window.confirm(`${t("Are you sure you want to delete")} ${name}?`)) {
       try {
-        const res = await deleteDepartment({ id: depId });
-        if (res) {
-          fetchDepartments();
-        }
-      } catch (err) {
-        console.error(err);
+        await deleteDepartment(id);
+        toast.success(t("Department deleted successfully"));
+        fetchDepartments();
+      } catch (error) {
+        console.error(error);
       }
     }
   };
 
   const handleDeleteUser = async (user) => {
-    if (window.confirm(`${t("დარწმუნებული ხართ რომ გსურთ იუზერ")} ${user.name}-ის წაშლა?`)) {
+    if (window.confirm(`${t("Are you sure you want to delete user")} ${user.name}?`)) {
       try {
-        const res = await deleteUser(user.id);
-        if (res) {
-          fetchUsers();
-        }
-      } catch (err) {
-        console.error(err);
+        await deleteUser(user.id);
+        toast.success(t("User deleted successfully"));
+        fetchUsers();
+      } catch (error) {
+        console.error(error);
       }
     }
   };
 
-  const openAssignHeadModal = (department) => {
-    setChosenDepartment(department);
-    setIsAddDepartmentModal(false);
-    setModal(true);
-  };
-
-  const handleAssignHead = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await assignHead({
-        user_id: e.target.user_id.value,
-        department_id: chosenDepartment.id,
-      });
-      if (res) {
-        toast.success(t("successfully_assigned"));
-        setModal(false);
-        fetchDepartments();
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleSideChange = (side) => {
-    setActiveSide(side);
-    navigate(`?activeSide=${side}`);
+  // Tab Switching Function
+  const toggle = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
   };
 
   return (
     <div className="page-content">
       <Container fluid>
-        <Breadcrumbs title="Admin" breadcrumbItem="Dashboard" />
-        <Col>
-        <Col lg="2" className="sidebar">
-          <div className="d-flex  gap-3 mb-3">
-            <Button
-              color={activeSide === "departments" ? "primary" : "secondary"}
-              onClick={() => handleSideChange("departments")}
-            >
-              {t("departments")}
-            </Button>
-            <Button
-              color={activeSide === "users" ? "primary" : "secondary"}
-              onClick={() => handleSideChange("users")}
-            >
-              {t("users")}
-            </Button>
-          </div>
-        </Col>
+        <Row>
+          <Col lg="12">
+            {/* Tab Navigation */}
+            <Nav tabs className="mb-3">
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: activeTab === "1" })}
+                  onClick={() => toggle("1")}
+                >
+                  {t("Departments")}
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: activeTab === "2" })}
+                  onClick={() => toggle("2")}
+                >
+                  {t("Users")}
+                </NavLink>
+              </NavItem>
+            </Nav>
 
-          <Col >
-            {activeSide === "departments" && (
-              <>
+            <TabContent activeTab={activeTab}>
+              <TabPane tabId="1" >
+                <Button
+                  color="success"
+                  onClick={() => openDepartmentModal(null)} 
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:"5px",
+                    justifyContent:"end"
+                  }}
+                >
+                  <FaPlus /> {t("Add Department")}
+                </Button>
+
                 <Card>
                   <CardBody>
-                    <Button
-                      color="success"
-                      className="mb-3"
-                      onClick={() => setModal(true)}
-                    >
-                      {t("add_department")}
-                    </Button>
-                    <table className="table table-bordered">
+                    <Table className="table table-bordered">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>{t("department_name")}</th>
-                          <th>{t("department_head")}</th>
-                          <th>{t("action")}</th>
+                          <th>{t("Department Name")}</th>
+                          <th>{t("Department Head")}</th>
+                          <th>{t("Action")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -209,14 +203,16 @@ const AdminPage = () => {
                               <Button
                                 color="primary"
                                 size="sm"
-                                onClick={() => openAssignHeadModal(dep)}
+                                onClick={() => openDepartmentModal(dep)} // Open modal for editing department
                               >
-                                <FaPlus />
+                                Edit
                               </Button>
                               <Button
                                 color="danger"
                                 size="sm"
-                                onClick={() => confirmDelete(dep.id, dep.name)}
+                                onClick={() =>
+                                  handleDeleteDepartment(dep.id, dep.name)
+                                }
                               >
                                 <FaTrash />
                               </Button>
@@ -224,99 +220,93 @@ const AdminPage = () => {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   </CardBody>
                 </Card>
+              </TabPane>
 
-                {/* Modal for assigning head */}
-                <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-                  <ModalHeader toggle={() => setModal(!modal)}>
-                    {isAddDepartmentModal ? t("add_department") : t("assign_head_to")} {chosenDepartment?.name}
-                  </ModalHeader>
-                  <ModalBody>
-                    {isAddDepartmentModal ? (
-                      <Form onSubmit={handleAddDepartment}>
-                        <Label>{t("department_name")}</Label>
-                        <Input type="text" name="name" required />
-                        <Label>{t("is_it_purchase_department")}</Label>
-                        <Input type="select" name="type">
-                          <option value="department">{t("no")}</option>
-                          <option value="purchase_head">{t("yes")}</option>
-                        </Input>
-                        <Button type="submit" color="success" className="mt-3">
-                          {t("add")}
-                        </Button>
-                      </Form>
-                    ) : (
-                      <Form onSubmit={handleAssignHead}>
-                        <Label>{t("search_user")}</Label>
-                        <Input
-                          type="text"
-                          value={searchTerm}
-                          onChange={handleSearchChange}
-                        />
-                        <Input type="hidden" name="department_id" value={chosenDepartment?.id} />
-                        <Label>{t("choose_head")}</Label>
-                        <Input type="select" name="user_id">
-                          {filteredUsers.map((user) => (
-                            <option key={user.id} value={user.id}>
-                              {user.name} - {user.email}
-                            </option>
-                          ))}
-                        </Input>
-                        <Button type="submit" color="success" className="mt-3">
-                          {t("assign")}
-                        </Button>
-                      </Form>
-                    )}
-                  </ModalBody>
-                </Modal>
-              </>
-            )}
-
-            {activeSide === "users" && (
-              <Card>
-                <CardBody>
-                  <Input
-                    type="text"
-                    placeholder={t("search_by_name_or_email")}
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className="mb-3"
-                  />
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>{t("name")}</th>
-                        <th>{t("email")}</th>
-                        <th>{t("department")}</th>
-                        <th>{t("action")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {searchedUsers.map((user) => (
-                        <tr key={user.id}>
-                          <td>{user.name}</td>
-                          <td>{user.email}</td>
-                          <td>{user.department ? user.department.name : "N/A"}</td>
-                          <td>
-                            <Button
-                              color="danger"
-                              size="sm"
-                              onClick={() => handleDeleteUser(user)}
-                            >
-                              <FaTrash />
-                            </Button>
-                          </td>
+              {/* Users Tab */}
+              <TabPane tabId="2">
+                <Input
+                  type="text"
+                  placeholder={t("Search by name or email")}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="mb-3"
+                />
+                <Card>
+                  <CardBody>
+                    <Table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>{t("User Name")}</th>
+                          <th>{t("Email")}</th>
+                          <th>{t("Department")}</th>
+                          <th>{t("Action")}</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </CardBody>
-              </Card>
-            )}
+                      </thead>
+                      <tbody>
+                        {users
+                          .filter((user) =>
+                            (user?.name || "")
+                              .toLowerCase()
+                              .includes(searchTerm.toLowerCase()) ||
+                            (user?.email || "")
+                              .toLowerCase()
+                              .includes(searchTerm.toLowerCase())
+                          )
+                          .map((user, index) => (
+                            <tr key={user.id}>
+                              <td>{index + 1}</td>
+                              <td>{user?.name}</td>
+                              <td>{user?.email}</td>
+                              <td>{user?.department ? user.department.name : "N/A"}</td>
+                              <td>
+                                <Button
+                                  color="primary"
+                                  size="sm"
+                                  onClick={() => openUserModal(user)} // Open user modal for editing
+                                >
+                                  Edit
+                                </Button>
+                                <Button
+                                  color="danger"
+                                  size="sm"
+                                  onClick={() => handleDeleteUser(user)}
+                                >
+                                  <FaTrash />
+                                </Button>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </Table>
+                  </CardBody>
+                </Card>
+              </TabPane>
+            </TabContent>
+
+            {/* Department Form Modal */}
+            <DepartmentForm
+              isOpen={isDepartmentModalOpen}
+              toggle={() => setIsDepartmentModalOpen(!isDepartmentModalOpen)}
+              isEditMode={isEditMode}
+              department={chosenDepartment}
+              onSave={handleAddDepartment}
+              onAssignHead={handleAssignHead}
+            />
+
+            {/* User Form Modal */}
+            <UserForm
+              isOpen={isUserModalOpen}
+              toggle={() => setIsUserModalOpen(!isUserModalOpen)}
+              isEditMode={isEditMode}
+              user={chosenUser}
+              onSave={handleAddUser}
+            />
           </Col>
-          </Col>
+        </Row>
       </Container>
     </div>
   );

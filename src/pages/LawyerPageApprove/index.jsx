@@ -34,6 +34,9 @@ const LawyerPageApprove = ({ filterStatus }) => {
   const fetchAgreements = async () => {
     try {
       const response = await getDepartmentAgreements()
+
+      console.log(response);
+      
       setAgreements(response.data.data)
     } catch (err) {
       console.error("Error fetching agreements:", err)

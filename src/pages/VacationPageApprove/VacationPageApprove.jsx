@@ -32,7 +32,9 @@ const VacationPageApprove = ({ filterStatus }) => {
   const fetchVacations = async () => {
     try {
       const response = await getVacations()
-      setVacations(response.data.vocations) // Assuming vacations are stored in response.data.vocations
+      console.log(response);
+      
+      setVacations(response.data.vocations)
     } catch (err) {
       console.error("Error fetching vacation requests:", err)
     }
@@ -56,7 +58,6 @@ const VacationPageApprove = ({ filterStatus }) => {
     }
   }
 
-  // Filter vacations based on filterStatus prop
   const filteredVacations = filterStatus
     ? vacations.filter(vacation => filterStatus.includes(vacation.status))
     : vacations

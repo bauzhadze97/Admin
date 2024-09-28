@@ -9,7 +9,7 @@ export const createDepartment = async (data) => {
 }
 
 export const deleteDepartment = async(id) => {
-  return defaultInstance.post('/api/admin/department/' + id.id + '/delete')
+  return defaultInstance.post('/api/admin/department/' + id + '/delete')
 }
 
 export const assignHead = async (data) => {
@@ -23,4 +23,9 @@ export const getUsers = async () => {
 export const deleteUser = async (id) => {
   console.log(id)
   return defaultInstance.post('/api/admin/delete-user/' + id)
+}
+
+
+export const updateUserById = async (id, data) => {
+  return defaultInstance.put(`/api/user/${id}`, data)
 }
