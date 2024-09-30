@@ -6,19 +6,8 @@ import defaultInstance from '../plugins/axios'; // Adjust the path if your axios
  * @param {number} limit - The number of leads per page.
  * @returns The list of leads from the server.
  */
-export const getLeads = async (page = 1, limit = 10) => {
-  try {
-    const response = await defaultInstance.get('/api/leads', {
-      params: {
-        page: page,
-        limit: limit
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching leads:', error);
-    throw error;
-  }
+export const getLeads = async () => {
+  // Implement API call to fetch all leads
 };
 
 /**
@@ -26,14 +15,8 @@ export const getLeads = async (page = 1, limit = 10) => {
  * @param {object} data - The data for creating a new lead.
  * @returns The newly created lead data.
  */
-export const createLead = async (data) => {
-  try {
-    const response = await defaultInstance.post('/api/leads', data);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating lead:', error);
-    throw error;
-  }
+export const createLead = async (leadData) => {
+  // Implement API call to create a new lead
 };
 
 /**
@@ -42,14 +25,8 @@ export const createLead = async (data) => {
  * @param {object} data - The new data for the lead.
  * @returns The updated lead data.
  */
-export const updateLead = async (id, data) => {
-  try {
-    const response = await defaultInstance.put(`/api/leads/${id}`, data);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating lead:', error);
-    throw error;
-  }
+export const updateLead = async (leadId, leadData) => {
+  // Implement API call to update an existing lead
 };
 
 /**
@@ -57,12 +34,14 @@ export const updateLead = async (id, data) => {
  * @param {number} id - The ID of the lead to delete.
  * @returns Confirmation of the deletion.
  */
-export const deleteLead = async (id) => {
-  try {
-    const response = await defaultInstance.delete(`/api/leads/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting lead:', error);
-    throw error;
-  }
+export const deleteLead = async (leadId) => {
+  // Implement API call to delete a lead
+};
+
+export const fetchCommentsForLead = async (leadId) => {
+  // Implement API call to fetch comments for a specific lead
+};
+
+export const addCommentToLead = async (leadId, commentText) => {
+  // Implement API call to add a new comment to a specific lead
 };
