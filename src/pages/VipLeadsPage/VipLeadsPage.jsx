@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import DeleteModal from 'components/Common/DeleteModal';
 import { getVipLeads, createVipLead, updateVipLead, deleteVipLead } from '../../services/vipLeadsService';
 import Breadcrumbs from 'components/Common/Breadcrumb';
+import moment from 'moment';  // Import moment.js for formatting dates
 
 const VipLeadsPage = () => {
   const [vipLeads, setVipLeads] = useState([]);
@@ -48,7 +49,6 @@ const VipLeadsPage = () => {
     const updatedLead = { ...leadToUpdate, status: newStatus };
     try {
       await updateVipLead(leadId, updatedLead);
-      console.log('Updated Lead:', updatedLead);
       fetchVipLeads();
     } catch (error) {
       console.error('Error updating lead status:', error);
@@ -78,6 +78,11 @@ const VipLeadsPage = () => {
         ),
       },
       { Header: 'კომენტარი', accessor: 'comment' },
+      {
+        Header: 'თარიღი', // Add the "Date Added" column header
+        accessor: 'created_at', // This is the created_at field from the database
+        Cell: ({ value }) => moment(value).format('YYYY-MM-DD'), // Format the date using moment.js
+      },
       {
         Header: 'მოქმედება',
         id: 'actions',

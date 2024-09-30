@@ -48,7 +48,7 @@ const VipLeadDetailPage = () => {
         <Col lg="10">
           <Card className="mb-4 shadow-sm">
             <CardBody>
-              <h3 className="text-primary mb-4">VIP Lead Details</h3>
+              <h3 className="text-primary mb-4">ლიდის შიდა გვერდი</h3>
               <Row>
                 <Col md="6">
                   <p><strong>სახელი:</strong> {vipLead.first_name} {vipLead.last_name}</p>
