@@ -199,6 +199,7 @@ import UserAgreements from "pages/UserAgreements";
 import UserPurchases from "pages/UserPurchases";
 import UserVocation from "pages/UserVocations";
 import UserTrip from "pages/UserTrips";
+import VipLeadDetailPage from "pages/VipLeadsPage/VipLeadDetailPage";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -311,6 +312,7 @@ const authProtectedRoutes = [
   { path: "/contacts-list", component: <ContactsList /> },
   { path: "/visitors", component: <VisitorsTraffic /> },
   { path: "/vip-leads", component: <VipLeadsPage /> },
+  { path: "/vip-leads/:id", component: <VipLeadDetailPage /> },
   { path: "/corporate-leads", component: <LeadsPage /> },
   { path: "/payment-monitoring", component: <InvoicePage /> },
   { path: "/contacts-profile", component: <ContactsProfile /> },

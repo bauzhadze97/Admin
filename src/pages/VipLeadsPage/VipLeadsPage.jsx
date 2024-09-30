@@ -15,6 +15,7 @@ import {
   Button,
 } from 'reactstrap';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import { Link } from 'react-router-dom';
 import DeleteModal from 'components/Common/DeleteModal';
 import { getVipLeads, createVipLead, updateVipLead, deleteVipLead } from '../../services/vipLeadsService';
 import Breadcrumbs from 'components/Common/Breadcrumb';
@@ -43,7 +44,7 @@ const VipLeadsPage = () => {
 
   // Handle status change directly from the table
   const handleStatusChange = async (leadId, newStatus) => {
-    const leadToUpdate = vipLeads.find(lead => lead.id === leadId);
+    const leadToUpdate = vipLeads.find((lead) => lead.id === leadId);
     const updatedLead = { ...leadToUpdate, status: newStatus };
     try {
       await updateVipLead(leadId, updatedLead);
@@ -55,38 +56,48 @@ const VipLeadsPage = () => {
   };
 
   // Define table columns and actions, including the status dropdown
-  const columns = useMemo(() => [
-    { Header: 'სახელი', accessor: 'first_name' },
-    { Header: 'გვარი', accessor: 'last_name' },
-    { Header: 'მოთხოვნა', accessor: 'request' },
-    { Header: 'პასუხისმგებელი პირი', accessor: 'responsible_person' },
-    {
-      Header: 'სტატუსი',
-      accessor: 'status',
-      Cell: ({ row }) => (
-        <Input
-          type="select"
-          value={row.original.status}
-          onChange={(e) => handleStatusChange(row.original.id, e.target.value)}
-        >
-          <option value="Active">აქტიური</option>
-          <option value="Closed">დახურული</option>
-          <option value="Problem">პრობლემური</option>
-        </Input>
-      ),
-    },
-    { Header: 'კომენტარი', accessor: 'comment' },
-    {
-      Header: 'მოქმედება',
-      id: 'actions',
-      Cell: ({ row }) => (
-        <div className="d-flex gap-2">
-          <Button color="primary" onClick={() => handleEditClick(row.original)}>რედაკტირება</Button>
-          <Button color="danger" onClick={() => handleDeleteClick(row.original)}>წაშლა</Button>
-        </div>
-      ),
-    },
-  ], [vipLeads]);
+  const columns = useMemo(
+    () => [
+      { Header: 'სახელი', accessor: 'first_name' },
+      { Header: 'გვარი', accessor: 'last_name' },
+      { Header: 'მოთხოვნა', accessor: 'request' },
+      { Header: 'პასუხისმგებელი პირი', accessor: 'responsible_person' },
+      {
+        Header: 'სტატუსი',
+        accessor: 'status',
+        Cell: ({ row }) => (
+          <Input
+            type="select"
+            value={row.original.status}
+            onChange={(e) => handleStatusChange(row.original.id, e.target.value)}
+          >
+            <option value="Active">აქტიური</option>
+            <option value="Closed">დახურული</option>
+            <option value="Problem">პრობლემური</option>
+          </Input>
+        ),
+      },
+      { Header: 'კომენტარი', accessor: 'comment' },
+      {
+        Header: 'მოქმედება',
+        id: 'actions',
+        Cell: ({ row }) => (
+          <div className="d-flex gap-2">
+            <Button color="primary" onClick={() => handleEditClick(row.original)}>
+              რედაქტირება
+            </Button>
+            <Button color="danger" onClick={() => handleDeleteClick(row.original)}>
+              წაშლა
+            </Button>
+            <Link to={`/vip-leads/${row.original.id}`}>
+              <Button color="info">კომენტარები</Button> {/* Link to the detail page */}
+            </Link>
+          </div>
+        ),
+      },
+    ],
+    [vipLeads]
+  );
 
   // Initialize table with pagination and sorting
   const {
@@ -168,7 +179,8 @@ const VipLeadsPage = () => {
               <Button
                 color="success"
                 className="btn-rounded waves-effect waves-light mb-2"
-                onClick={handleAddClick}>
+                onClick={handleAddClick}
+              >
                 დამატება
               </Button>
             </Col>
@@ -179,9 +191,9 @@ const VipLeadsPage = () => {
                 <CardBody>
                   <table {...getTableProps()} className="table">
                     <thead>
-                      {headerGroups.map(headerGroup => (
+                      {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                          {headerGroup.headers.map(column => (
+                          {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps(column.getSortByToggleProps())} key={column.id}>
                               {column.render('Header')}
                               <span>
@@ -193,12 +205,14 @@ const VipLeadsPage = () => {
                       ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
-                      {rows.map(row => {
+                      {rows.map((row) => {
                         prepareRow(row);
                         return (
                           <tr {...row.getRowProps()} key={row.id}>
-                            {row.cells.map(cell => (
-                              <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
+                            {row.cells.map((cell) => (
+                              <td {...cell.getCellProps()} key={cell.column.id}>
+                                {cell.render('Cell')}
+                              </td>
                             ))}
                           </tr>
                         );
@@ -210,31 +224,53 @@ const VipLeadsPage = () => {
             </Col>
           </Row>
           <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'განახლება' : 'დამატება'}</ModalHeader>
+            <ModalHeader toggle={() => setModal(!modal)}>
+              {isEdit ? 'განახლება' : 'დამატება'}
+            </ModalHeader>
             <ModalBody>
               <Form onSubmit={handleSaveVipLead}>
                 <FormGroup>
                   <Label for="first_name">სახელი</Label>
-                  <Input id="first_name" name="first_name" defaultValue={vipLead ? vipLead.first_name : ''} required />
+                  <Input
+                    id="first_name"
+                    name="first_name"
+                    defaultValue={vipLead ? vipLead.first_name : ''}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label for="last_name">გვარი</Label>
-                  <Input id="last_name" name="last_name" defaultValue={vipLead ? vipLead.last_name : ''} required />
+                  <Input
+                    id="last_name"
+                    name="last_name"
+                    defaultValue={vipLead ? vipLead.last_name : ''}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label for="request">მოთხოვნა</Label>
-                  <Input id="request" name="request" defaultValue={vipLead ? vipLead.request : ''} required />
+                  <Input
+                    id="request"
+                    name="request"
+                    defaultValue={vipLead ? vipLead.request : ''}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label for="responsible_person">პასუხისმგებელი პირი</Label>
-                  <Input id="responsible_person" name="responsible_person" defaultValue={vipLead ? vipLead.responsible_person : ''} required />
+                  <Input
+                    id="responsible_person"
+                    name="responsible_person"
+                    defaultValue={vipLead ? vipLead.responsible_person : ''}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label for="status">სტატუსი</Label>
                   <Input
                     type="select"
                     name="status"
-                    defaultValue={vipLead ? vipLead.status : 'Active'} 
+                    defaultValue={vipLead ? vipLead.status : 'Active'}
                   >
                     <option value="Active">აქტიური</option>
                     <option value="Closed">დახურული</option>
@@ -246,7 +282,10 @@ const VipLeadsPage = () => {
                   <Input type="textarea" id="comment" name="comment" defaultValue={vipLead ? vipLead.comment : ''} />
                 </FormGroup>
                 <Col style={{ textAlign: 'right' }}>
-                <Button type="submit" color="primary">{isEdit ? 'განახლება' : 'დამატება'}</Button></Col>
+                  <Button type="submit" color="primary">
+                    {isEdit ? 'განახლება' : 'დამატება'}
+                  </Button>
+                </Col>
               </Form>
             </ModalBody>
           </Modal>
