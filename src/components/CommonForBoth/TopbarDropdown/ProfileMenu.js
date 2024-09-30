@@ -1,58 +1,47 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
+} from "reactstrap"
 
-//i18n
-import { withTranslation } from "react-i18next";
+// i18n
+import { withTranslation } from "react-i18next"
 // Redux
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import withRouter from "components/Common/withRouter";
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import withRouter from "components/Common/withRouter"
 
 // users
-import user1 from "../../../assets/images/users/avatar-1.jpg";
-import { fetchUser } from "services/user";
+import { fetchUser } from "services/user"
+import NoAvatarIcon from "../../../assets/images/no-avatar.jpg"
 
 const ProfileMenu = props => {
-  const [menu, setMenu] = useState(false);
-  const [username, setusername] = useState("Admin");
-  const [user, setUser] = useState();
+  const [menu, setMenu] = useState(false)
+  const [username, setUsername] = useState("Admin")
+  const [user, setUser] = useState()
 
   useEffect(() => {
     if (sessionStorage.getItem("authUser")) {
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(sessionStorage.getItem("authUser"));
-        setusername(obj.displayName);
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        const obj = JSON.parse(sessionStorage.getItem("authUser"));
-        setusername(obj.username);
-      }
+      const obj = JSON.parse(sessionStorage.getItem("authUser"))
+      setUsername(obj.displayName || obj.username)
     }
-  }, [props.success]);
-
+  }, [props.success])
 
   useEffect(() => {
     const fetchData = async () => {
-        const response = await fetchUser();
-        setUser(response.data)
+      const response = await fetchUser()
+      setUser(response.data)
     }
 
-    fetchData();
-}, [])
+    fetchData()
+  }, [])
 
-
-console.log(`${process.env.REACT_APP_BASE_URL}/${user?.profile_image}`);
-
-
-console.log(process.env);
+  const profileImageSrc = user?.profile_image
+    ? `${process.env.REACT_APP_BASE_URL}/${user.profile_image}`
+    : NoAvatarIcon // Fallback to NoAvatarIcon if no profile image
 
   return (
     <React.Fragment>
@@ -62,13 +51,13 @@ console.log(process.env);
         className="d-inline-block"
       >
         <DropdownToggle
-          className="btn header-item "
+          className="btn header-item"
           id="page-header-user-dropdown"
           tag="button"
         >
           <img
             className="rounded-circle header-profile-user"
-            src={`${process.env.REACT_APP_BASE_URL}/${user?.profile_image}`} 
+            src={profileImageSrc}
             alt="Header Avatar"
           />
           <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
@@ -76,23 +65,14 @@ console.log(process.env);
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
-            {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
-            {props.t("Profile")}{" "}
+            {props.t("Profile")}
           </DropdownItem>
-          {/* <DropdownItem tag="a" href="/crypto-wallet">
-            <i className="bx bx-wallet font-size-16 align-middle me-1" />
-            {props.t("My Wallet")}
-          </DropdownItem> */}
           <DropdownItem tag="a" href="#">
             <span className="badge bg-success float-end">11</span>
             <i className="bx bx-wrench font-size-16 align-middle me-1" />
             {props.t("Settings")}
           </DropdownItem>
-          {/* <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {props.t("Lock screen")}
-          </DropdownItem> */}
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
@@ -101,19 +81,19 @@ console.log(process.env);
         </DropdownMenu>
       </Dropdown>
     </React.Fragment>
-  );
-};
+  )
+}
 
 ProfileMenu.propTypes = {
   success: PropTypes.any,
-  t: PropTypes.any
-};
+  t: PropTypes.any,
+}
 
 const mapStatetoProps = state => {
-  const { error, success } = state.Profile;
-  return { error, success };
-};
+  const { error, success } = state.Profile
+  return { error, success }
+}
 
 export default withRouter(
   connect(mapStatetoProps, {})(withTranslation()(ProfileMenu))
-);
+)

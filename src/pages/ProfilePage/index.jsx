@@ -1,215 +1,215 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { changePassword, updateUser } from '../../services/user';
-import useFetchUser from '../../hooks/useFetchUser';
-import { getDepartments } from '../../services/admin/department';
-import { getDepartments as getDeps, getPurchaseDepartments } from '../../services/auth';
-import { useTranslation } from 'react-i18next';
-import store from '../../store';
-import { Breadcrumbs } from '@mui/material';
-import './index.css'; // Make sure the relevant styles are in this file
+import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import { changePassword, updateUser } from "../../services/user"
+import useFetchUser from "../../hooks/useFetchUser"
+import { getDepartments } from "../../services/admin/department"
+import {
+  getDepartments as getDeps,
+  getPurchaseDepartments,
+} from "../../services/auth"
+import { useTranslation } from "react-i18next"
+import store from "../../store"
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
+import "./index.css" // Make sure the relevant styles are in this file
 
 const ProfilePage = () => {
-  const { t } = useTranslation();
-  useFetchUser();
-  const [userData, setUserData] = useState({});
+  const { t } = useTranslation()
+  useFetchUser()
+  const [userData, setUserData] = useState({})
 
   useEffect(() => {
     if (store.getState().user && store.getState().user.data) {
-      setUserData(store.getState().user.data);
+      setUserData(store.getState().user.data)
     }
-  }, [store.getState().user.data]);
+  }, [store.getState().user.data])
 
-  const [departments, setDepartments] = useState([]);
-
+  const [departments, setDepartments] = useState([])
   const [passForm, setPassForm] = useState({
-    old_password: '',
-    password: '',
-    confirm_password: '',
-  });
+    old_password: "",
+    password: "",
+    confirm_password: "",
+  })
 
   const [passError, setPassError] = useState({
-    old_password: '',
-    password: '',
-    confirm_password: '',
-  });
+    old_password: "",
+    password: "",
+    confirm_password: "",
+  })
 
   const [profileForm, setProfileForm] = useState({
-    name: '',
-    sur_name: '',
-    position: '',
-    department: '',
-    location: '',
-    working_start_date: '',
-    date_of_birth: '',
-    email: '',
-    mobile_number: '',
-    password: '',
-    type: '',
-    status: '',
-    profile_image: '', 
-});
-
+    name: "",
+    sur_name: "",
+    position: "",
+    department: "",
+    location: "",
+    working_start_date: "",
+    date_of_birth: "",
+    email: "",
+    mobile_number: "",
+    id_number: "", // Added id_number field
+    password: "",
+    profile_image: "",
+  })
 
   const [profileError, setProfileError] = useState({
-    position: '',
-    department: '',
-    location: '',
-    working_start_date: '',
-    date_of_birth: '',
-    email: '',
-    mobile_number: '',
-    password: '',
-  });
+    name: "",
+    sur_name: "",
+    position: "",
+    department: "",
+    location: "",
+    working_start_date: "",
+    date_of_birth: "",
+    email: "",
+    mobile_number: "",
+    id_number: "", // Added id_number error handling
+    password: "",
+    profile_image: "",
+  })
+
+  // Modal State
+  const [modal, setModal] = useState(false)
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        await getDepartments();
+        const res = await getDepartments()
+        setDepartments(res.data.departments || [])
       } catch (err) {
-        console.error(err);
+        console.error(err)
       }
-    };
-    fetchDepartments();
-  }, []);
+    }
+    fetchDepartments()
+  }, [])
 
   useEffect(() => {
     if (Object.keys(userData).length > 0) {
       setProfileForm({
-        name: userData?.name || '',
-        sur_name: userData?.sur_name || '',
-        position: userData?.position || '',
-        department: userData?.department?.name || '',
-        location: userData?.location || '',
-        working_start_date: userData?.working_start_date || '',
-        date_of_birth: userData?.date_of_birth || '',
-        email: userData?.email || '',
-        mobile_number: userData?.mobile_number || '',
-        password: '',
-      });
+        name: userData?.name || "",
+        sur_name: userData?.sur_name || "",
+        position: userData?.position || "",
+        department: userData?.department?.name || "",
+        location: userData?.location || "",
+        working_start_date: userData?.working_start_date || "",
+        date_of_birth: userData?.date_of_birth || "",
+        email: userData?.email || "",
+        mobile_number: userData?.mobile_number || "",
+        id_number: userData?.id_number || "", // Initialize id_number
+        password: "",
+      })
     }
-  }, [userData]);
+  }, [userData])
 
-  const handleChangePass = (e) => {
-    const { name, value } = e.target;
+  const handleChangePass = e => {
+    const { name, value } = e.target
     setPassForm({
       ...passForm,
       [name]: value,
-    });
-  };
+    })
+  }
 
-  const handleChangeProfile = (e) => {
-    const { name, value } = e.target;
+  const handleChangeProfile = e => {
+    const { name, value } = e.target
     setProfileForm({
       ...profileForm,
       [name]: value,
-    });
-  };
+    })
+  }
 
-  const submitPassForm = async (e) => {
-    e.preventDefault();
-
+  const submitPassForm = async e => {
+    e.preventDefault()
     try {
       setPassError({
-        old_password: '',
-        password: '',
-        confirm_password: '',
-      });
-      const res = await changePassword(passForm);
+        old_password: "",
+        password: "",
+        confirm_password: "",
+      })
+      const res = await changePassword(passForm)
       if (res.data.status === 401) {
-        setPassError({ old_password: res.data.message });
+        setPassError({ old_password: res.data.message })
       } else {
-        toast.success(res.data.message);
+        toast.success(res.data.message)
+        setModal(true) // Show modal on success
       }
     } catch (err) {
       for (const [key, value] of Object.entries(err.response.data)) {
-        setPassError({ ...passError, [key]: value[0] });
-        toast.error(value[0]);
+        setPassError({ ...passError, [key]: value[0] })
+        toast.error(value[0])
       }
     }
-  };
+  }
 
-  // Inside submitProfileForm
-  const submitProfileForm = async (e) => {
-    e.preventDefault();
-  
-    const formData = new FormData();
-    
-    // Append all other fields except profile_image
-    Object.keys(profileForm).forEach((key) => {
-      if (key !== 'profile_image') {
-        formData.append(key, profileForm[key]);
-      }
-    });
-  
-    // Append the profile image separately if it exists
+  const submitProfileForm = async e => {
+    e.preventDefault()
+
+    const formData = new FormData()
+
+    Object.keys(profileForm).forEach(key => {
+      formData.append(key, profileForm[key])
+    })
+
     if (profileForm.profile_image) {
-      formData.append('profile_image', profileForm.profile_image); // Append the actual File object
+      formData.append("profile_image", profileForm.profile_image)
     }
-  
+
     try {
-      const res = await updateUser(formData); 
+      const res = await updateUser(formData)
       if (res.data.status === 401) {
-        setPassError({ old_password: res.data.message });
+        setPassError({ old_password: res.data.message })
       } else {
-        toast.success(res.data.message);
+        toast.success(res.data.message)
         setProfileError({
-          name: '',
-          sur_name: '',
-          position: '',
-          department: '',
-          location: '',
-          working_start_date: '',
-          date_of_birth: '',
-          email: '',
-          mobile_number: '',
-          password: '',
-          type: '',
-          status: '',
-          profile_image: '',
-        });
+          name: "",
+          sur_name: "",
+          position: "",
+          department: "",
+          location: "",
+          working_start_date: "",
+          date_of_birth: "",
+          email: "",
+          mobile_number: "",
+          id_number: "", // Reset id_number error
+          password: "",
+          profile_image: "",
+        })
+        setModal(true) // Show modal on success
       }
     } catch (err) {
       for (const [key, value] of Object.entries(err.response.data)) {
-        setProfileError({ ...profileError, [key]: value[0] });
-        toast.error(value[0]);
+        setProfileError({ ...profileError, [key]: value[0] })
+        toast.error(value[0])
       }
     }
-  };
-  
-
+  }
 
   useEffect(() => {
-    let departmentsArray = [];
     const fetchDepartments = async () => {
+      let departmentsArray = []
       try {
-        const res = await getDeps();
-
-        departmentsArray = [...departmentsArray, ...res.data.departments];
+        const res = await getDeps()
+        departmentsArray = [...departmentsArray, ...res.data.departments]
       } catch (err) {
-        console.error(err);
+        console.error(err)
       } finally {
-        setDepartments(departmentsArray);
+        setDepartments(departmentsArray)
       }
-    };
+    }
 
     const fetchPurchaseDepartments = async () => {
       try {
-        const res = await getPurchaseDepartments();
-
-        departmentsArray = [...departmentsArray, ...res.data.departments];
+        const res = await getPurchaseDepartments()
+        setDepartments(prev => [...prev, ...res.data.departments])
       } catch (err) {
-        console.error(err);
-      } finally {
-        setDepartments(departmentsArray);
+        console.error(err)
       }
-    };
+    }
 
-    fetchDepartments();
-    fetchPurchaseDepartments();
-  }, []);
+    fetchDepartments()
+    fetchPurchaseDepartments()
+  }, [])
 
-  console.log(profileForm)
+  const toggleModal = () => {
+    setModal(!modal) // Toggle modal visibility
+  }
 
   return (
     <div className="profile-dashboard-container">
@@ -219,12 +219,36 @@ const ProfilePage = () => {
             <div className="profile grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div className="profile-section">
                 <div className="section-header mb-6">
-                  <h2>{t("Profile")}</h2>
+                  <h2>{t("პროფილი")}</h2>
                 </div>
                 <form onSubmit={submitProfileForm}>
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("position")}</label>
+                      <label>{t("სახელი")}</label>
+                      <input
+                        type="text"
+                        name="name"
+                        onChange={handleChangeProfile}
+                        value={profileForm.name}
+                      />
+                      <p className="error-text">{profileError?.name}</p>
+                    </div>
+
+                    <div className="profile-form-wrapper">
+                      <label>{t("გვარი")}</label>
+                      <input
+                        type="text"
+                        name="sur_name"
+                        onChange={handleChangeProfile}
+                        value={profileForm.sur_name}
+                      />
+                      <p className="error-text">{profileError?.sur_name}</p>
+                    </div>
+                  </div>
+
+                  <div className="form-row">
+                    <div className="profile-form-wrapper">
+                      <label>{t("პოზიცია")}</label>
                       <input
                         type="text"
                         name="position"
@@ -235,12 +259,12 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="profile-form-wrapper">
-                      <label>{t("department")}</label>
+                      <label>{t("დეპარტამენტი")}</label>
                       <select
                         name="department_id"
                         onChange={handleChangeProfile}
                       >
-                        {departments.map((dep) => (
+                        {departments.map(dep => (
                           <option
                             key={dep.id}
                             selected={dep.id === userData?.department_id}
@@ -253,33 +277,10 @@ const ProfilePage = () => {
                       <p className="error-text">{profileError?.department}</p>
                     </div>
                   </div>
-                  <div className="form-row">
-                    <div className="profile-form-wrapper">
-                        <label>{t("Name")}</label>
-                        <input
-                            type="text"
-                            name="name"
-                            onChange={handleChangeProfile}
-                            value={profileForm.name}
-                        />
-                        <p className="error-text">{profileError?.name}</p>
-                    </div>
-
-                    <div className="profile-form-wrapper">
-                        <label>{t("Surname")}</label>
-                        <input
-                            type="text"
-                            name="sur_name"
-                            onChange={handleChangeProfile}
-                            value={profileForm.sur_name}
-                        />
-                        <p className="error-text">{profileError?.sur_name}</p>
-                    </div>
-                </div>
 
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("location")}</label>
+                      <label>{t("ლოკაცია")}</label>
                       <input
                         type="text"
                         name="location"
@@ -290,31 +291,35 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="profile-form-wrapper">
-                      <label>{t("work start date")}</label>
+                      <label>{t("სამსახურის დაწყების თარიღი")}</label>
                       <input
                         type="date"
                         name="working_start_date"
                         onChange={handleChangeProfile}
                         value={profileForm.working_start_date}
                       />
-                      <p className="error-text">{profileError?.working_start_date}</p>
+                      <p className="error-text">
+                        {profileError?.working_start_date}
+                      </p>
                     </div>
                   </div>
 
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("birth date")}</label>
+                      <label>{t("დაბადების თარიღი")}</label>
                       <input
                         type="date"
                         name="date_of_birth"
                         onChange={handleChangeProfile}
                         value={profileForm.date_of_birth}
                       />
-                      <p className="error-text">{profileError?.date_of_birth}</p>
+                      <p className="error-text">
+                        {profileError?.date_of_birth}
+                      </p>
                     </div>
 
                     <div className="profile-form-wrapper">
-                      <label>{t("email")}</label>
+                      <label>{t("Email")}</label>
                       <input
                         type="email"
                         name="email"
@@ -327,59 +332,61 @@ const ProfilePage = () => {
 
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("mobile number")}</label>
+                      <label>{t("მობილურის ნომერი")}</label>
                       <input
                         type="text"
                         name="mobile_number"
                         onChange={handleChangeProfile}
                         value={profileForm.mobile_number}
                       />
-                      <p className="error-text">{profileError?.mobile_number}</p>
+                      <p className="error-text">
+                        {profileError?.mobile_number}
+                      </p>
                     </div>
-
                     <div className="profile-form-wrapper">
-                      <label>{t("password")}</label>
+                      <label>{t("პირადი ნომერი")}</label>
                       <input
-                        type="password"
-                        name="password"
+                        type="text"
+                        name="id_number"
                         onChange={handleChangeProfile}
-                        value={profileForm.password}
-                        placeholder={t('confirm current password')}
+                        value={profileForm.id_number}
                       />
-                      <p className="error-text">{profileError?.password}</p>
+                      <p className="error-text">{profileError?.id_number}</p>
                     </div>
                   </div>
+
                   <div className="form-row">
-                  <div className="profile-form-wrapper">
-                      <label>{t("Profile Image")}</label>
+                    <div className="profile-form-wrapper">
+                      <label>{t("პროფილის სურათი")}</label>
                       <input
-                          type="file"
-                          name="profile_image"
-                          onChange={(e) => {
-                              const file = e.target.files[0];
-                              setProfileForm({
-                                  ...profileForm,
-                                  profile_image: file, // Store the image file in the form state
-                              });
-                          }}
+                        type="file"
+                        name="profile_image"
+                        onChange={e => {
+                          const file = e.target.files[0]
+                          setProfileForm({
+                            ...profileForm,
+                            profile_image: file,
+                          })
+                        }}
                       />
-                      <p className="error-text">{profileError?.profile_image}</p>
+                      <p className="error-text">
+                        {profileError?.profile_image}
+                      </p>
+                    </div>
                   </div>
-                  </div>
-                  <button className="save-button">
-                    {t('save')}
-                  </button>
+
+                  <button className="save-button">{t("შენახვა")}</button>
                 </form>
               </div>
 
               <div className="profile-section">
                 <div className="section-header mb-6">
-                  <h2>{t("Change Your Password")}</h2>
+                  <h2>{t("შეცვალე პაროლი")}</h2>
                 </div>
                 <form onSubmit={submitPassForm}>
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("old password")}</label>
+                      <label>{t("ძველი პაროლი")}</label>
                       <input
                         type="password"
                         name="old_password"
@@ -389,7 +396,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="profile-form-wrapper">
-                      <label>{t("new password")}</label>
+                      <label>{t("ახალი პაროლი")}</label>
                       <input
                         type="password"
                         name="password"
@@ -401,27 +408,38 @@ const ProfilePage = () => {
 
                   <div className="form-row">
                     <div className="profile-form-wrapper">
-                      <label>{t("repeat new password")}</label>
+                      <label>{t("გაიმეორე ახალი პაროლი")}</label>
                       <input
                         type="password"
                         name="confirm_password"
                         onChange={handleChangePass}
                       />
-                      <p className="error-text">{passError?.confirm_password}</p>
+                      <p className="error-text">
+                        {passError?.confirm_password}
+                      </p>
                     </div>
                   </div>
 
-                  <button className="save-button">
-                    {t('change')}
-                  </button>
+                  <button className="save-button">{t("შეცვლა")}</button>
                 </form>
               </div>
             </div>
           </main>
         </div>
       </div>
-    </div>
-  );
-};
 
-export default ProfilePage;
+      {/* Modal for Success Message */}
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>{t("პროფილის განახლება")}</ModalHeader>
+        <ModalBody>{t("პროფილი წარმატებით განახლდა")}</ModalBody>
+        <ModalFooter>
+          <button className="save-button" onClick={toggleModal}>
+            {t("დახურვა")}
+          </button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  )
+}
+
+export default ProfilePage
