@@ -363,12 +363,12 @@ const SidebarContent = props => {
                 <span>{props.t("ვიზიტორები")}</span>
               </Link>
             </li>
-            <li>
+            {/*<li>
               <Link to="/payment-monitoring">
                 <i className="bx bx-credit-card-alt"></i>
                 <span>{props.t("გადახდების მონიტორინგი")}</span>
               </Link>
-            </li>
+            </li>*/}
           
             <li>
               <Link to="/#" className="has-arrow ">
