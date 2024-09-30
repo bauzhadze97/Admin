@@ -189,32 +189,6 @@ const VacationPage = () => {
                       </Col>
                       <Col lg="6">
                         <div className="mb-3">
-                          <Label for="start_date">დაწყების თარიღი</Label>
-                          <Input
-                            type="date"
-                            id="start_date"
-                            name="start_date"
-                            value={formData.start_date}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
-                        <div className="mb-3">
-                          <Label for="end_date">დასრულების თარიღი</Label>
-                          <Input
-                            type="date"
-                            id="end_date"
-                            name="end_date"
-                            value={formData.end_date}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                      </Col>
-                      <Col lg="6">
-                        <div className="mb-3">
                           <Label for="type_of_vocations">შვებულების ტიპი</Label>
                           <Input
                             type="select"
@@ -231,6 +205,34 @@ const VacationPage = () => {
                           </Input>
                         </div>
                       </Col>
+                      
+                    </Row>
+                    <Row>
+                    <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="start_date">დაწყების თარიღი</Label>
+                          <Input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            value={formData.start_date}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </Col>
+                      <Col lg="6">
+                        <div className="mb-3">
+                          <Label for="end_date">დასრულების თარიღი</Label>
+                          <Input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            value={formData.end_date}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </Col>
+                      
                     </Row>
                     <Row>
                       <Col lg="12">
@@ -270,7 +272,7 @@ const VacationPage = () => {
                   </Form>
 
                   {/* Display the list of vacation requests */}
-                  <div className="w-[80%] h-[600px] overflow-y-auto pt-2 flex flex-col items-center">
+                  {/* <div className="w-[80%] h-[600px] overflow-y-auto pt-2 flex flex-col items-center">
                     {vacations.map((vacation, idx) => (
                       <RequestCard
                         key={idx}
@@ -281,7 +283,7 @@ const VacationPage = () => {
                         status={vacation.status}
                       />
                     ))}
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </Col>
