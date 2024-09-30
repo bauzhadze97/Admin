@@ -245,7 +245,7 @@ const SidebarContent = props => {
               <ul className="sub-menu">
                 <li>
                   <Link to="/#" className="has-arrow">
-                    <span>{props.t("შესყიდვები")}</span>
+                    <span>{props.t("შიდა შესყიდვები")}</span>
                   </Link>
                   <ul className="sub-menu">
                     <li>
@@ -318,7 +318,7 @@ const SidebarContent = props => {
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bxs-file-doc"></i>
-                <span>{props.t("დოკუმენტები")}</span>
+                <span>{props.t("HR დოკუმენტები")}</span>
               </Link>
               <ul className="sub-menu">
                 <li>

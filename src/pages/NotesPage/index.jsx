@@ -125,11 +125,11 @@ const NotesPage = () => {
         >
           {filteredNotes.length === 0 ? (
             <Box sx={{ textAlign: "center", paddingTop: "50px" }}>
-              <img
+              {/* <img
                 src={NoteIcon}
                 alt="Empty Notes"
                 style={{ marginBottom: "20px", width: "150px" }}
-              />
+              /> */}
               <Typography
                 variant="h6"
                 sx={{ fontWeight: "bold", marginBottom: "10px", color: "#333" }}
