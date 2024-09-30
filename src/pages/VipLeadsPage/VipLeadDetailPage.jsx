@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCommentsForVipLead, addCommentToVipLead, getVipLeadById } from '../../services/vipLeadsService';
 import { Card, CardBody, Col, Container, Row, Label, Input, Form, Button } from 'reactstrap';
+import moment from 'moment'; // For formatting date
 
 const VipLeadDetailPage = () => {
   const { id } = useParams(); // Get the VIP lead ID from the URL
@@ -67,7 +68,17 @@ const VipLeadDetailPage = () => {
                   comments.map((comment, index) => (
                     <Card key={index} className="mb-3 border-0 shadow-sm">
                       <CardBody className="bg-light">
-                        {comment.comment}
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <strong>
+                              {comment.user ? `${comment.user.name} ${comment.user.sur_name}` : 'Unknown User'}
+                            </strong> {/* Check if the user object exists */}
+                            <p className="mb-0">{comment.comment}</p> {/* Comment text */}
+                          </div>
+                          <small className="text-muted">
+                            {moment(comment.created_at).format('YYYY-MM-DD HH:mm')}
+                          </small> {/* Display comment creation date */}
+                        </div>
                       </CardBody>
                     </Card>
                   ))
