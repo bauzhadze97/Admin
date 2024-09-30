@@ -91,7 +91,7 @@ const Dashboard = props => {
           {/* Render Breadcrumb */}
           <Breadcrumbs title={props.t("Dashboards")} breadcrumbItem={props.t("Dashboard")} />
 
-          <Row>
+          {/* <Row>
             <Col xl="4">
               <WelcomeComp />
               <MonthlyEarning />
@@ -149,13 +149,13 @@ const Dashboard = props => {
                     </div>
                   </div>
                   {/* <div className="clearfix"></div> */}
-                  <StackedColumnChart periodData={periodData} dataColors='["--bs-primary", "--bs-warning", "--bs-success"]' />
+                  {/* <StackedColumnChart periodData={periodData} dataColors='["--bs-primary", "--bs-warning", "--bs-success"]' />
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </Row> */} 
 
-          <Row>
+          {/* <Row>
             <Col xl="4">
               <SocialSource />
             </Col>
@@ -166,13 +166,13 @@ const Dashboard = props => {
             <Col xl="4">
               <TopCities />
             </Col>
-          </Row>
+          </Row> */}
 
-          <Row>
+          {/* <Row>
             <Col lg="12">
               <LatestTranaction />
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </div>
 
@@ -209,7 +209,7 @@ const Dashboard = props => {
         </ModalBody>
       </Modal> */}
 
-      <Modal isOpen={modal} role="dialog" autoFocus={true} centered={true} className="exampleModal" tabIndex="-1"
+      {/* <Modal isOpen={modal} role="dialog" autoFocus={true} centered={true} className="exampleModal" tabIndex="-1"
         toggle={() => { setModal(!modal); }}>
         <div>
           <ModalHeader toggle={() => { setModal(!modal); }}> Order Details</ModalHeader>
@@ -291,7 +291,7 @@ const Dashboard = props => {
             </Button>
           </ModalFooter>
         </div>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 };
