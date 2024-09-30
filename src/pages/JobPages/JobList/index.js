@@ -47,7 +47,8 @@ const TaskList = () => {
         setLoading(true);
         try {
             const response = await getTaskList();
-            setTasks(response || []);
+            const sortedTasks = response.sort((a, b) => b.id - a.id);
+            setTasks(sortedTasks || []);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         } finally {
