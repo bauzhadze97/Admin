@@ -304,6 +304,7 @@ const AdminPage = () => {
               isEditMode={isEditMode}
               user={chosenUser}
               onSave={handleAddUser}
+              departments={departments}
             />
           </Col>
         </Row>
