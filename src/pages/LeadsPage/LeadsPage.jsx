@@ -87,7 +87,7 @@ const LeadsPage = () => {
       id: 'actions',
       Cell: ({ row }) => (
         <div className="d-flex gap-2">
-          <Button color="primary" onClick={() => handleEditClick(row.original)}>რედაკტირება</Button>
+          <Button color="primary" onClick={() => handleEditClick(row.original)}>რედაქტირება</Button>
           <Button color="danger" onClick={() => handleDeleteClick(row.original)}>წაშლა</Button>
         </div>
       )
@@ -214,7 +214,7 @@ const LeadsPage = () => {
             </Col>
           </Row>
           <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'რედაკტირება' : 'დამატება'}</ModalHeader>
+            <ModalHeader toggle={() => setModal(!modal)}>{isEdit ? 'რედაქტირება' : 'დამატება'}</ModalHeader>
             <ModalBody>
               <Form onSubmit={handleSaveLead}>
                 <Label for="first_name">სახელი</Label>

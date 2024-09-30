@@ -50,6 +50,9 @@ const UserTrip = () => {
     }
   };
 
+
+  console.log(trips);
+  
   return (
     <React.Fragment>
       <div className="page-content">
@@ -64,8 +67,10 @@ const UserTrip = () => {
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>მოგზაურობის მიზანი</th>
-                          <th>მოგზაურობის თარიღი</th>
+                          <th>მივლინების ტიპი</th>
+                          <th>დაწყების თარიღი</th>
+                          <th>დასრულების თარიღი</th>
+                          <th>შემცვლელი პირის სახელი/გვარი</th>
                           <th>სტატუსი</th>
                         </tr>
                       </thead>
@@ -78,8 +83,17 @@ const UserTrip = () => {
                               style={{ cursor: "pointer" }}
                             >
                               <th scope="row">{index + 1}</th>
-                              <td>{trip.objective}</td>
-                              <td>{trip.trip_date}</td>
+                              <td>
+                                {trip.trip_type === "regional"
+                                  ? "რეგიონალური"
+                                  : trip.trip_type === "international"
+                                  ? "საერთაშორისო"
+                                  : "უცნობი"}
+                              </td>
+                              <td>{trip?.start_date}</td>
+                              <td>{trip?.end_date}</td>
+                              <td>{trip?.subtitle_user_name
+                              } {trip?.subtitle_user_sur_name}</td>
                               <td>
                                 {trip.status === "rejected"
                                   ? "უარყოფილია"
