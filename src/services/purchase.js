@@ -11,3 +11,8 @@ export const createPurchase = async (data) => {
 export const getPurchase = async (data) => {
     return defaultInstance.get('/api/internal-purchase/create', data)
 }
+
+
+export const getCurrentUserPurchases = async () => {
+    return defaultInstance.get('/api/internal-purchases/current-user');
+}

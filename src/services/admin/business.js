@@ -19,3 +19,7 @@ export const createBusinessTrip = async (data) => {
 export const deleteBusinessTrip = async (id) => {
     return defaultInstance.delete("/api/business-trip/" + id + "/delete")
 }
+
+export const getCurrentUserTrips = async () => {
+  return defaultInstance.get('/api/business-trip/currentUser')
+}

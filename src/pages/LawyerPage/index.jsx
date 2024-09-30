@@ -994,7 +994,7 @@ const LawyerPage = () => {
                             }}
                             disabled={!(passedSteps || []).includes(1)}
                           >
-                            <span className="number">1.</span> ინფორმაცია
+                            <span className="number">1.</span> ინფორმაცია 1
                           </NavLink>
                         </NavItem>
                         <NavItem
@@ -1007,7 +1007,7 @@ const LawyerPage = () => {
                             }}
                             disabled={!(passedSteps || []).includes(2)}
                           >
-                            <span className="number">2.</span> დამატებითი პირობები
+                            <span className="number">2.</span> ინფორმაცია 2
                           </NavLink>
                         </NavItem>
                         <NavItem
@@ -1020,7 +1020,7 @@ const LawyerPage = () => {
                             }}
                             disabled={!(passedSteps || []).includes(3)}
                           >
-                            <span className="number">3.</span> არასავალდებულო
+                            <span className="number">3.</span> დამატებითი ინფორმაცია
                           </NavLink>
                         </NavItem>
                       </ul>

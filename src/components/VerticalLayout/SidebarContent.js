@@ -258,6 +258,11 @@ const SidebarContent = props => {
                         <span>{props.t("ვიზირება")}</span>
                       </Link>
                     </li>
+                    {/* <li>
+                      <Link to="/procurement/manage">
+                        <span>{props.t("გაგზავნილი")}</span>
+                      </Link>
+                    </li> */}
                   </ul>
                 </li>
                 <li>
@@ -275,6 +280,11 @@ const SidebarContent = props => {
                         <span>{props.t("ვიზირება")}</span>
                       </Link>
                     </li>
+                    <li>
+                      <Link to="/user-vocations">
+                        <span>{props.t("გაგზავნილი")}</span>
+                      </Link>
+                    </li>
                   </ul>
                 </li>
                 <li>
@@ -290,6 +300,11 @@ const SidebarContent = props => {
                     <li>
                       <Link to="/business/manage">
                         <span>{props.t("ვიზირება")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/user-business">
+                        <span>{props.t("გაგზავნილი")}</span>
                       </Link>
                     </li>
                   </ul>

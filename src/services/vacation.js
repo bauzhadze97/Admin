@@ -11,3 +11,7 @@ export const createPurchase = async (data) => {
 export const getPurchase = async (data) => {
     return defaultInstance.get('/api/vocation/create', data)
 }
+
+export const getCurrentUserVocations = async () => {
+    return defaultInstance.get('/api/vocation/currentUser')
+}

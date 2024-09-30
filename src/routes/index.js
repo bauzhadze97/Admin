@@ -196,6 +196,9 @@ import VacationPageApprove from "pages/VacationPageApprove/VacationPageApprove";
 import TripPageApprove from "pages/TripPageApprove/TripPageApprove";
 import PurchasePageApprove from "pages/PurchasePageApprove/PurchasePageApprove";
 import UserAgreements from "pages/UserAgreements";
+import UserPurchases from "pages/UserPurchases";
+import UserVocation from "pages/UserVocations";
+import UserTrip from "pages/UserTrips";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -230,10 +233,15 @@ const authProtectedRoutes = [
   { path: "/profile", component: <ProfilePage /> },
   { path: "/business", component: <BusinessPage /> },
   { path: "/business/manage", component: <TripPageApprove/> },
+  { path: "/user-business", component: <UserTrip/> },
+
   { path: "/vacation", component: <VacationPage /> },
   { path: "/vacation/manage", component: <VacationPageApprove /> },
+  { path: "/user-vocations", component: <UserVocation /> },
   { path: "/procurement", component: <ProcurementPage /> },
   { path: "/procurement/manage", component: <PurchasePageApprove/> },
+  { path: "/user-purchases", component: <UserPurchases/> },
+
   { path: "/head", component: <HeadPage /> },
   { path: "/archive", component: <ArchivePage /> },
   { path: "/it", component: <ItHelpPage /> },
