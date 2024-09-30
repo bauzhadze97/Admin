@@ -14,7 +14,7 @@ const UserVocation = () => {
   // Fetch the current user's vocations from the API
   const fetchVocations = async () => {
     try {
-      const response = await getCurrentUserVocations(); // Fetch user vocations
+      const response = await getCurrentUserVocations();
 
       console.log(response);
       

@@ -15,3 +15,7 @@ export const getPurchase = async (data) => {
 export const getCurrentUserVocations = async () => {
     return defaultInstance.get('/api/vocation/currentUser')
 }
+
+export const updateVacationStatus = async (vacationId, status) => {
+    return defaultInstance.put(`/api/vocations/${vacationId}/status`, { status });
+}

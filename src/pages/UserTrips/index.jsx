@@ -7,10 +7,10 @@ import { getCurrentUserTrips } from "services/admin/business";
 
 
 const UserTrip = () => {
-  // Meta title
   document.title = "მოგზაურობები | Gorgia LLC";
 
   const [trips, setTrips] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]); // State to track expanded rows
 
   // Fetch the current user's trips from the API
   const fetchTrips = async () => {
@@ -25,6 +25,16 @@ const UserTrip = () => {
   useEffect(() => {
     fetchTrips();
   }, []);
+
+  // Toggle row expansion to show detailed trip info
+  const toggleRow = (index) => {
+    const isRowExpanded = expandedRows.includes(index);
+    if (isRowExpanded) {
+      setExpandedRows(expandedRows.filter((rowIndex) => rowIndex !== index));
+    } else {
+      setExpandedRows([...expandedRows, index]);
+    }
+  };
 
   // Determine the row class based on the trip status
   const getRowClass = (status) => {
@@ -61,15 +71,40 @@ const UserTrip = () => {
                       </thead>
                       <tbody>
                         {trips?.map((trip, index) => (
-                          <tr key={trip.id} className={getRowClass(trip.status)}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{trip.objective}</td>
-                            <td>{trip.trip_date}</td>
-                            <td>
-                              {trip.status === "rejected" ? "უარყოფილია" :
-                               trip.status === "approved" ? "დადასტურებულია" : "მოლოდინში"}
-                            </td>
-                          </tr>
+                          <React.Fragment key={trip.id}>
+                            <tr
+                              className={getRowClass(trip.status)}
+                              onClick={() => toggleRow(index)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <th scope="row">{index + 1}</th>
+                              <td>{trip.objective}</td>
+                              <td>{trip.trip_date}</td>
+                              <td>
+                                {trip.status === "rejected"
+                                  ? "უარყოფილია"
+                                  : trip.status === "approved"
+                                  ? "დადასტურებულია"
+                                  : "მოლოდინში"}
+                              </td>
+                            </tr>
+                            {expandedRows.includes(index) && (
+                              <tr>
+                                <td colSpan="4">
+                                  <div className="p-3">
+                                    <p>დეტალური ინფორმაცია</p>
+                                    <ul>
+                                      <li>მიზანი: {trip.objective}</li>
+                                      <li>სრული ხარჯი: {trip.total_expense}₾</li>
+                                      <li>ტრანსპორტის ხარჯი: {trip.expense_transport}₾</li>
+                                      <li>საცხოვრებელი: {trip.expense_living}₾</li>
+                                      <li>კვების ხარჯი: {trip.expense_meal}₾</li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
                         ))}
                       </tbody>
                     </Table>

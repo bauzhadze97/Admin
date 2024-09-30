@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -8,56 +8,59 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-} from "reactstrap"
-import Breadcrumbs from "../../components/Common/Breadcrumb"
-import { getTripList } from "services/trip" // Assuming you also need to import approveTrip
+} from "reactstrap";
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { getTripList, updateTripStatus } from "services/trip"; // Importing updateTripStatus
 
 const TripPageApprove = ({ filterStatus }) => {
-  document.title = "მივლინებების ვიზირება | Georgia LLC" // Page title
+  document.title = "მივლინებების ვიზირება | Georgia LLC"; // Page title
 
-  const [expandedRows, setExpandedRows] = useState([]) // To handle expanded rows
-  const [trips, setTrips] = useState([]) // To store the fetched trip requests
+  const [expandedRows, setExpandedRows] = useState([]); // To handle expanded rows
+  const [trips, setTrips] = useState([]); // To store the fetched trip requests
 
   // Toggle row expansion to show detailed trip info
-  const toggleRow = index => {
-    const isRowExpanded = expandedRows.includes(index)
+  const toggleRow = (index) => {
+    const isRowExpanded = expandedRows.includes(index);
     if (isRowExpanded) {
-      setExpandedRows(expandedRows.filter(rowIndex => rowIndex !== index))
+      setExpandedRows(expandedRows.filter((rowIndex) => rowIndex !== index));
     } else {
-      setExpandedRows([...expandedRows, index])
+      setExpandedRows([...expandedRows, index]);
     }
-  }
+  };
 
   // Fetch trip requests from the backend
   const fetchTrips = async () => {
     try {
-      const response = await getTripList()
-      setTrips(response.data.business) // Assuming business contains the trip data
+      const response = await getTripList();
+      setTrips(response.data.business);
     } catch (err) {
-      console.error("Error fetching trip requests:", err)
+      console.error("Error fetching trip requests:", err);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchTrips()
-  }, [])
+    fetchTrips();
+  }, []);
 
   // Handle status update (approve/reject)
   const handleUpdateStatus = async (tripId, status) => {
     try {
-      // await approveTrip(tripId, { status }) // Pass status in request payload
-      setTrips(prevTrips =>
-        prevTrips.map(trip => (trip.id === tripId ? { ...trip, status } : trip))
-      )
+      await updateTripStatus(tripId, status); // Call the API to update status
+      // Update the status in the local state
+      setTrips((prevTrips) =>
+        prevTrips.map((trip) =>
+          trip.id === tripId ? { ...trip, status } : trip
+        )
+      );
     } catch (err) {
-      console.error("Error updating trip status:", err)
+      console.error("Error updating trip status:", err);
     }
-  }
+  };
 
   // Filter trips based on filterStatus prop
   const filteredTrips = filterStatus
-    ? trips.filter(trip => filterStatus.includes(trip.status))
-    : trips
+    ? trips.filter((trip) => filterStatus.includes(trip.status))
+    : trips;
 
   return (
     <React.Fragment>
@@ -65,9 +68,7 @@ const TripPageApprove = ({ filterStatus }) => {
         <Col xl={12}>
           <Card>
             <CardBody>
-              <CardTitle className="h4">
-                მივლინებების ვიზირების გვერდი
-              </CardTitle>
+              <CardTitle className="h4">მივლინებების ვიზირების გვერდი</CardTitle>
               <CardSubtitle className="card-title-desc">
                 ქვემოთ მოცემულია მიმდინარე მივლინების მოთხოვნები
               </CardSubtitle>
@@ -101,8 +102,7 @@ const TripPageApprove = ({ filterStatus }) => {
                         >
                           <th scope="row">{index + 1}</th>
                           <td>
-                            {trip.subtitle_user_name}{" "}
-                            {trip.subtitle_user_sur_name}
+                            {trip.subtitle_user_name} {trip.subtitle_user_sur_name}
                           </td>
                           <td>{trip.place_of_trip}</td>
                           <td>
@@ -158,9 +158,7 @@ const TripPageApprove = ({ filterStatus }) => {
                                 <ul>
                                   <li>მიზანი: {trip.purpose_of_trip}</li>
                                   <li>სრული ხარჯი: {trip.total_expense}₾</li>
-                                  <li>
-                                    ტრანსპორტის ხარჯი: {trip.expense_transport}₾
-                                  </li>
+                                  <li>ტრანსპორტის ხარჯი: {trip.expense_transport}₾</li>
                                   <li>საცხოვრებელი: {trip.expense_living}₾</li>
                                   <li>კვების ხარჯი: {trip.expense_meal}₾</li>
                                 </ul>
@@ -178,7 +176,7 @@ const TripPageApprove = ({ filterStatus }) => {
         </Col>
       </Row>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default TripPageApprove
+export default TripPageApprove;

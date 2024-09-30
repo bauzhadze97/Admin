@@ -10,7 +10,8 @@ import {
   CardSubtitle,
 } from "reactstrap"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
-import { getVacations } from "services/admin/vacation" // Make sure this points to the correct file
+import { getVacations } from "services/admin/vacation" // Updated import for updateVacationStatus
+import { updateVacationStatus } from "services/vacation"
 
 const VacationPageApprove = ({ filterStatus }) => {
   document.title = "შვებულების ვიზირება | Gorgia LLC"
@@ -32,8 +33,6 @@ const VacationPageApprove = ({ filterStatus }) => {
   const fetchVacations = async () => {
     try {
       const response = await getVacations()
-      console.log(response);
-      
       setVacations(response.data.vocations)
     } catch (err) {
       console.error("Error fetching vacation requests:", err)
@@ -47,7 +46,10 @@ const VacationPageApprove = ({ filterStatus }) => {
   // Function to update vacation status (approve/reject)
   const handleUpdateStatus = async (vacationId, status) => {
     try {
-      // await approveVacation(vacationId, { status }) // Pass status in request payload
+      // Update vacation status on the backend
+      await updateVacationStatus(vacationId, status)
+
+      // Update the vacation status in the frontend
       setVacations(prevVacations =>
         prevVacations.map(vacation =>
           vacation.id === vacationId ? { ...vacation, status } : vacation
@@ -61,7 +63,7 @@ const VacationPageApprove = ({ filterStatus }) => {
   const filteredVacations = filterStatus
     ? vacations.filter(vacation => filterStatus.includes(vacation.status))
     : vacations
-    
+
   return (
     <React.Fragment>
       <Row>
