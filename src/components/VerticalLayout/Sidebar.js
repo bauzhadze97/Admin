@@ -16,6 +16,9 @@ import logoDark from "../../assets/images/logo-dark.png";
 
 const Sidebar = props => {
 
+
+  
+
   return (
     <React.Fragment>
       <div className="vertical-menu">
