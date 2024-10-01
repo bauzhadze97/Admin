@@ -234,6 +234,14 @@ const HrPageApprove = ({ filterStatus }) => {
                                     იურიდიული მისამართი / ფაქტიური მისამართი:{" "}
                                     {document.user.location}
                                   </li>
+                                  <li>
+                                    ხელფასი:{" "}
+                                    {document?.salary}
+                                  </li>
+                                  <li>
+                                    კომენტარი:{" "}
+                                    {document?.comment}
+                                  </li>
                                 </ul>
                               </div>
                             </td>
