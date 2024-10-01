@@ -63,10 +63,10 @@ const LawyerPageApprove = ({ filterStatus }) => {
         console.log(filePath);
         
         const newWindow = window.open(`${process.env.REACT_APP_BASE_URL}/${filePath}`, '_blank');
-        if (newWindow) {
-          // newWindow.focus();
-          newWindow.print(); 
-        }
+        // if (newWindow) {
+        //   // newWindow.focus();
+        //   newWindow.print(); 
+        // }
       }
     } catch (err) {
       console.error("Error updating agreement status:", err);

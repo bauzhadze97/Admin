@@ -154,7 +154,7 @@ const AdminPage = () => {
                   className={classnames({ active: activeTab === "1" })}
                   onClick={() => toggle("1")}
                 >
-                  {t("Departments")}
+                  {t("დეპარტამენტები")}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -162,7 +162,7 @@ const AdminPage = () => {
                   className={classnames({ active: activeTab === "2" })}
                   onClick={() => toggle("2")}
                 >
-                  {t("Users")}
+                  {t("მომხმარებლები")}
                 </NavLink>
               </NavItem>
             </Nav>
@@ -179,7 +179,7 @@ const AdminPage = () => {
                     justifyContent:"end"
                   }}
                 >
-                  <FaPlus /> {t("Add Department")}
+                  <FaPlus /> {t("დეპარტამენტის დამატება")}
                 </Button>
 
                 <Card>
@@ -188,9 +188,9 @@ const AdminPage = () => {
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>{t("Department Name")}</th>
-                          <th>{t("Department Head")}</th>
-                          <th>{t("Action")}</th>
+                          <th>{t("სახელი")}</th>
+                          <th>{t("დეპარტამენტის ჰედი")}</th>
+                          <th>{t("მოქმედება")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -205,7 +205,7 @@ const AdminPage = () => {
                                 size="sm"
                                 onClick={() => openDepartmentModal(dep)} // Open modal for editing department
                               >
-                                Edit
+                               რედაქტირება
                               </Button>
                               <Button
                                 color="danger"
@@ -304,6 +304,7 @@ const AdminPage = () => {
               isEditMode={isEditMode}
               user={chosenUser}
               onSave={handleAddUser}
+              departments={departments}
             />
           </Col>
         </Row>
