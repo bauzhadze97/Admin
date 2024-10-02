@@ -38,11 +38,13 @@ const LawyerPageArchive = () => {
 
   // Handle downloading the Word document
   const downloadDocument = (fileUrl) => {
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = "agreement.docx"; // Set a default file name
-    link.click();
-  };
+    const newWindow = window.open(fileUrl, '_blank');
+
+        newWindow.focus();  // Focus on the new window
+        newWindow.print();  // Trigger print dialog
+      };
+   
+  
 
   // Determine the row class based on the agreement status
   const getRowClass = (status) => {
@@ -58,6 +60,9 @@ const LawyerPageArchive = () => {
     }
   };
 
+
+  console.log(agreements);
+  
   return (
     <React.Fragment>
       <div className="page-content">

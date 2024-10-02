@@ -50,28 +50,29 @@ const LawyerPageApprove = ({ filterStatus }) => {
   const handleUpdateStatus = async (agreementId, status) => {
     try {
       const response = await updateAgreementStatus(agreementId, status);
-
+  
       setAgreements(prevAgreements =>
         prevAgreements.map(agreement =>
           agreement.id === agreementId ? { ...agreement, status } : agreement
         )
       );
-
+  
       if (status === 'approved' && response.data.file_path) {
         const filePath = response.data.file_path;
-
-        console.log(filePath);
-        
-        const newWindow = window.open(`${process.env.REACT_APP_BASE_URL}/${filePath}`, '_blank');
-        // if (newWindow) {
-        //   // newWindow.focus();
-        //   newWindow.print(); 
-        // }
+        printPdf(filePath);
       }
     } catch (err) {
       console.error("Error updating agreement status:", err);
     }
-}
+  };
+  
+  const printPdf = (filePath) => {
+    const newWindow = window.open(filePath);
+      newWindow.focus();
+        newWindow.print();
+  
+  };
+  
 
 
   const filteredAgreements = filterStatus
