@@ -1,229 +1,183 @@
-import React, { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Box,
-  Typography,
-  Button,
+  Container,
+  Row,
+  Col,
   Card,
-  CardContent,
-  Breadcrumbs,
-  TextField,
-  IconButton,
-} from "@mui/material"
-import { getNoteList } from "../../services/note"
-import NoteIcon from "../../assets/images/note-icon.png"
-import SearchIcon from "../../assets/images/search-icon.png"
-import SaveIcon from "../../assets/images/save.png"
+  CardBody,
+  Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
+import { getNoteList, deleteNote } from "../../services/note";
+import SaveIcon from "../../assets/images/save.png";
 
 const NotesPage = () => {
-  const [notes, setNotes] = useState([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const navigate = useNavigate()
+  const [notes, setNotes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await getNoteList()
+    const fetchData = async () => {
+      try {
+        const response = await getNoteList();
         const sortedNotes = response.data.notes.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        )
-        setNotes(sortedNotes)
+        );
+        setNotes(sortedNotes);
+      } catch (error) {
+        console.log(error);
       }
-
-      fetchData()
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   const handleGetStarted = () => {
-    navigate("/notes-editor")
-  }
+    navigate("/notes-editor");
+  };
 
-  // Search functionality to filter notes
-  const filteredNotes = notes.filter(note => {
-    const lowerCaseSearchQuery = searchQuery.toLowerCase()
+  const handleDeleteNote = async () => {
+    if (noteToDelete) {
+      try {
+        await deleteNote(noteToDelete.id);
+        setNotes((prevNotes) =>
+          prevNotes.filter((note) => note.id !== noteToDelete.id)
+        );
+        setDeleteModalOpen(false);
+        setNoteToDelete(null);
+      } catch (error) {
+        console.error("Error deleting note:", error);
+      }
+    }
+  };
 
-    const lowerCaseTitle = note.title ? note.title.toLowerCase() : "" // Handle possible null titles
+  const handleEditNote = (noteId) => {
+    navigate(`/notes-editor/${noteId}`);
+  };
+
+  const filteredNotes = notes.filter((note) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    const lowerCaseTitle = note.title ? note.title.toLowerCase() : "";
     const lowerCaseNote = note.note
       ? note.note.replace(/(<([^>]+)>)/gi, "").toLowerCase()
-      : "" // Handle possible null note content
-
+      : "";
     return (
       lowerCaseTitle.includes(lowerCaseSearchQuery) ||
       lowerCaseNote.includes(lowerCaseSearchQuery)
-    )
-  })
+    );
+  });
 
   return (
-    <div className="page-content">
-      <div className="container-fluid">
-        <Breadcrumbs title="Admin" breadcrumbItem="My Notes" />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: "bold", color: "#105D8D" }}
-          >
-            Notes
-          </Typography>
-          <Box sx={{ display: "flex", gap: "10px" }}>
-            <TextField
-              variant="outlined"
-              size="small"
+    <Container fluid className="page-content">
+      <Breadcrumb>
+        <BreadcrumbItem active>Admin</BreadcrumbItem>
+        <BreadcrumbItem active>My Notes</BreadcrumbItem>
+      </Breadcrumb>
+
+      <Row className="mb-4">
+        <Col md="6">
+          <h4 className="font-weight-bold text-primary">Notes</h4>
+        </Col>
+        <Col md="6" className="text-right">
+          <div className="d-flex justify-content-end">
+            <Input
+              type="text"
               placeholder="ძებნა..."
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <IconButton position="start">
-                    <img src={SearchIcon} alt="search" />
-                  </IconButton>
-                ),
-              }}
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: "8px",
-                boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
-              }}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ maxWidth: "250px", marginRight: "10px" }}
             />
             <Link to="/notes-editor">
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#007dba",
-                  color: "#ffffff",
-                  borderRadius: "25px",
-                  padding: "10px 20px",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  textTransform: "none",
-                }}
-              >
-                <img src={SaveIcon} alt="Save Icon" style={{ width: "16px" }} />
+              <Button color="primary" className="d-flex align-items-center">
+                {/* <img src={SaveIcon} alt="Save Icon" style={{ width: "16px" }} /> */}
                 დამატება
               </Button>
             </Link>
-          </Box>
-        </Box>
+          </div>
+        </Col>
+      </Row>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            paddingBottom: "50px",
-          }}
-        >
-          {filteredNotes.length === 0 ? (
-            <Box sx={{ textAlign: "center", paddingTop: "50px" }}>
-              {/* <img
-                src={NoteIcon}
-                alt="Empty Notes"
-                style={{ marginBottom: "20px", width: "150px" }}
-              /> */}
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: "bold", marginBottom: "10px", color: "#333" }}
-              >
-                No Notes Found
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "#666666", marginBottom: "20px" }}
-              >
-                You don't have any notes yet. Click below to get started.
-              </Typography>
-              <Button
-                onClick={handleGetStarted}
-                variant="contained"
-                sx={{
-                  backgroundColor: "#007dba",
-                  color: "#ffffff",
-                  borderRadius: "25px",
-                  padding: "10px 30px",
-                  fontWeight: "bold",
-                  fontSize: "16px",
+      <Row>
+        {filteredNotes.length === 0 ? (
+          <Col className="text-center pt-5">
+            <h6 className="font-weight-bold mb-3">No Notes Found</h6>
+            <p>You don't have any notes yet. Click below to get started.</p>
+            <Button color="primary" onClick={handleGetStarted}>
+              Get Started
+            </Button>
+          </Col>
+        ) : (
+          filteredNotes.map((note) => (
+            <Col md="4" key={note.id}>
+              <Card
+                className="mb-4"
+                style={{
+                  boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+                  cursor: "pointer",
                 }}
+                onClick={() => handleEditNote(note.id)} // Navigate to the note editor when clicked
               >
-                Get Started
-              </Button>
-            </Box>
-          ) : (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-              {filteredNotes.map((note, index) => (
-                <Link
-                  to={`/notes-editor/${note.id}`}
-                  key={note.id}
-                  style={{
-                    textDecoration: "none",
-                    width: "calc(33.333% - 20px)",
-                  }}
-                >
-                  <Card
-                    sx={{
-                      padding: "20px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-                      backgroundColor: "#ffffff",
-                      transition: "transform 0.3s",
-                      "&:hover": {
-                        transform: "scale(1.03)",
-                      },
-                    }}
-                  >
-                    <CardContent>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#888888",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        {new Date(note.created_at).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </Typography>
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <p className="text-muted small">
+                      {new Date(note.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                    <Button
+                      color="danger"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the note click from triggering when clicking delete
+                        setNoteToDelete(note);
+                        setDeleteModalOpen(true);
+                      }}
+                    >
+                      წაშლა
+                    </Button>
+                  </div>
+                  <h6 className="font-weight-bold text-primary">{note.title}</h6>
+                  <p
+                    className="text-muted"
+                    dangerouslySetInnerHTML={{ __html: note.note }}
+                  />
+                </CardBody>
+              </Card>
+            </Col>
+          ))
+        )}
+      </Row>
 
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: "bold",
-                          fontFamily: '"BPG Rioni", sans-serif',
-                          color: "#007dba",
-                          marginBottom: "12px",
-                        }}
-                      >
-                        {note.title}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontFamily: '"BPG Rioni", sans-serif',
-                          color: "#333333",
-                          lineHeight: "1.6",
-                        }}
-                        dangerouslySetInnerHTML={{ __html: note.note }}
-                      />
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </Box>
-          )}
-        </Box>
-      </div>
-    </div>
-  )
-}
+      <Modal
+        isOpen={deleteModalOpen}
+        toggle={() => setDeleteModalOpen(!deleteModalOpen)}
+      >
+        <ModalHeader toggle={() => setDeleteModalOpen(!deleteModalOpen)}>
+          Delete Note
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this note? This action cannot be undone.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={() => setDeleteModalOpen(false)}>
+            Cancel
+          </Button>
+          <Button color="danger" onClick={handleDeleteNote}>
+            Delete
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </Container>
+  );
+};
 
-export default NotesPage
+export default NotesPage;

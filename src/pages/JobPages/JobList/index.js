@@ -31,18 +31,18 @@ import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const TaskList = () => {
-
     document.title = "Tasks List | Gorgia LLC";
 
     const [modal, setModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [task, setTask] = useState(null);
+    const [task, setTask] = useState(null); // This stores the selected task for editing
     const [tasks, setTasks] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [deleteModal, setDeleteModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
+    // Fetch tasks
     const fetchTasks = async () => {
         setLoading(true);
         try {
@@ -60,15 +60,15 @@ const TaskList = () => {
         fetchTasks();
     }, []);
 
+    // Formik setup for task form
     const validation = useFormik({
         enableReinitialize: true,
         initialValues: {
-            task_id: (task && task.task_id) || '',
-            task_title: (task && task.task_title) || '',
-            description: (task && task.description) || '',
-            priority: (task && task.priority) || 'Medium', // Default to English value
-            status: (task && task.status) || 'Pending', // Default to English value
-            ip_address: (task && task.ip_address) || '',
+            task_title: task?.task_title || '',  // Prefill when editing
+            description: task?.description || '',
+            priority: task?.priority || 'Medium', // Default to 'Medium'
+            status: task?.status || 'Pending',    // Default to 'Pending'
+            ip_address: task?.ip_address || '',
         },
         validationSchema: Yup.object({
             task_title: Yup.string().required("Please Enter Your Task Title"),
@@ -86,12 +86,9 @@ const TaskList = () => {
             try {
                 const currentDate = new Date().toISOString().split('T')[0];
 
-                // Prepare the payload with English values
                 const payload = {
                     ...values,
                     due_date: currentDate,
-                    priority: values.priority, // already in English
-                    status: values.status, // already in English
                 };
 
                 if (isEdit) {
@@ -99,29 +96,32 @@ const TaskList = () => {
                 } else {
                     await createTask(payload);
                 }
+
                 validation.resetForm();
-                toggle();
-                fetchTasks();
+                toggleModal(); // Close the modal after submission
+                fetchTasks();  // Refresh the task list
             } catch (error) {
                 console.error("Error submitting form:", error);
             }
         },
     });
 
-    const toggle = () => {
+    const toggleModal = () => {
         setModal(!modal);
         if (!modal) {
-            setTask(null);
+            setTask(null);  // Reset task when closing modal
             setIsEdit(false);
         }
     };
 
+    // Open the modal to edit a task
     const handleTaskClick = (task) => {
-        setTask(task);
-        setIsEdit(true);
-        toggle();
+        setTask(task);  // Set the selected task to edit
+        setIsEdit(true);  // Switch to edit mode
+        setModal(true);   // Open the modal
     };
 
+    // Open delete modal
     const onClickDelete = (task) => {
         setTask(task);
         setDeleteModal(true);
@@ -139,6 +139,7 @@ const TaskList = () => {
         }
     };
 
+    // Define table columns
     const columns = useMemo(
         () => [
             {
@@ -264,96 +265,86 @@ const TaskList = () => {
             <div className="page-content">
                 <div className="container-fluid">
                     <Breadcrumbs title="IT" breadcrumbItem="მხარდაჭერა" />
-                    {
-                        isLoading ? <Spinners setLoading={setLoading} />
-                            :
-                            <Row>
-                                <Col lg="12">
-                                    <Card>
-                                        <CardBody className="border-bottom">
-                                            <div className="d-flex align-items-center">
-                                                <h5 className="mb-0 card-title flex-grow-1">ბილეთების სია</h5>
-                                                <div className="flex-shrink-0">
-                                                    <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">ახალი ბილეთის გახსნა</Link>
-                                                </div>
+                    {isLoading ? <Spinners setLoading={setLoading} /> :
+                        <Row>
+                            <Col lg="12">
+                                <Card>
+                                    <CardBody className="border-bottom">
+                                        <div className="d-flex align-items-center">
+                                            <h5 className="mb-0 card-title flex-grow-1">ბილეთების სია</h5>
+                                            <div className="flex-shrink-0">
+                                                <Link to="#!" onClick={() => setModal(true)} className="btn btn-primary me-1">ახალი ბილეთის გახსნა</Link>
                                             </div>
-                                        </CardBody>
-                                        <CardBody>
-                                            {tasks.length > 0 ? (
-                                                <Fragment>
-                                                    <div className="table-responsive">
-                                                        <Table hover className="table-nowrap">
-                                                            <thead className="thead-light">
-                                                                <tr>
-                                                                    {columns.map((column, index) => (
-                                                                        <th key={column.accessorKey || index}>
-                                                                            {column.header}
-                                                                        </th>
+                                        </div>
+                                    </CardBody>
+                                    <CardBody>
+                                        {tasks.length > 0 ? (
+                                            <Fragment>
+                                                <div className="table-responsive">
+                                                    <Table hover className="table-nowrap">
+                                                        <thead className="thead-light">
+                                                            <tr>
+                                                                {columns.map((column, index) => (
+                                                                    <th key={column.accessorKey || index}>
+                                                                        {column.header}
+                                                                    </th>
+                                                                ))}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((task) => (
+                                                                <tr key={task.id}>
+                                                                    {columns.map((column) => (
+                                                                        <td key={`${task.id}-${column.accessorKey}`}>
+                                                                            {column.cell ? column.cell({ row: { original: task } }) : task[column.accessorKey]}
+                                                                        </td>
                                                                     ))}
                                                                 </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((task) => (
-                                                                    <tr key={task.id}>
-                                                                        {columns.map((column) => (
-                                                                            <td key={`${task.id}-${column.accessorKey}`}>
-                                                                                {column.cell ? column.cell({ row: { original: task } }) : task[column.accessorKey]}
-                                                                            </td>
-                                                                        ))}
-                                                                    </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </Table>
+                                                </div>
+                                                {totalPages > 1 && (
+                                                    <Row className="justify-content-between align-items-center mt-3">
+                                                        <Col sm={12} md={5}>
+                                                            <div className="text-muted">
+                                                                Page {currentPage} of {totalPages}
+                                                            </div>
+                                                        </Col>
+                                                        <Col sm={12} md={7}>
+                                                            <ul className="pagination">
+                                                                <li className={`page-item ${currentPage <= 1 ? "disabled" : ''}`}>
+                                                                    <Link className="page-link" to="#" onClick={handlePreviousPage}>
+                                                                        <i className="mdi mdi-chevron-left"></i>
+                                                                    </Link>
+                                                                </li>
+                                                                {[...Array(totalPages).keys()].map((page) => (
+                                                                    <li key={page + 1} className={`page-item ${currentPage === page + 1 ? "active" : ""}`}>
+                                                                        <Link className="page-link" to="#" onClick={() => handlePageClick(page + 1)}>
+                                                                            {page + 1}
+                                                                        </Link>
+                                                                    </li>
                                                                 ))}
-                                                            </tbody>
-                                                        </Table>
-                                                    </div>
-
-                                                    {totalPages > 1 && (
-                                                        <Row className="justify-content-between align-items-center mt-3">
-                                                            <Col sm={12} md={5}>
-                                                                <div className="text-muted">
-                                                                    Page {currentPage} of {totalPages}
-                                                                </div>
-                                                            </Col>
-                                                            <Col sm={12} md={7}>
-                                                                <ul className="pagination">
-                                                                    <li className={`page-item ${currentPage <= 1 ? "disabled" : ''}`}>
-                                                                        <Link className="page-link" to="#" onClick={handlePreviousPage}>
-                                                                            <i className="mdi mdi-chevron-left"></i>
-                                                                        </Link>
-                                                                    </li>
-                                                                    {[...Array(totalPages).keys()].map((page) => (
-                                                                        <li
-                                                                            key={page + 1}
-                                                                            className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
-                                                                        >
-                                                                            <Link
-                                                                                className="page-link"
-                                                                                to="#"
-                                                                                onClick={() => handlePageClick(page + 1)}
-                                                                            >
-                                                                                {page + 1}
-                                                                            </Link>
-                                                                        </li>
-                                                                    ))}
-                                                                    <li className={`page-item ${currentPage >= totalPages ? "disabled" : ''}`}>
-                                                                        <Link className="page-link" to="#" onClick={handleNextPage}>
-                                                                            <i className="mdi mdi-chevron-right"></i>
-                                                                        </Link>
-                                                                    </li>
-                                                                </ul>
-                                                            </Col>
-                                                        </Row>
-                                                    )}
-                                                </Fragment>
-                                            ) : (
-                                                <div>No tasks available.</div>
-                                            )}
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
+                                                                <li className={`page-item ${currentPage >= totalPages ? "disabled" : ''}`}>
+                                                                    <Link className="page-link" to="#" onClick={handleNextPage}>
+                                                                        <i className="mdi mdi-chevron-right"></i>
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
+                                                        </Col>
+                                                    </Row>
+                                                )}
+                                            </Fragment>
+                                        ) : (
+                                            <div>No tasks available.</div>
+                                        )}
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
                     }
-                    <Modal isOpen={modal} toggle={toggle}>
-                        <ModalHeader toggle={toggle} tag="h4">
+                    <Modal isOpen={modal} toggle={toggleModal}>
+                        <ModalHeader toggle={toggleModal} tag="h4">
                             {!!isEdit ? "Edit Task" : "Add Task"}
                         </ModalHeader>
                         <ModalBody>
@@ -381,8 +372,8 @@ const TaskList = () => {
                                                 <option value="სერვისი">სერვისი</option>
                                                 <option value="პაროლის აღდგენა">პაროლის აღდგენა</option>
                                                 <option value="ელ-ფოსტის პრობლემა">ელ-ფოსტის პრობლემა</option>
-                                                <option value="ტექნიკური პრობლემა">ტექნიკური problema</option>
-                                                <option value="სერვისის პრობლემა">სერვისის problema</option>
+                                                <option value="ტექნიკური პრობლემა">ტექნიკური პრობლემა</option>
+                                                <option value="სერვისის პრობლემა">სერვისის პრობლემა</option>
                                                 <option value="ფაილების აღდგენა">ფაილების აღდგენა</option>
                                                 <option value="სხვა">სხვა</option>
                                             </Input>

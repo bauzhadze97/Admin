@@ -169,8 +169,9 @@ const AdminPage = () => {
 
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1" >
-                <Button
-                  color="success"
+              <div className="d-flex justify-content-end mb-3">
+              <Button
+                  color="primary"
                   onClick={() => openDepartmentModal(null)} 
                   style={{
                     display:"flex",
@@ -181,6 +182,8 @@ const AdminPage = () => {
                 >
                   <FaPlus /> {t("დეპარტამენტის დამატება")}
                 </Button>
+              </div>
+               
 
                 <Card>
                   <CardBody>

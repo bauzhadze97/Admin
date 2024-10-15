@@ -7,7 +7,6 @@ import { createDailyComment } from 'services/dailyComment';
 import { getDepartments } from '../../services/auth';
 import Pusher from 'pusher-js';
 
-// Define custom styles for react-select
 const customStyles = {
   control: (provided) => ({
     ...provided,
