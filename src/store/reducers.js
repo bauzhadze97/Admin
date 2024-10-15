@@ -54,7 +54,10 @@ import DashboardBlog from "./dashboard-blog/reducer";
 //Dasboard job
 import DashboardJob from "./dashboard-jobs/reducer";
 
-import user from "./user/reducer";
+// import user from "./user/reducer";
+
+import user from '../redux/user/reducer'
+import users from "../redux/users/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -78,7 +81,8 @@ const rootReducer = combineReducers({
   DashboardCrypto,
   DashboardBlog,
   DashboardJob,
-  user
+  user,
+  users
 });
 
 export default rootReducer;

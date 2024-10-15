@@ -388,14 +388,14 @@ const SidebarContent = props => {
             </li>
               </ul>
             </li>
-            {/* <li className="menu-title">{props.t("Apps")}</li>
+            <li className="menu-title">{props.t("Apps")}</li>
 
-            <li>
+            {/* <li>
               <Link to="/calendar" >
                 <i className="bx bx-calendar"></i>
                 <span>{props.t("Calendar")}</span>
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to="/chat" >
@@ -403,7 +403,7 @@ const SidebarContent = props => {
                 <span>{props.t("Chat")}</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/apps-filemanager" >
                 <i className="bx bx-file"></i>
                 <span>{props.t("File Manager")}</span>
