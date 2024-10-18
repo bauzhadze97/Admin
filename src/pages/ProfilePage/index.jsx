@@ -45,7 +45,7 @@ const ProfilePage = () => {
         mobile_number: userData?.mobile_number || "",
         id_number: userData?.id_number || "", // Initialize id_number
         password: "",
-    profile_image: "",
+        profile_image: "",
   })
 
   const [profileError, setProfileError] = useState({
@@ -58,12 +58,11 @@ const ProfilePage = () => {
     date_of_birth: "",
     email: "",
     mobile_number: "",
-    id_number: "", // Added id_number error handling
+    id_number: "", 
     password: "",
     profile_image: "",
   })
 
-  // Modal State
   const [modal, setModal] = useState(false)
 
 

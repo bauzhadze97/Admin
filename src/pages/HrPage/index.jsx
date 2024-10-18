@@ -13,36 +13,34 @@ import {
   ModalBody,
   ModalFooter,
   Input,
+  FormFeedback,
 } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { createHrDocument, getHrDocuments, getCurrentUser } from "services/hrDocument";
+import { createHrDocument, getCurrentUserHrDocuments } from "services/hrDocument";
 import { fetchUser, updateUser } from "services/user";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const HrPage = () => {
   document.title = "ვიზირება | Gorgia LLC";
 
   const [hrDocuments, setHrDocuments] = useState([]);
   const [modal, setModal] = useState(false);
-  const [expandedRows, setExpandedRows] = useState([]); // State to track expanded rows
-  const [missingIdUser, setMissingIdUser] = useState(null);
-  // const [currentUser, setCurrentUser] = useState(null);
-  const [newIdNumber, setNewIdNumber] = useState(""); 
+  const [expandedRows, setExpandedRows] = useState([]);
+  const [documentType, setDocumentType] = useState(""); 
+  const dispatch = useDispatch();
 
-  const currentUser= useSelector((state) => state.user.user)
+  const reduxUser = useSelector((state) => state.user.user);
+  const [currentUser, setCurrentUser] = useState(reduxUser);
 
-  // const fetchCurrentUser = async () => {
-  //   try {
-  //     const response = await fetchUser();
-  //     setCurrentUser(response.data);
-  //   } catch (err) {
-  //     console.error("Error fetching current user:", err);
-  //   }
-  // };
+  useEffect(() => {
+    setCurrentUser(reduxUser); 
+  }, [reduxUser]);
 
   const fetchHrDocuments = async () => {
     try {
-      const response = await getHrDocuments();
+      const response = await getCurrentUserHrDocuments();
       setHrDocuments(response.data);
     } catch (err) {
       console.error("Error fetching HR documents:", err);
@@ -50,23 +48,65 @@ const HrPage = () => {
   };
 
   useEffect(() => {
-    // fetchCurrentUser(); 
-    fetchHrDocuments(); 
+    fetchHrDocuments();
   }, []);
 
   const handleCreateDocument = async (type) => {
-    if (!currentUser?.id_number) {
-      setMissingIdUser(currentUser);
+    setDocumentType(type);
+
+    if (!currentUser?.id_number || !currentUser?.position || !currentUser?.working_start_date) {
+      setModal(true);
+      return;
+    }
+
+    if (type === "paid") {
       setModal(true);
       return;
     }
 
     try {
-      const documentName = type === "paid" ? "ხელფასიანი ცნობა" : "უხელფასო ცნობა";
+      const documentName = "უხელფასო ცნობა";
+
       const response = await createHrDocument({ name: documentName });
       setHrDocuments([...hrDocuments, response.data]);
     } catch (err) {
       console.error("Error creating HR document:", err);
+    }
+  };
+
+  const handleUpdateUser = async (values) => {
+    try {
+      const updatedUser = {
+        id_number: values.id_number || currentUser.id_number,
+        position: values.position || currentUser.position,
+        working_start_date: values.working_start_date || currentUser.working_start_date,
+      };
+
+      await updateUser(updatedUser);
+
+      const updatedUserResponse = await fetchUser();
+      dispatch({ type: "UPDATE_USER", payload: updatedUserResponse.data });
+      setCurrentUser(updatedUserResponse.data);
+
+      setModal(false);
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
+  };
+
+  const handleCreatePaidDocumentWithPurpose = async (values) => {
+    try {
+      const documentName = "ხელფასიანი ცნობა";
+      const response = await createHrDocument({
+        name: documentName,
+        purpose: values.purpose,
+      });
+
+      setHrDocuments([...hrDocuments, response.data]);
+
+      setModal(false);
+    } catch (err) {
+      console.error("Error creating paid HR document:", err);
     }
   };
 
@@ -83,30 +123,21 @@ const HrPage = () => {
     }
   };
 
-  // Handle row click to toggle the expansion
   const handleRowClick = (index) => {
-    const currentExpandedRows = expandedRows;
-    const isRowExpanded = currentExpandedRows.includes(index);
-
-    if (isRowExpanded) {
-      setExpandedRows(currentExpandedRows.filter((id) => id !== index));
+    if (expandedRows.includes(index)) {
+      setExpandedRows(expandedRows.filter((id) => id !== index));
     } else {
-      setExpandedRows([...currentExpandedRows, index]);
+      setExpandedRows([...expandedRows, index]);
     }
   };
 
-  const handleUpdateIdNumber = async () => {
-    try {
-      const updatedUser = { id_number: newIdNumber }; 
-      await updateUser(updatedUser); 
-      // setCurrentUser({ ...currentUser, id_number: newIdNumber }); 
-      setModal(false); 
-      fetchHrDocuments(); 
-    } catch (err) {
-      console.error("Error updating ID number:", err);
-    }
-  };
-  
+  // Yup validation schema
+  const validationSchema = Yup.object().shape({
+    id_number: Yup.string().required("პირადი ნომერი აუცილებელია"),
+    position: Yup.string().required("პოზიცია აუცილებელია"),
+    working_start_date: Yup.date().required("სამსახურის დაწყების თარიღი აუცილებელია"),
+    purpose: documentType === "paid" ? Yup.string().required("მიზანი აუცილებელია") : Yup.string(),
+  });
 
   return (
     <React.Fragment>
@@ -121,8 +152,8 @@ const HrPage = () => {
                   <CardTitle className="h4">მოთხოვნილი ცნობები</CardTitle>
                   {currentUser && (
                     <div className="mb-4">
-                      <strong>Currently Logged In:</strong> {currentUser.name || "უცნობი"} (ID:{" "}
-                      {currentUser.id_number || "უცნობი"})
+                      <strong>მომხმარებელი:</strong> {currentUser.name || "უცნობი"} (ID:{" "}
+                      {currentUser.id_number || "უცნობი"}, პოზიცია: {currentUser.position || "უცნობი"})
                     </div>
                   )}
                   <CardSubtitle className="card-title-desc d-flex justify-content-between align-items-center">
@@ -136,14 +167,14 @@ const HrPage = () => {
                         className="me-1"
                         onClick={() => handleCreateDocument("paid")}
                       >
-                        <i className="font-size-12 align-middle "></i> ხელფასიანი ცნობის მოთხოვნა
+                        ხელფასიანი ცნობის მოთხოვნა
                       </Button>
                       <Button
                         type="button"
                         color="success"
                         onClick={() => handleCreateDocument("unpaid")}
                       >
-                        <i className="font-size-12 align-middle"></i> უხელფასო ცნობის მოთხოვნა
+                        უხელფასო ცნობის მოთხოვნა
                       </Button>
                     </div>
                   </CardSubtitle>
@@ -192,7 +223,6 @@ const HrPage = () => {
                               </td>
                             </tr>
 
-                            {/* Expandable row to show the comment */}
                             {expandedRows.includes(index) && (
                               <tr>
                                 <td colSpan="7">
@@ -215,34 +245,86 @@ const HrPage = () => {
         </div>
       </div>
 
-      {/* Modal for missing ID Number */}
       <Modal isOpen={modal} toggle={() => setModal(!modal)}>
         <ModalHeader toggle={() => setModal(!modal)}>
-          პირადი ნომრის შეცდომა
+          {documentType === "paid" ? "მიზნის შეყვანა" : "მომხმარებლის განახლება"}
         </ModalHeader>
-        <ModalBody>
-          {missingIdUser ? (
-            <>
-              <p>{missingIdUser.name} - ID ნომერი არ არსებობს.</p>
-              <Input
-                type="text"
-                value={newIdNumber}
-                onChange={(e) => setNewIdNumber(e.target.value)}
-                placeholder="შეიყვანეთ ID ნომერი"
-              />
-            </>
-          ) : (
-            "ID ნომერი არ არსებობს, გთხოვთ შეავსოთ ID ნომერი, თქვენს პროფილზე"
+        <Formik
+          initialValues={{
+            id_number: currentUser?.id_number || "",
+            position: currentUser?.position || "",
+            working_start_date: currentUser?.working_start_date || "",
+            purpose: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={documentType === "paid" ? handleCreatePaidDocumentWithPurpose : handleUpdateUser}
+        >
+          {({ values, handleChange, handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <ModalBody>
+                {!currentUser?.id_number && (
+                  <>
+                    <p>პირადი ნომრის განახლება:</p>
+                    <Field
+                      type="text"
+                      name="id_number"
+                      className="form-control"
+                      placeholder="შეიყვანეთ ახალი პირადი ნომერი"
+                    />
+                    <ErrorMessage name="id_number" component={FormFeedback} />
+                  </>
+                )}
+
+                {!currentUser?.position && (
+                  <>
+                    <p>პოზიციის განახლება:</p>
+                    <Field
+                      type="text"
+                      name="position"
+                      className="form-control"
+                      placeholder="შეიყვანეთ ახალი პოზიცია"
+                    />
+                    <ErrorMessage name="position" component={FormFeedback} />
+                  </>
+                )}
+
+                {!currentUser?.working_start_date && (
+                  <>
+                    <p>სამსახურის დაწყების თარიღი:</p>
+                    <Field
+                      type="date"
+                      name="working_start_date"
+                      className="form-control"
+                      placeholder="შეიყვანეთ სამსახურის დაწყების თარიღი"
+                    />
+                    <ErrorMessage name="working_start_date" component={FormFeedback} />
+                  </>
+                )}
+
+                {documentType === "paid" && currentUser?.id_number && currentUser?.position && currentUser?.working_start_date && (
+                  <>
+                    <p>მიზნის შეყვანა:</p>
+                    <Field
+                      type="text"
+                      name="purpose"
+                      className="form-control"
+                      placeholder="შეიყვანეთ მიზანი"
+                    />
+                    <ErrorMessage name="purpose" component={FormFeedback} />
+                  </>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" type="submit">
+                  შენახვა
+                </Button>
+                <Button color="secondary" onClick={() => setModal(false)}>
+                  დახურვა
+                </Button>
+              </ModalFooter>
+            </Form>
           )}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={handleUpdateIdNumber}>
-            შენახვა
-          </Button>
-          <Button color="secondary" onClick={() => setModal(false)}>
-            დახურვა
-          </Button>
-        </ModalFooter>
+        </Formik>
       </Modal>
     </React.Fragment>
   );

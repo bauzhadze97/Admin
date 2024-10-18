@@ -1,6 +1,8 @@
 import defaultInstance from "plugins/axios";
 
 export const createHrDocument = async (data) => {
+    console.log("data", data);
+    
     return defaultInstance.post('/api/hr-documents', data);
 }
 
@@ -16,5 +18,5 @@ export const getHrDocuments = async () => {
 }
 
 export const getCurrentUserHrDocuments = async () => {
-    return defaultInstance.get('/api/hr-documents/user');
+    return defaultInstance.get('/api/hr-documents/current');
 }
