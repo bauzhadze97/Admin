@@ -29,13 +29,13 @@ import {
   updateUserById,
 } from "../../services/admin/department";
 import DepartmentForm from "components/DepartmentForm";
-import UserForm from "components/UserForm"; // Import the new UserForm component
+import UserForm from "components/UserForm"; 
 import { updateUser } from "services/user";
 
 const AdminPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("1"); // To toggle between Department and User tabs
+  const [activeTab, setActiveTab] = useState("1"); 
   const [isDepartmentModalOpen, setIsDepartmentModalOpen] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -93,7 +93,7 @@ const AdminPage = () => {
 
   const handleAddUser = async (data) => {
     try {
-      await updateUserById(chosenUser.id, data); // Use updateUserById here
+      await updateUserById(chosenUser.id, data);  
       toast.success(t("User updated successfully"));
       fetchUsers();
       setIsUserModalOpen(false);
@@ -137,7 +137,6 @@ const AdminPage = () => {
     }
   };
 
-  // Tab Switching Function
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -166,7 +165,6 @@ const AdminPage = () => {
                 </NavLink>
               </NavItem>
             </Nav>
-
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1" >
               <div className="d-flex justify-content-end mb-3">
@@ -183,8 +181,6 @@ const AdminPage = () => {
                   <FaPlus /> {t("დეპარტამენტის დამატება")}
                 </Button>
               </div>
-               
-
                 <Card>
                   <CardBody>
                     <Table className="table table-bordered">

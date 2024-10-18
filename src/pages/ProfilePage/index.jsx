@@ -11,17 +11,14 @@ import { useTranslation } from "react-i18next"
 import store from "../../store"
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import "./index.css" // Make sure the relevant styles are in this file
+import { useSelector } from "react-redux"
 
 const ProfilePage = () => {
   const { t } = useTranslation()
-  useFetchUser()
-  const [userData, setUserData] = useState({})
+  // useFetchUser()
+  const userData = useSelector((state) => state.user.user); 
 
-  useEffect(() => {
-    if (store.getState().user && store.getState().user.data) {
-      setUserData(store.getState().user.data)
-    }
-  }, [store.getState().user.data])
+  console.log(userData)
 
   const [departments, setDepartments] = useState([])
   const [passForm, setPassForm] = useState({
@@ -37,17 +34,17 @@ const ProfilePage = () => {
   })
 
   const [profileForm, setProfileForm] = useState({
-    name: "",
-    sur_name: "",
-    position: "",
-    department: "",
-    location: "",
-    working_start_date: "",
-    date_of_birth: "",
-    email: "",
-    mobile_number: "",
-    id_number: "", // Added id_number field
-    password: "",
+         name: userData?.name || "",
+        sur_name: userData?.sur_name || "",
+        position: userData?.position || "",
+        department: userData?.department?.name || "",
+        location: userData?.location || "",
+        working_start_date: userData?.working_start_date || "",
+        date_of_birth: userData?.date_of_birth || "",
+        email: userData?.email || "",
+        mobile_number: userData?.mobile_number || "",
+        id_number: userData?.id_number || "", // Initialize id_number
+        password: "",
     profile_image: "",
   })
 
@@ -69,6 +66,26 @@ const ProfilePage = () => {
   // Modal State
   const [modal, setModal] = useState(false)
 
+
+  useEffect(() => {
+    if (userData) {
+      setProfileForm({
+        name: userData.name || "",
+        sur_name: userData.sur_name || "",
+        position: userData.position || "",
+        department: userData.department?.name || "",
+        location: userData.location || "",
+        working_start_date: userData.working_start_date || "",
+        date_of_birth: userData.date_of_birth || "",
+        email: userData.email || "",
+        mobile_number: userData.mobile_number || "",
+        id_number: userData.id_number || "",
+        password: "", // Keep password field empty for security reasons
+        profile_image: "",
+      });
+    }
+  }, [userData]);
+
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -81,23 +98,6 @@ const ProfilePage = () => {
     fetchDepartments()
   }, [])
 
-  useEffect(() => {
-    if (Object.keys(userData).length > 0) {
-      setProfileForm({
-        name: userData?.name || "",
-        sur_name: userData?.sur_name || "",
-        position: userData?.position || "",
-        department: userData?.department?.name || "",
-        location: userData?.location || "",
-        working_start_date: userData?.working_start_date || "",
-        date_of_birth: userData?.date_of_birth || "",
-        email: userData?.email || "",
-        mobile_number: userData?.mobile_number || "",
-        id_number: userData?.id_number || "", // Initialize id_number
-        password: "",
-      })
-    }
-  }, [userData])
 
   const handleChangePass = e => {
     const { name, value } = e.target

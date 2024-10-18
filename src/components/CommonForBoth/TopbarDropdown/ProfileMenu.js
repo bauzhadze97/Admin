@@ -30,14 +30,14 @@ const ProfileMenu = props => {
     }
   }, [props.success])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetchUser()
-      setUser(response.data)
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetchUser()
+  //     setUser(response.data)
+  //   }
 
-    fetchData()
-  }, [])
+  //   fetchData()
+  // }, [])
 
   const profileImageSrc = user?.profile_image
     ? `${process.env.REACT_APP_BASE_URL}/${user.profile_image}`

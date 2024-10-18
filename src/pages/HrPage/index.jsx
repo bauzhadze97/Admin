@@ -17,6 +17,7 @@ import {
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { createHrDocument, getHrDocuments, getCurrentUser } from "services/hrDocument";
 import { fetchUser, updateUser } from "services/user";
+import { useSelector } from "react-redux";
 
 const HrPage = () => {
   document.title = "ვიზირება | Gorgia LLC";
@@ -25,17 +26,19 @@ const HrPage = () => {
   const [modal, setModal] = useState(false);
   const [expandedRows, setExpandedRows] = useState([]); // State to track expanded rows
   const [missingIdUser, setMissingIdUser] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
   const [newIdNumber, setNewIdNumber] = useState(""); 
 
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await fetchUser();
-      setCurrentUser(response.data);
-    } catch (err) {
-      console.error("Error fetching current user:", err);
-    }
-  };
+  const currentUser= useSelector((state) => state.user.user)
+
+  // const fetchCurrentUser = async () => {
+  //   try {
+  //     const response = await fetchUser();
+  //     setCurrentUser(response.data);
+  //   } catch (err) {
+  //     console.error("Error fetching current user:", err);
+  //   }
+  // };
 
   const fetchHrDocuments = async () => {
     try {
@@ -47,7 +50,7 @@ const HrPage = () => {
   };
 
   useEffect(() => {
-    fetchCurrentUser(); 
+    // fetchCurrentUser(); 
     fetchHrDocuments(); 
   }, []);
 
@@ -96,13 +99,14 @@ const HrPage = () => {
     try {
       const updatedUser = { id_number: newIdNumber }; 
       await updateUser(updatedUser); 
-      setCurrentUser({ ...currentUser, id_number: newIdNumber }); 
+      // setCurrentUser({ ...currentUser, id_number: newIdNumber }); 
       setModal(false); 
       fetchHrDocuments(); 
     } catch (err) {
       console.error("Error updating ID number:", err);
     }
   };
+  
 
   return (
     <React.Fragment>

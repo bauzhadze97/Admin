@@ -7,7 +7,6 @@ import { startTask, finishTask } from 'services/tasks'; // Import the API functi
 import adobephotoshop from "../../../assets/images/companies/adobe-photoshop.svg";
 import { use } from 'i18next';
 import { fetchUser } from 'services/user';
-import { comments } from 'common/data';
 
 const Overview = ({ task }) => {
     const [isTaskStarted, setIsTaskStarted] = useState(false);
@@ -65,12 +64,8 @@ const Overview = ({ task }) => {
             }
         }
     };
-
-
-    console.log(user);
     
     
-
     return (
         <React.Fragment>
             <Col xl={3}>
