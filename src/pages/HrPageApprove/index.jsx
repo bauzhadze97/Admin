@@ -53,25 +53,49 @@ const HrPageApprove = ({ filterStatus }) => {
     try {
       const document = documents.find((doc) => doc.id === documentId);
       setSelectedDocument(document);
-
+  
       if (status === "approved") {
+        // Check if the document name is 'უხელფასო ცნობა'
+        if (document.name === "უხელფასო ცნობა") {
+          // Directly update the status without showing the modal for salary
+          const response = await updateHrDocumentStatus(documentId, "approved");
+          setDocuments((prevDocuments) =>
+            prevDocuments.map((doc) =>
+              doc.id === documentId ? { ...doc, status: "approved" } : doc
+            )
+          );
+          
+          // Check if PDF path is present and generate the PDF
+          if (response.status === 200 && response.data.pdf_path) {
+            printPdf(response.data.pdf_path);
+          }
+          return; // Skip the modal and exit the function
+        }
+  
+        // If not 'უხელფასო ცნობა', show modal to enter salary details
         setIsRejection(false);
         setModal(true);
       } else if (status === "rejected") {
         setIsRejection(true);
         setModal(true);
       } else {
-        await updateHrDocumentStatus(documentId, status);
+        const response = await updateHrDocumentStatus(documentId, status);
         setDocuments((prevDocuments) =>
           prevDocuments.map((document) =>
             document.id === documentId ? { ...document, status } : document
           )
         );
+  
+        if (status === "approved" && response.status === 200 && response.data.pdf_path) {
+          printPdf(response.data.pdf_path);
+        }
       }
     } catch (err) {
       console.error("Error updating document status:", err);
     }
   };
+  
+  
 
   const handleSave = async () => {
     try {
@@ -87,7 +111,7 @@ const HrPageApprove = ({ filterStatus }) => {
           )
         );
       } else {
-        await updateHrDocumentStatus(selectedDocument.id, "approved", {
+        const response = await updateHrDocumentStatus(selectedDocument.id, "approved", {
           salary,
           salary_text: salaryText,
         });
@@ -103,6 +127,11 @@ const HrPageApprove = ({ filterStatus }) => {
               : document
           )
         );
+
+        console.log("response", response);
+        if (response.data.pdf_path) {
+          printPdf(response.data.pdf_path);
+        }
       }
 
       setModal(false);
@@ -111,6 +140,14 @@ const HrPageApprove = ({ filterStatus }) => {
       setComment("");
     } catch (err) {
       console.error("Error saving document:", err);
+    }
+  };
+
+  const printPdf = (filePath) => {
+    const newWindow = window.open(filePath);
+    if (newWindow) {
+      newWindow.focus();
+      newWindow.print();
     }
   };
 

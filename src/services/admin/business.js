@@ -1,8 +1,8 @@
 import defaultInstance from '../../plugins/axios'
 
 export const getBusinessTrips = async () => {
-    return defaultInstance.get('/api/business-trip/list')
-  }
+  return defaultInstance.get('/api/business-trip/list')
+}
   
 export const getApprovalBusinessTrips = async (data) => {
   return defaultInstance.get('/api/approval/list', data)

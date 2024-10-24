@@ -41,6 +41,9 @@ const Login = (props) => {
         } else {
           sessionStorage.setItem('token', res.data.token);          
           sessionStorage.setItem('authUser', JSON.stringify(res.data.user));
+
+          console.log(res);
+          
           dispatch(fetchUserSuccess(res.data.user))
           
           toast.success(res.data.message);

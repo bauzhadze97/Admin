@@ -202,6 +202,7 @@ const AdminPage = () => {
                               <Button
                                 color="primary"
                                 size="sm"
+                                className="me-2"
                                 onClick={() => openDepartmentModal(dep)} // Open modal for editing department
                               >
                                რედაქტირება
@@ -264,10 +265,11 @@ const AdminPage = () => {
                               <td>
                                 <Button
                                   color="primary"
+                                  className="me-2" 
                                   size="sm"
                                   onClick={() => openUserModal(user)} // Open user modal for editing
                                 >
-                                  Edit
+                                  რედაქტირება
                                 </Button>
                                 <Button
                                   color="danger"

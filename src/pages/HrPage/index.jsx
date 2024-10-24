@@ -34,6 +34,10 @@ const HrPage = () => {
   const reduxUser = useSelector((state) => state.user.user);
   const [currentUser, setCurrentUser] = useState(reduxUser);
 
+
+  console.log(currentUser);
+  
+
   useEffect(() => {
     setCurrentUser(reduxUser); 
   }, [reduxUser]);
